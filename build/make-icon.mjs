@@ -3,8 +3,8 @@
 // the five feel colours. It is drawn afresh at every size rather than shrunk from one big picture.
 //   build/icon.ico (+ icon.png)          the .exe / installer / shortcut / pinned taskbar icon
 //   electron/icons/matinee.ico (+ .png)  the running window's icon (taskbar button, Alt+Tab)
-//   build/icon-mac.png                   the Mac app and Dock icon: the same ticket inside Apple's icon grid (art about 80% of the
-//                                        square, centred), so it sits the same size as other apps in the Dock
+//   build/icon-mac.png                   the Mac app and Dock icon: a full charcoal tile in Apple's icon grid with the striped M and
+//                                        a feel-coloured tear line (macSvg below)
 //   ui/assets/logo.png                   the logo at the top of the side menu: the same charcoal ticket since 22 Nov ("not a
 //                                        fan of white matinee logo on dark mode, lets try the dark one"). railSvg, the earlier white ticket
 //                                        (20 Nov, "in app use the old design"), is kept below in case it is wanted back.
@@ -34,8 +34,16 @@ const ticketSvg = () => {
 <path d="${ticketPath(26, 62, 460, 388, 56, 74)}" fill="#2b2a2a" stroke="#ece6e0" stroke-width="20"/>
 <text x="256" y="262" text-anchor="middle" dominant-baseline="central" font-family="BS" font-weight="900" font-size="400" fill="url(#g)">M</text></svg>`;
 };
-// The Mac icon: the same ticket, scaled into the middle 80% of the square like every other Mac app icon.
-const macSvg = () => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><svg x="51" y="51" width="410" height="410" viewBox="0 0 512 512">${ticketSvg().replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '')}</svg></svg>`;
+// The Mac icon (24 Nov, picked from mock-ups in a real Dock): a full charcoal tile in Apple's grid (824 of 1024, corner radius 185), since
+// macOS 26 puts any icon that isn't a full tile into a grey one. The striped M with a tear line of the five feel colours down the right.
+const macSvg = () => {
+  const stops = BOLD.map((c, i) => `<stop offset="${i / 5}" stop-color="${c}"/><stop offset="${(i + 1) / 5}" stop-color="${c}"/>`).join('');
+  const tear = BOLD.map((c, k) => `<line x1="760" y1="${292 + k * 92}" x2="760" y2="${292 + k * 92 + 56}" stroke="${c}" stroke-width="26" stroke-linecap="round"/>`).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><defs><style>@font-face{font-family:BS;src:url("${font}");font-weight:100 900}</style>
+<linearGradient id="g" gradientUnits="userSpaceOnUse" x1="300" y1="300" x2="724" y2="724">${stops}</linearGradient></defs>
+<rect x="100" y="100" width="824" height="824" rx="185" fill="#2b2a2a"/>
+<text x="470" y="515" text-anchor="middle" dominant-baseline="central" font-family="BS" font-weight="900" font-size="560" fill="url(#g)">M</text>${tear}</svg>`;
+};
 // The in-app logo: the white ticket with a charcoal edge, the M in the Map's pastel feel colours and a tear line of one dash each.
 const FEEL = ['#ec9481', '#e9c77f', '#95d0a2', '#94b6e2', '#bea6e8']; // the Map's own pastels (ui/screens/map/model.js)
 const railSvg = () => {

@@ -35,6 +35,7 @@
 :root[data-feel-colours="on"] .diary-poster .poster[data-fc]::after,
 :root[data-feel-colours="on"] .lib-thumb .poster[data-fc]::after,
 :root[data-feel-colours="on"] .disc-card .poster[data-fc]::after { left: 0; right: 0; bottom: -8px; height: 4px; border-radius: 2px; background: var(--fc); }
+:root[data-feel-colours="on"] .feel-tile-title { margin-top: 12px; } /* clear of the colour strip, which hangs 8px below the poster */
 :root[data-feel-colours="on"] .film-poster .poster[data-fc]::after,
 :root[data-feel-colours="on"] .tn-choose-poster .poster[data-fc]::after,
 :root[data-feel-colours="on"] .tn-pick-poster .poster[data-fc]::after { inset: -5px; border: 2px solid var(--fc); border-radius: calc(var(--radius-poster) + 5px); }

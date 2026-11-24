@@ -3,6 +3,9 @@
 Newest first. Plain language; what you'd notice.
 The TOP section is published as the release notes (and shown in Settings → Updates) by the next build. After a build, retitle it with its version and date, then start a new "## Next build" section above it.
 
+## v1.1 — 24 Nov 2026
+- UI polish and minor bug fixes
+
 ## v1.0 — 24 Nov 2026
 - **Matinee 1.0, the first public release.** Download it from github.com/defmellow/matinee-app/releases.
 - **Updates without a key.** Matinee now checks the public releases page, so Settings → Updates no longer asks for a GitHub key, and the old key is removed. Copies from before 1.0 won't find this version by themselves: download it once and install it over the old one. Your library stays as it is.

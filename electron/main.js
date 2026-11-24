@@ -404,7 +404,12 @@ async function start() {
   ipcMain.handle('matinee:update-check', event => (forbidden(event) || !updates ? OFF : updates.check()));
   ipcMain.handle('matinee:update-retry', event => (forbidden(event) || !updates ? OFF : updates.retry()));
   ipcMain.handle('matinee:update-set-channel', (event, name) => (forbidden(event) || !updates ? { ok: false, reason: 'off' } : updates.setChannel(name)));
-  if (app.isPackaged && ['win32', 'darwin', 'linux'].includes(process.platform)) {
+  // Test builds (made outside the public repo, see build.yml) never update themselves: the public release would replace them.
+  let testBuild = false;
+  try { testBuild = !!JSON.parse(fs.readFileSync(path.join(app.getAppPath(), 'package.json'), 'utf8')).matinee?.testBuild; }
+  catch (e) { problem('Updates', "Matinee couldn't read its own build details.", e, 'warning'); }
+  if (testBuild) log('Test build: updates are off.');
+  if (!testBuild && app.isPackaged && ['win32', 'darwin', 'linux'].includes(process.platform)) {
     try {
       const { default: pkg } = await import('electron-updater');
       // Windows installers, Linux AppImages: install by themselves. Mac (unsigned: Squirrel.Mac refuses), the .deb and the portable exe only check.

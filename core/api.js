@@ -684,6 +684,10 @@ export function createCore({ dataDir, logsDir = null, appDir = null, fetch = glo
   }
 
   async function runRefresh(signal, { full = false, ignoreBackoff = false } = {}) {
+    // Started and finished marks: a run cut short (the app closed mid-fetch) is picked up at the next launch (autoRefresh).
+    store.library.sync = store.library.sync || {};
+    store.library.sync.refreshStarted = new Date().toISOString();
+    store.touch('library');
     const user = store.library.user && store.library.user.username;
     if (user) {
       emit('progress', { phase: 'rss', label: 'Checking Letterboxd for new diary entries and watchlist films', done: 0, total: 1 });
@@ -697,6 +701,7 @@ export function createCore({ dataDir, logsDir = null, appDir = null, fetch = glo
     await runEnrichment(signal, { full, ignoreBackoff });
     store.library.sync = store.library.sync || {};
     store.library.sync.lastRefresh = new Date().toISOString(); // also when there is no username or the RSS step failed, so autoRefresh doesn't restart at every launch
+    if (!(signal && signal.aborted)) store.library.sync.refreshDone = store.library.sync.lastRefresh;
     store.touch('library');
   }
 
@@ -901,7 +906,11 @@ export function createCore({ dataDir, logsDir = null, appDir = null, fetch = glo
       // Opening the app fetches whatever is missing on the user's computer (new sources, newly added films), at most hourly;
       // otherwise a quiet top-up every six hours.
       const pending = hasPendingWork({ store, providers: allProviders() });
-      if (Date.now() - last < (pending ? 1 : 6) * HOUR) return { started: false };
+      // A run that never finished (the app was closed while it fetched) carries on straight away. Checking Letterboxd at the start of
+      // a run already stamps lastRefresh, so without this a reopen within the hour left the rest unfetched until a manual Refresh.
+      const sync = store.library.sync || {};
+      const cutShort = pending && !!sync.refreshStarted && !(Date.parse(sync.refreshDone || 0) >= Date.parse(sync.refreshStarted));
+      if (!cutShort && Date.now() - last < (pending ? 1 : 6) * HOUR) return { started: false };
       return startJob('refresh', signal => runRefresh(signal, { full: Date.now() - lastFull > 7 * 24 * HOUR }));
     },
     cancel() { rerunEnrichment = false; stopQuiet(); if (job) job.controller.abort(); stopFetchNow(); stopFilmRuns(); return { ok: true }; },

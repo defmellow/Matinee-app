@@ -43,7 +43,7 @@ jobs:
       - name: Work out the version (1.<n>.0 in the public repo, 0.<n>.0 elsewhere; experimental builds get -exp.<run> so they sort below the real release)
         id: stamp
         run: |
-          if [ "${GITHUB_REPOSITORY,,}" = "defmellow/matinee-app" ]; then   # GitHub shows it as Matinee-app
+          if [ "$(echo "$GITHUB_REPOSITORY" | tr "[:upper:]" "[:lower:]")" = "defmellow/matinee-app" ]; then   # GitHub shows it as Matinee-app
             major=$(node -p "require('./package.json').version.split('.')[0]")
             minor=$(( ${{ github.run_number }} - 1 ))
           else
@@ -66,6 +66,8 @@ jobs:
           log=docs/CHANGELOG.md
           if [ "$EXPERIMENTAL" = "true" ] && [ -f docs/CHANGELOG-experimental.md ]; then log=docs/CHANGELOG-experimental.md; fi
           node scripts/release-notes.mjs "$log" notes.md
+          # Test builds publish no update notes (those are written or approved by the owner before a public release).
+          if [ "$(echo "$GITHUB_REPOSITORY" | tr "[:upper:]" "[:lower:]")" != "defmellow/matinee-app" ]; then echo "Test build from ${GITHUB_SHA::7}. Not for release; it does not update itself." > notes.md; fi
           flag=""
           if [ "$EXPERIMENTAL" = "true" ]; then flag="--prerelease"; fi
           if gh release view "v$APP_VERSION" >/dev/null 2>&1; then
@@ -89,7 +91,10 @@ jobs:
       - run: npm ci
       - name: Stamp the version
         shell: bash
-        run: npm pkg set version="$APP_VERSION"
+        run: |
+          npm pkg set version="$APP_VERSION"
+          # A test build (any repo but the public one) never updates itself: the updater would swap it for the public release.
+          if [ "$(echo "$GITHUB_REPOSITORY" | tr "[:upper:]" "[:lower:]")" != "defmellow/matinee-app" ]; then npm pkg set matinee.testBuild=true --json; fi
       - run: npm run build:ui
       - name: Build (and publish when allowed)
         shell: bash
@@ -136,7 +141,10 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Stamp the version
-        run: npm pkg set version="$APP_VERSION"
+        run: |
+          npm pkg set version="$APP_VERSION"
+          # A test build (any repo but the public one) never updates itself: the updater would swap it for the public release.
+          if [ "$(echo "$GITHUB_REPOSITORY" | tr "[:upper:]" "[:lower:]")" != "defmellow/matinee-app" ]; then npm pkg set matinee.testBuild=true --json; fi
       - run: npm run build:ui
       - name: Build (and publish when allowed)
         env:
@@ -181,7 +189,10 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Stamp the version
-        run: npm pkg set version="$APP_VERSION"
+        run: |
+          npm pkg set version="$APP_VERSION"
+          # A test build (any repo but the public one) never updates itself: the updater would swap it for the public release.
+          if [ "$(echo "$GITHUB_REPOSITORY" | tr "[:upper:]" "[:lower:]")" != "defmellow/matinee-app" ]; then npm pkg set matinee.testBuild=true --json; fi
       - run: npm run build:ui
       - name: Build (and publish when allowed)
         env:

@@ -79,12 +79,22 @@ export function createEngine({ canvas, map: first, reduced = false, onHover = ()
   const zoomF = () => Math.max(0.5, view.k / kWhole) ** 0.4;
   const visible = i => canPoint(sim.alive, sim.fade, i);
   // dot sizes in pixels at the whole-map zoom, and the same sizes as the physics' collision radii, so settled dots never overlap
+  // While films are still loading the library refreshes every few seconds and each refresh restyles the map: unchanged sizes
+  // leave the physics alone, and a few films growing as their ratings arrive only nudge their neighbours (a full reheat each
+  // time kept the whole map shaking until loading finished).
+  let lastSim = null;
   function applySizes() {
     const big = biggestRadius(size.w || 900, size.h || 700);
     const radii = Array.from({ length: n }, (_, i) => tierRadius(tiers[i] || 0, big, steps));
     style = { ...style, radii };
     const k = kWhole > 0 ? kWhole : 1;
-    sim.setRadii(radii.map(r => (r + 0.6) / k), sized ? 0.25 : 0.3);
+    const simR = radii.map(r => (r + 0.6) / k);
+    const changed = !lastSim || simR.some((r, i) => Math.abs(r - lastSim[i]) > 1e-9);
+    if (changed) {
+      const many = !lastSim || simR.filter((r, i) => Math.abs(r - lastSim[i]) > 1e-9).length > n / 4; // a new size choice, a resize
+      sim.setRadii(simR, !sized ? 0.3 : many ? 0.25 : 0.06);
+      lastSim = simR;
+    }
     if (!sized && size.w) { sized = true; sim.settle(); } // the first sizes are in place before anything is drawn
   }
 

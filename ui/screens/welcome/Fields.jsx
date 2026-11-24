@@ -109,7 +109,8 @@ function KeyField({ core, id, label }) {
       if (r && r.ok) { setValue(''); refreshCore(); }
     } catch (err) { setState('bad'); } // api.call recorded why; the words below say it didn't work
   }, 700);
-  const url = p && p.keyHelp && p.keyHelp.url;
+  const help = (p && p.keyHelp) || {};
+  const [how, setHow] = useState(false); // the steps to get a key, the same ones Settings → Sources shows
   return (
     <div class="onb-fld">
       <label for={`onb-key-${id}`}>{label} key</label>
@@ -120,8 +121,18 @@ function KeyField({ core, id, label }) {
         {state === 'ok' && <Ok>Working</Ok>}
         {state === 'checking' && <span class="onb-hint">Checking…</span>}
         {state === 'bad' && <span class="onb-bad" role="status">That key didn't work</span>}
-        {url && state !== 'ok' && state !== 'bad' && state !== 'checking' && <button type="button" class="btn-link onb-lnk" onClick={() => openExternal(url)}>Get a free {label} key</button>}
       </div>
+      {(help.url || (help.steps && help.steps.length > 0)) && (
+        <button type="button" class="btn-link onb-lnk onb-how" aria-expanded={String(how)} onClick={() => setHow(!how)}>
+          <Icon name="chevron" size={12} />How to get a free {label} key
+        </button>
+      )}
+      {how && (
+        <div class="onb-how-body">
+          {help.url && <div><button type="button" class="btn btn-small" onClick={() => openExternal(help.url)}><Icon name="external" size={16} />Open the {label} page</button></div>}
+          {help.steps && help.steps.length > 0 && <ol class="onb-keysteps">{help.steps.map((t, i) => <li key={i}>{t}</li>)}</ol>}
+        </div>
+      )}
     </div>
   );
 }
