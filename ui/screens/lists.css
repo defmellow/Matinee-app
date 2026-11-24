@@ -1,0 +1,52 @@
+/* Lists. Classes prefixed ls-. */
+.ls { display: grid; gap: var(--space-5); align-content: start; }
+.ls .screen-head { margin-bottom: 0; }
+.ls-forms { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-5); }
+.ls-form, .ls-link { display: grid; gap: var(--space-2); min-width: 0; }
+.ls-form-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ls-form-row .input { flex: 1 1 200px; min-width: 0; }
+.ls-hint { margin: 0; font-size: var(--step--1); }
+.ls-error { margin: 0; font-size: var(--step--1); font-weight: 600; color: var(--bad); }
+.ls-section { display: grid; gap: var(--space-3); }
+.ls-section h2 { margin: 0; }
+.ls-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: var(--space-5) var(--space-4); }
+.ls-tile { display: grid; gap: 4px; align-content: start; color: var(--text); min-width: 0; }
+.ls-cover { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; aspect-ratio: 1; border-radius: var(--radius-c); overflow: hidden; background: var(--raised); border: 1px solid var(--line); transition: border-color var(--dur-1) var(--ease); }
+.ls-tile:hover .ls-cover, .ls-tile:focus-visible .ls-cover { border-color: var(--accent); }
+.ls-cover img, .ls-cover-empty { width: 100%; height: 100%; min-height: 0; object-fit: cover; background: var(--surface); display: block; }
+.ls-tile-name { font-weight: 600; overflow-wrap: anywhere; }
+.ls-tile-meta { font-size: var(--step--1); }
+.ls-badge-warn { justify-self: start; color: var(--bad); }
+.ls-head { align-items: flex-start; }
+.ls-desc { margin: var(--space-2) 0 0; max-width: 70ch; color: var(--muted); }
+.ls-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ls-notice { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--surface); border: 1px solid var(--bad); border-radius: var(--radius-c); }
+.ls-notice span { flex: 1 1 280px; }
+.ls-follows { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); }
+.ls-follow-actions { display: flex; gap: var(--space-4); font-size: var(--step--1); }
+.ls-changes { font-size: var(--step--1); }
+.ls-more { font-size: var(--step--1); }
+.ls-history { margin: var(--space-2) 0 0; padding-left: var(--space-5); display: grid; gap: var(--space-1); }
+.ls-export { display: grid; gap: var(--space-3); }
+.ls-export-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.ls-steps { margin: 0; padding-left: var(--space-5); display: grid; gap: var(--space-1); max-width: 70ch; }
+.ls-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.ls-grid { align-items: start; }
+.ls-item { position: relative; display: grid; gap: var(--space-1); align-content: start; min-width: 0; }
+.ls-note { margin: 0; font-size: var(--step--1); color: var(--muted); overflow-wrap: anywhere; }
+.ls-note-btn { justify-self: start; font-size: var(--step--1); font-weight: 400; color: var(--muted); text-align: left; overflow-wrap: anywhere; }
+.ls-note-input { min-height: 64px; font-size: var(--step--1); }
+.ls-remove { position: absolute; top: 4px; right: 4px; background: color-mix(in srgb, var(--bg) 78%, transparent); border-radius: 50%; opacity: 0; transition: opacity var(--dur-1) var(--ease); }
+.ls-item:hover .ls-remove, .ls-remove:focus-visible { opacity: 1; }
+/* Add to list popover */
+.ls-slot { position: relative; display: inline-block; }
+.ls-pop { width: min(300px, 86vw); box-sizing: border-box; grid-template-columns: minmax(0, 1fr); right: auto; left: 0; }
+.ls-pop-up { left: auto; right: 0; }
+.ls-pop-down { bottom: auto; top: calc(100% + 8px); }
+.ls-pop-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: 220px; overflow: auto; }
+.ls-pop-item { display: flex; align-items: center; gap: var(--space-2); width: 100%; min-height: 32px; padding: 0 var(--space-2); background: none; border: 0; border-radius: var(--radius-b); color: var(--text); cursor: pointer; text-align: left; }
+.ls-pop-item:hover { background: var(--raised); }
+.ls-pop-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ls-tick { width: 16px; display: inline-flex; color: var(--accent-text); }
+.film-lists .chips { margin-bottom: var(--space-1); }
+.ls-back { margin-left: calc(-1 * var(--space-3)); }

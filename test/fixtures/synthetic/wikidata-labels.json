@@ -1,0 +1,16 @@
+{
+  "_note": "SYNTHETIC labels response; Q199 deliberately has no English label.",
+  "entities": {
+    "Q101": { "id": "Q101", "labels": { "en": { "language": "en", "value": "Wim Wenders" } } },
+    "Q102": { "id": "Q102", "labels": { "en": { "language": "en", "value": "Harry Dean Stanton" } } },
+    "Q103": { "id": "Q103", "labels": { "en": { "language": "en", "value": "Nastassja Kinski" } } },
+    "Q104": { "id": "Q104", "labels": { "en": { "language": "en", "value": "Travis" } } },
+    "Q110": { "id": "Q110", "labels": { "en": { "language": "en", "value": "drama film" } } },
+    "Q111": { "id": "Q111", "labels": { "en": { "language": "en", "value": "LGBT-related film" } } },
+    "Q30": { "id": "Q30", "labels": { "en": { "language": "en", "value": "United States of America" } } },
+    "Q183": { "id": "Q183", "labels": { "en": { "language": "en", "value": "West Germany" } } },
+    "Q120": { "id": "Q120", "labels": { "en": { "language": "en", "value": "Palme d'Or" } } },
+    "Q121": { "id": "Q121", "labels": { "en": { "language": "en", "value": "BAFTA Award for Best Film" } } },
+    "Q199": { "id": "Q199", "labels": {} }
+  }
+}

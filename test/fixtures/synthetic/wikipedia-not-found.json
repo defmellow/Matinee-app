@@ -1,0 +1,9 @@
+{
+  "_synthetic": "hand-written from the public REST API docs; not real API output",
+  "_note": "The body of a 404 from the summary endpoint",
+  "type": "https://mediawiki.org/wiki/HyperSwitch/errors/not_found",
+  "title": "Not found.",
+  "method": "get",
+  "detail": "Page or revision not found.",
+  "uri": "/en.wikipedia.org/v1/page/summary/No_Such_Film"
+}

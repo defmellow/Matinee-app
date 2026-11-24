@@ -1,0 +1,37 @@
+{
+  "name": "matinee",
+  "productName": "Matinee",
+  "desktopName": "matinee.desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Your Letterboxd history, every rating source, and a map of how your films connect.",
+  "license": "GPL-3.0-or-later",
+  "author": "Matinee",
+  "type": "module",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "node dev/server.js",
+    "build:ui": "vite build",
+    "start": "npm run build:ui && electron .",
+    "test": "node --test --test-reporter=spec \"test/unit/**/*.test.js\"",
+    "test:ui": "node test/ui/run.js",
+    "dist": "npm run build:ui && electron-builder --win --publish never --config build/electron-builder.yml",
+    "test:electron": "node test/electron/smoke.mjs",
+    "seed": "node scripts/seed-dev.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/nunito": "5.3.0",
+    "@fontsource-variable/quicksand": "5.3.0",
+    "electron-updater": "6.8.10",
+    "fflate": "0.8.3",
+    "linkedom": "0.18.13"
+  },
+  "devDependencies": {
+    "@fontsource-variable/big-shoulders-display": "5.3.0",
+    "@preact/preset-vite": "2.10.6",
+    "electron": "44.6.0",
+    "electron-builder": "26.17.0",
+    "preact": "10.29.8",
+    "vite": "8.3.3"
+  }
+}

@@ -1,0 +1,109 @@
+/* The Map: dots on a canvas you can drag and zoom, with a flat side panel. Flat and plain: the dots are the colour. */
+.map-screen { height: 100%; min-height: 0; width: 100%; max-width: 1600px; margin: 0 auto; display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: var(--space-3); padding: var(--space-6) var(--space-6) var(--space-5); }
+.map-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.map-head .sub { color: var(--muted); margin-top: var(--space-2); }
+.map-head .sub b { color: var(--text); }
+.map-find { width: 300px; max-width: 100%; }
+.map-found { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 6; list-style: none; margin: 0; padding: var(--space-2); border-radius: var(--radius-p); background: var(--raised); border: 1px solid var(--control-border); }
+.map-found button { display: block; width: 100%; padding: 7px var(--space-3); border: 0; border-radius: var(--radius-c); background: none; color: var(--text); text-align: left; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background-color var(--dur-1) var(--ease); }
+.map-found button:hover, .map-found button:focus-visible { background: var(--accent-soft); }
+.map-found-none { padding: 7px var(--space-3); }
+.map-found-head { padding: 8px var(--space-3) 2px; font-size: var(--step--1); font-weight: 700; }
+/* the box holds a selected feeling as a pill, then the text being typed */
+.map-findbox { display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
+.map-findbox input { flex: 1; min-width: 60px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-size: var(--step--1); }
+.map-findbox:focus-within { border-color: var(--accent); }
+.map-pill { flex: none; border-color: var(--accent); background: var(--accent-soft); color: var(--text); min-height: 24px; }
+.map-pill > .chip { min-height: 22px; color: var(--text); }
+.map-pill > .icon-btn { width: 20px; height: 20px; }
+.map-n { margin-left: 6px; color: var(--faint); font-weight: 600; }
+.map-filters { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+
+.map-body { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--space-4); }
+.map-view { position: relative; min-height: 0; overflow: hidden; border-radius: var(--radius-m); background: var(--bg); border: 1px solid var(--line); touch-action: none; user-select: none; }
+.map-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+.map-canvas:active { cursor: grabbing; }
+
+/* the card that follows the pointer: flat, a slightly lighter fill, a hairline */
+.map-card { position: absolute; left: 0; top: 0; z-index: 4; width: 252px; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-m); background: var(--raised); border: 1px solid var(--control-border); pointer-events: none; }
+.map-card[hidden] { display: none; }
+.map-card-poster .poster { border-radius: 6px; }
+.map-card-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; font-size: var(--step--1); }
+.map-card-text strong { font-size: var(--step-0); line-height: 1.25; }
+.map-card-feel { color: var(--muted); }
+
+.map-whole-back { position: absolute; left: var(--space-3); top: var(--space-3); background: var(--surface); }
+.map-zoom { position: absolute; right: var(--space-3); bottom: var(--space-3); display: flex; align-items: center; gap: 2px; padding: 3px; border-radius: calc(var(--radius-c) + 3px); background: var(--surface); border: 1px solid var(--line); }
+.map-zoom .icon-btn { width: 30px; height: 30px; }
+.map-zoom .icon-btn span { font-size: 20px; line-height: 1; font-weight: 600; }
+.map-zoom .btn { border-color: transparent; background: none; }
+.map-zoom .btn:hover { background: var(--raised); }
+
+/* what is around the pointer after it rests on empty map for a moment: a small flat note */
+.map-around { position: absolute; z-index: 3; width: 228px; margin: 0; padding: var(--space-3); border-radius: var(--radius-m); background: var(--raised); border: 1px solid var(--control-border); font-size: var(--step--1); line-height: 1.45; color: var(--muted); pointer-events: none; }
+.map-around b { display: block; color: var(--text); margin-bottom: 2px; }
+
+/* side panel */
+.map-side { min-height: 0; overflow: auto; padding: var(--space-5); border-radius: var(--radius-m); background: var(--surface); border: 1px solid var(--line); }
+.map-side h2 { font: 700 var(--step-1)/1.25 var(--font-display); }
+.map-side h3 { font-size: var(--step--1); font-weight: 700; margin: var(--space-5) 0 var(--space-2); }
+.map-check { display: flex; align-items: center; gap: var(--space-2); margin: var(--space-3) 0 0; font-size: var(--step--1); cursor: pointer; }
+.map-check input { width: 16px; height: 16px; margin: 0; accent-color: var(--accent); }
+.map-sentence { font-size: var(--step--1); margin: var(--space-2) 0 0; line-height: 1.5; }
+.map-shape .segmented { margin-top: var(--space-1); flex-wrap: wrap; }
+.map-swatch { display: block; width: 10px; height: 10px; border-radius: 50%; }
+.map-key { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: grid; gap: 6px; font-size: var(--step--1); }
+.map-key li { display: grid; grid-template-columns: 14px 52px minmax(0, 1fr); align-items: center; column-gap: var(--space-3); min-height: 18px; }
+.map-key .map-swatch { justify-self: center; }
+.map-key b { font-weight: 650; }
+.map-key-sizes { margin-top: var(--space-4); }
+.map-key-sizes li { grid-template-columns: 14px minmax(0, 1fr); }
+.map-key-sizes li.map-key-size { grid-template-columns: auto auto minmax(0, 1fr); column-gap: var(--space-2); } /* the smallest dot, the biggest, then what bigger means */
+.map-key-size .map-key-dot { width: auto; min-width: 14px; }
+.map-key li:has(.map-key-pick) { display: block; }
+.map-key-pick { display: grid; grid-template-columns: 14px 52px minmax(0, 1fr); align-items: center; column-gap: var(--space-3); width: calc(100% + 12px); margin: -3px -6px; padding: 3px 6px; border: 0; border-radius: var(--radius-c); background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; transition: background-color var(--dur-1) var(--ease), opacity var(--dur-1) var(--ease); }
+.map-key-pick:hover { background: color-mix(in srgb, var(--text) 6%, transparent); }
+.map-key-pick[aria-pressed="true"] { background: var(--raised); }
+.map-key-pick[data-off] { opacity: .45; }
+.map-key-pick .map-swatch { justify-self: center; }
+.map-key-clear { margin-top: var(--space-2); font-size: var(--step--1); }
+.map-key-lines { margin-top: var(--space-4); }
+.map-key-lines li { grid-template-columns: 34px minmax(0, 1fr); }
+.map-key-line { display: flex; align-items: center; width: 34px; height: 14px; }
+.map-key-line i { display: block; width: 100%; border-radius: 3px; background: var(--text); }
+.map-card-hint { font-size: var(--step--2); line-height: 1.35; margin-top: 2px; }
+.map-key-dot { display: flex; align-items: center; justify-content: center; width: 14px; }
+.map-key-dot i { display: block; flex: none; border-radius: 50%; background: var(--muted); }
+
+.map-pick-top { position: relative; display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: var(--space-4); align-items: start; padding-right: var(--space-4); }
+.map-pick-poster { display: block; }
+.map-pick-poster .poster { border-radius: 8px; }
+.map-pick-text { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; font-size: var(--step--1); }
+.map-pick-text h2 { font-size: var(--step-0); }
+.map-pick-text .btn { margin-top: var(--space-2); }
+.map-let-go { position: absolute; right: -10px; top: -8px; }
+.map-near { list-style: none; margin: 0 calc(var(--space-2) * -1); padding: 0; display: grid; gap: 2px; }
+.map-near li button { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: var(--space-3); align-items: center; width: 100%; padding: 6px var(--space-2); border: 0; border-radius: var(--radius-c); background: none; color: var(--text); text-align: left; cursor: pointer; transition: background-color var(--dur-1) var(--ease); }
+.map-near li button:hover { background: var(--raised); }
+.map-near-poster .poster { border-radius: 5px; }
+.map-near-poster .poster-fallback span { display: none; }
+.map-near-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; font-size: var(--step--1); }
+.map-near-title { font-size: var(--step-0); font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.map-near-why { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.map-near-why b { color: var(--text); font-weight: 600; }
+.map-pick .btn-link { margin-top: var(--space-2); }
+
+@media (max-width: 800px) {
+  .map-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; }
+  .map-side { max-height: 240px; }
+}
+
+.map-lens h3 { margin-top: var(--space-3); }
+.map-lens .segmented { margin-top: var(--space-1); display: flex; }
+.map-lens .segmented button { flex: 1 1 auto; padding: 0 8px; white-space: nowrap; }
+.map-lens ~ .map-pick, .map-lens ~ .map-shape { margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid var(--line); }
+.map-lives h3 { margin-top: var(--space-4); }
+.map-lives .chips { margin-top: var(--space-2); }
+.map-clear { margin-top: var(--space-4); margin-left: calc(var(--space-2) * -1); }
+.map-findbox svg { position: static; width: 12px; height: 12px; }
+.map-findbox { padding-left: 40px; }

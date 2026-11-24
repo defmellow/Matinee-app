@@ -1,0 +1,56 @@
+/* "How it feels" — all classes prefixed feel-. Facet tints use existing tokens via color-mix. */
+.feel h3 { font-size: var(--step-1); margin: 0; }
+.feel-headline { font-size: var(--step-1); line-height: 1.4; margin: 0; max-width: 62ch; }
+.feel-note { margin: 0; max-width: 62ch; }
+.feel-note a, .feel-hint a { color: var(--accent-text); }
+.feel-groups { display: grid; gap: var(--space-2); }
+.feel-group { display: grid; grid-template-columns: 8.5rem 1fr; gap: var(--space-3); align-items: baseline; }
+.feel-group-label { font-size: var(--step--1); font-weight: 600; color: var(--muted); }
+.feel-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; } /* centred, so a taller button in the line (Show N more) cannot stretch the chips */
+
+.feel-chip { --tint: var(--accent); display: inline-flex; align-items: center; gap: 6px; min-height: 26px; padding: 0 10px; border-radius: 999px; font-size: var(--step--1); font-weight: 600; text-decoration: none; color: var(--text);
+  border: 1px solid color-mix(in srgb, var(--tint) 35%, var(--line)); background: color-mix(in srgb, var(--tint) 10%, transparent); transition: border-color var(--dur-1) var(--ease), background-color var(--dur-1) var(--ease); }
+.feel-chip:hover, .feel-chip:focus-visible { border-color: var(--tint); background: color-mix(in srgb, var(--tint) 20%, transparent); }
+/* Same size for every chip; strength runs darker (strong) to lighter (light). */
+.feel-chip.w3 { color: var(--text); border-color: color-mix(in srgb, var(--tint) 70%, var(--line)); background: color-mix(in srgb, var(--tint) 26%, transparent); }
+.feel-chip.w2 { color: var(--text); }
+.feel-chip.w1 { color: var(--muted); border-color: var(--line-strong, var(--line)); background: transparent; } /* lightest shade: no dashes */
+.feel-setting { --tint: var(--muted); color: var(--muted); }
+.feel-setting:hover { background: color-mix(in srgb, var(--tint) 10%, transparent); border-color: color-mix(in srgb, var(--tint) 35%, var(--line)); }
+
+.feel-basis { font-size: var(--step--1); margin: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.feel-key { display: inline-flex; gap: 12px; }
+.feel-key > span { display: inline-flex; align-items: center; gap: 5px; }
+.feel-hint { font-size: var(--step--1); margin: 0; }
+
+.feel-similar { display: grid; gap: var(--space-3); margin-top: var(--space-2); }
+.feel-similar-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
+.feel-link { background: none; border: 0; padding: 0; min-height: 26px; font: inherit; font-size: var(--step--1); font-weight: 600; color: var(--accent-text); cursor: pointer; text-decoration: none; }
+.feel-link:hover { text-decoration: underline; }
+.feel-rail { display: flex; gap: var(--space-3); overflow-x: auto; padding: 4px 2px var(--space-2); }
+.feel-tile { flex: 0 0 112px; display: flex; flex-direction: column; gap: 3px; min-width: 0; color: inherit; text-decoration: none; }
+.feel-tile-title { font-size: 12px; font-weight: 600; line-height: 1.25; margin-top: 3px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.feel-tile-why { font-size: 11.5px; line-height: 1.3; color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.feel-shift { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: baseline; }
+.feel-shift .feel-group-label { white-space: nowrap; }
+@media (max-width: 1100px) { .feel-shift { grid-template-columns: 1fr; gap: var(--space-2); } }
+
+.feel-skel { display: grid; gap: var(--space-3); }
+.feel-skel-line, .feel-skel-chips span, .feel-skel-row span { background: var(--raised); border-radius: 6px; animation: mt-pulse 1.4s ease-in-out infinite; }
+.feel-skel-line { height: 20px; }
+.feel-skel-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.feel-skel-chips span { height: 26px; border-radius: 999px; }
+.feel-skel-row { display: flex; gap: var(--space-3); overflow: hidden; }
+.feel-skel-row span { flex: 0 0 112px; aspect-ratio: 2 / 3; }
+
+/* TEMPORARY: new/old comparison toggle */
+
+/* "How sure" is a sentence about the whole section, in the same quiet text as the line it sits in; its reasons are in the hover text. */
+.feel-sure { cursor: help; font-weight: 650; color: var(--text); }
+/* Fragile chips (one mention, one tag or one list): dashed, the only dashed chips on the page. */
+.feel-chip.fragile { color: var(--muted); border-style: dashed; border-color: var(--line-strong, var(--line)); background: transparent; }
+.feel-none { font-size: var(--step--1); }
+.feel-more { grid-column: 2; justify-self: start; }
+/* The rough-guess line under the headline: plain text in the muted colour (not faint), one step smaller than the headline. */
+.feel-rough { margin: 0; font-size: var(--step--1); color: var(--muted); cursor: help; }
+.feel-rough strong { color: var(--text); font-weight: 700; }

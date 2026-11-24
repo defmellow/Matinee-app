@@ -1,0 +1,26 @@
+{
+  "_note": "Synthetic /person/{id}/movie_credits and /search/person fixtures in TMDB's documented shape. Invented films, no real keys.",
+  "search": { "results": [
+    { "id": 901, "name": "Ada Fictional", "known_for_department": "Acting", "popularity": 4.0 },
+    { "id": 902, "name": "Ada Fictional", "known_for_department": "Directing", "popularity": 2.0 },
+    { "id": 903, "name": "Ada Fictionals", "known_for_department": "Directing", "popularity": 90.0 }
+  ] },
+  "credits": {
+    "id": 902,
+    "cast": [
+      { "id": 10, "title": "Example Harbour", "original_title": "Example Harbour", "release_date": "2001-05-04", "poster_path": "/harbour.jpg", "character": "The Pilot", "vote_count": 120, "popularity": 9 },
+      { "id": 11, "title": "Cameo Night", "original_title": "Cameo Night", "release_date": "2010-01-01", "poster_path": null, "character": "", "vote_count": 3, "popularity": 1 },
+      { "id": 12, "title": "Announced Thing", "original_title": "Announced Thing", "release_date": "2027-03-01", "poster_path": "/ann.jpg", "character": "Mum", "vote_count": 0, "popularity": 1 },
+      { "id": 13, "title": "Placeholder", "original_title": "Placeholder", "release_date": "", "poster_path": null, "character": "X", "vote_count": 0, "popularity": 0 },
+      { "id": 14, "title": "Adult Thing", "release_date": "2005-01-01", "adult": true, "character": "Y", "vote_count": 10 }
+    ],
+    "crew": [
+      { "id": 10, "title": "Example Harbour", "original_title": "Example Harbour", "release_date": "2001-05-04", "poster_path": "/harbour.jpg", "job": "Director", "department": "Directing", "vote_count": 120 },
+      { "id": 10, "title": "Example Harbour", "original_title": "Example Harbour", "release_date": "2001-05-04", "poster_path": "/harbour.jpg", "job": "Screenplay", "department": "Writing", "vote_count": 120 },
+      { "id": 10, "title": "Example Harbour", "original_title": "Example Harbour", "release_date": "2001-05-04", "poster_path": "/harbour.jpg", "job": "Writer", "department": "Writing", "vote_count": 120 },
+      { "id": 15, "title": "Rock & Roll Lamps", "original_title": "Rock & Roll Lamps", "release_date": "1999-02-02", "poster_path": "/lamps.jpg", "job": "Director", "department": "Directing", "vote_count": 40 },
+      { "id": 16, "title": "Gaffer Film", "release_date": "2003-02-02", "job": "Gaffer", "department": "Lighting", "vote_count": 5 },
+      { "id": 17, "title": "Score Only", "original_title": "Score Only", "release_date": "1995-07-07", "poster_path": "/score.jpg", "job": "Original Music Composer", "department": "Sound", "vote_count": 9 }
+    ]
+  }
+}

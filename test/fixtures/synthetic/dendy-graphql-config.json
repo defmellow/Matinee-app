@@ -1,0 +1,86 @@
+{
+ "_note": "SYNTHETIC fixture: invented films and ids, real field structure of newtown.dendy.com.au/graphql responses (29 Oct 2026). Not real schedule data.",
+ "data": {
+  "addOrUpdateClientConfig": {
+   "clientConfig": {
+    "version": 8451938,
+    "showingBadges": [
+     {
+      "id": "52",
+      "displayName": "Reserved Seating",
+      "type": "name",
+      "title": "Reserved Seating",
+      "description": "",
+      "iconName": null
+     },
+     {
+      "id": "53",
+      "displayName": "CC",
+      "type": "name",
+      "title": "Closed Captions",
+      "description": "",
+      "iconName": null
+     },
+     {
+      "id": "54",
+      "displayName": "AD",
+      "type": "name",
+      "title": "Audio Description",
+      "description": "",
+      "iconName": null
+     },
+     {
+      "id": "64",
+      "displayName": "Q&A",
+      "type": "icon",
+      "title": "Q&A",
+      "description": "",
+      "iconName": "qa"
+     },
+     {
+      "id": "66",
+      "displayName": "35MM",
+      "type": "icon",
+      "title": "35MM",
+      "description": "",
+      "iconName": null
+     }
+    ],
+    "screens": [
+     {
+      "id": "108",
+      "name": "Cinema 1",
+      "number": 1,
+      "seatCount": 203,
+      "reservedSeating": true,
+      "displayOrder": 1
+     },
+     {
+      "id": "109",
+      "name": "Cinema 2",
+      "number": 2,
+      "seatCount": 126,
+      "reservedSeating": true,
+      "displayOrder": 2
+     },
+     {
+      "id": "111",
+      "name": "Dendy Lounge",
+      "number": 4,
+      "seatCount": 34,
+      "reservedSeating": true,
+      "displayOrder": 4
+     },
+     {
+      "id": "112",
+      "name": "Cinema 5",
+      "number": 5,
+      "seatCount": 67,
+      "reservedSeating": true,
+      "displayOrder": 5
+     }
+    ]
+   }
+  }
+ }
+}

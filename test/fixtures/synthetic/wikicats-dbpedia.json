@@ -1,0 +1,10 @@
+{ "_note": "Synthetic, shaped from a real DBpedia SPARQL JSON response (Paris, Texas), trimmed.",
+  "head": { "link": [], "vars": ["t", "c"] },
+  "results": { "distinct": false, "ordered": true, "bindings": [
+    { "t": { "type": "uri", "value": "http://dbpedia.org/resource/Paris,_Texas_(film)" }, "c": { "type": "uri", "value": "http://dbpedia.org/resource/Category:Films_about_atonement" }},
+    { "t": { "type": "uri", "value": "http://dbpedia.org/resource/Paris,_Texas_(film)" }, "c": { "type": "uri", "value": "http://dbpedia.org/resource/Category:Palme_d'Or_winners" }},
+    { "t": { "type": "uri", "value": "http://dbpedia.org/resource/Paris,_Texas_(film)" }, "c": { "type": "uri", "value": "http://dbpedia.org/resource/Category:Films_set_in_Texas" }},
+    { "t": { "type": "uri", "value": "http://dbpedia.org/resource/Amélie" }, "c": { "type": "uri", "value": "http://dbpedia.org/resource/Category:French_romantic_comedy_films" }},
+    { "t": { "type": "uri", "value": "http://dbpedia.org/resource/Amélie" }, "c": { "type": "uri", "value": "http://dbpedia.org/resource/Category:Films_about_Paris%2C_France" }},
+    { "t": { "type": "uri", "value": "http://dbpedia.org/resource/Amélie" }, "c": { "type": "uri", "value": "http://dbpedia.org/resource/Category:Films_about_Paris%2C_France" }}
+  ] } }

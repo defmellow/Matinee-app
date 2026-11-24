@@ -1,0 +1,4 @@
+/* Watchlist status row on the film page (History section): the status plus a small quiet Remove. */
+.film-watchlist-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2) var(--space-4); margin: 0; }
+.film-watchlist-remove, .film-watchlist-off .btn-link { font-size: var(--step--1); font-weight: 500; color: var(--muted); }
+.film-watchlist-off { margin: 0; font-size: var(--step--1); }

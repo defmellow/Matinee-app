@@ -1,0 +1,31 @@
+{
+  "_synthetic": "hand-written from the public API docs; not real API output",
+  "_note": "A made-up film, shaped like GET /?i=<imdbId>&apikey=<key>",
+  "Title": "Harbour Lights",
+  "Year": "2019",
+  "Rated": "R",
+  "Released": "21 Jun 2019",
+  "Runtime": "118 min",
+  "Genre": "Drama, Thriller",
+  "Director": "Claire Beaumont",
+  "Plot": "A night-shift ferry pilot discovers that the lights guiding her boat home have been rewired.",
+  "Language": "English, French",
+  "Country": "France, United States",
+  "Poster": "https://m.media-amazon.com/images/M/SYNTHETIC_POSTER._V1_SX300.jpg",
+  "Ratings": [
+    { "Source": "Internet Movie Database", "Value": "7.6/10" },
+    { "Source": "Rotten Tomatoes", "Value": "95%" },
+    { "Source": "Metacritic", "Value": "78/100" }
+  ],
+  "Metascore": "78",
+  "imdbRating": "7.6",
+  "imdbVotes": "123,456",
+  "imdbID": "tt9000001",
+  "Type": "movie",
+  "DVD": "N/A",
+  "Awards": "Won 2 Oscars. 14 wins & 31 nominations total",
+  "BoxOffice": "$48,500,000",
+  "Production": "N/A",
+  "Website": "N/A",
+  "Response": "True"
+}

@@ -1,0 +1,91 @@
+/* By feel. Classes prefixed byf- (the film page owns feel-). */
+.byf-head { align-items: flex-end; }
+.byf-layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: var(--space-5); align-items: start; }
+.byf-side { position: sticky; top: var(--space-4); max-height: calc(100vh - var(--titlebar-h, 0px) - var(--space-6)); overflow-y: auto; scrollbar-gutter: stable; padding: var(--space-4); }
+.byf-main { min-width: 0; }
+.byf-filters { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+.byf-filters .segmented { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
+.byf-filters .segmented button { min-height: 30px; padding: 0 6px; }
+.byf-searchbox { position: relative; }
+.byf-search { display: flex; }
+.byf-filters .byf-chip { max-width: 100%; }
+.byf-filters .byf-chip { height: auto; min-height: 28px; white-space: normal; padding-block: 4px; }
+.byf-filters .byf-chip-l { min-width: 0; overflow-wrap: anywhere; text-align: left; } /* long names wrap, never cut */
+.byf-scroll { max-height: 260px; overflow-y: auto; padding-right: 4px; overscroll-behavior: contain; }
+.byf-findall { font-size: var(--step--1); margin: 8px 0 0; }
+.byf-findall .feel-link { background: none; border: 0; padding: 0; font: inherit; color: var(--accent-text); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.byf-active { display: grid; gap: var(--space-2); justify-items: start; padding-bottom: var(--space-3); border-bottom: 1px solid var(--line); }
+.byf-group { display: grid; gap: var(--space-2); }
+.byf-group-h { white-space: nowrap; width: 100%; display: flex; align-items: center; gap: var(--space-2); background: none; border: 0; padding: 4px 0; color: var(--text); font-weight: 700; font-size: var(--step-0); cursor: pointer; text-align: left; }
+.byf-group-h .faint { font-size: var(--step--1); font-weight: 600; margin-left: auto; }
+.byf-chev { display: inline-grid; transition: transform var(--dur-2) var(--ease); color: var(--faint); }
+.byf-chev[data-open="true"] { transform: rotate(90deg); }
+.byf-chips { gap: 6px; }
+.byf-chip-n { font-size: var(--step--2); color: var(--faint); font-weight: 600; }
+.byf-chip[data-state="out"] { border-color: var(--bad); color: var(--muted); }
+.byf-chip[data-state="out"] .byf-chip-l { text-decoration: line-through; text-decoration-thickness: 1px; }
+.byf-chip[data-state="out"] svg { color: var(--bad); }
+.byf-not { font-size: var(--step--2); letter-spacing: .01em; color: var(--bad); font-weight: 800; }
+.byf-more { border-style: dashed; color: var(--faint); }
+
+.byf-start { max-width: 560px; display: grid; gap: var(--space-4); padding-top: var(--space-4); }
+.byf-picker { display: grid; gap: var(--space-2); }
+.byf-picker-list { list-style: none; margin: 0; padding: 4px; border: 1px solid var(--line); border-radius: var(--radius-p); background: var(--surface); display: grid; gap: 2px; }
+.byf-picker-list button { width: 100%; display: flex; justify-content: space-between; gap: var(--space-3); padding: 8px 10px; border: 0; border-radius: var(--radius-c); background: none; color: var(--text); cursor: pointer; text-align: left; }
+.byf-picker-list button[data-hi="true"] { background: var(--raised); }
+.byf-pick-t { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.byf-hero { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: var(--space-3); }
+.byf-hero-body { display: grid; gap: 4px; align-content: start; min-width: 0; }
+.byf-eyebrow { font-size: var(--step--2); letter-spacing: .01em; font-weight: 700; }
+.byf-hero-t { font: 650 var(--step-1)/1.2 var(--font-body); }
+.byf-headline { margin: 0; color: var(--muted); line-height: 1.35; }
+.byf-change { justify-self: start; margin-left: calc(-1 * var(--space-3)); }
+.byf-voice[data-voice="editors"] { color: var(--faint); } /* DECISION: dashed borders marked the source; flat badges use brightness instead */
+.byf-voice[data-voice="viewers"], .byf-voice[data-voice="critics"] { color: var(--text); }
+.byf-legend { margin: 0; font-size: var(--step--1); }
+.byf-ctl { display: grid; gap: var(--space-2); }
+.byf-ctl-l { font-size: var(--step--1); font-weight: 700; color: var(--muted); letter-spacing: .01em; }
+.byf-axes { display: grid; gap: 6px; }
+.byf-axis { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.byf-dir { justify-content: center; }
+
+.byf-results-h { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-2); }
+.byf-h2 { font-size: var(--step-1); }
+.byf-note { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-4); padding: 8px 12px; border-radius: var(--radius-c); background: var(--raised); color: var(--muted); font-size: var(--step--1); }
+.byf-note svg { flex: none; }
+.byf-grid { list-style: none; margin: 0; padding: 0; --card-min: 140px; }
+.byf-results[data-loading="true"] .byf-grid { opacity: .55; transition: opacity var(--dur-1) var(--ease); }
+.byf-card { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.byf-card > a { display: grid; gap: 6px; color: inherit; text-decoration: none; min-width: 0; }
+.byf-card .meta { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; font-size: var(--step--1); min-width: 0; }
+.byf-card .title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Closeness badge: words, neutral colours (never the gold of the Matinee score). The number is in the hover text. */
+.byf-tier { display: inline-flex; align-items: center; gap: 4px; justify-self: start; padding: 1px 8px; border-radius: var(--radius-b); font-size: var(--step--2); font-weight: 600; letter-spacing: .01em; color: var(--muted); background: var(--raised); border: 1px dashed var(--line-strong, var(--line)); cursor: help; }
+.byf-tier-very { color: var(--text); border-color: var(--line-strong); }
+.byf-tier-some { color: var(--faint, var(--muted)); background: transparent; }
+.byf-why { margin: 0; font-size: var(--step--1); line-height: 1.35; color: var(--muted); overflow-wrap: anywhere; }
+.byf-state { display: grid; place-items: center; }
+.byf-skel .poster, .byf-skel-l { background: var(--raised); animation: mt-pulse 1.4s ease-in-out infinite; }
+.byf-skel-l { height: 10px; border-radius: 4px; }
+.byf-skel-l.short { width: 60%; }
+@media (max-width: 1100px) { .byf-layout { grid-template-columns: 260px minmax(0, 1fr); } }
+
+.feel-why { margin: 0 0 var(--space-4); padding: var(--space-3) var(--space-4); background: var(--raised); border: 1px solid var(--line); border-radius: var(--radius-m); font-size: var(--step--1); }
+.feel-why strong { display: block; margin-bottom: var(--space-1); }
+.feel-why ul { margin: 0; padding-left: 1.1em; color: var(--muted); }
+
+/* Matching-tags search: three layouts being tried (Dropdown, In place, Strip). */
+.byf-searchbox { display: grid; gap: var(--space-2); }
+.byf-inputwrap { position: relative; }
+.byf-drop { position: absolute; z-index: 20; top: calc(100% + 6px); left: 0; right: 0; max-height: 288px; overflow-y: auto; overscroll-behavior: contain; padding: var(--space-2); background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius-s); box-shadow: var(--shadow); }
+.byf-drop-list { list-style: none; margin: 0; padding: 0; }
+.byf-drop-list li { display: flex; align-items: flex-start; gap: var(--space-2); padding: 6px 8px; border-radius: 8px; cursor: pointer; min-height: 32px; }
+.byf-drop-list li[data-active="true"] { background: var(--line); }
+.byf-drop-l { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; } /* the name takes the room and wraps */
+.byf-drop-s { flex: none; max-width: 40%; font-size: var(--step--2); color: var(--faint); text-align: right; }
+.byf-drop-n { flex: none; font-size: var(--step--2); color: var(--faint); min-width: 2ch; text-align: right; }
+
+/* A film Matinee has little to go on for: two quiet words beside the closeness badge, nothing more. */
+.byf-badges { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.byf-rough { font-size: var(--step--2); color: var(--faint, var(--muted)); font-style: italic; white-space: nowrap; }

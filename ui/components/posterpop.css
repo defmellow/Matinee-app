@@ -1,0 +1,26 @@
+.pp {
+  position: fixed; z-index: 900; pointer-events: none; overflow: hidden; isolation: isolate;
+  border-radius: var(--radius-p); background: var(--raised); color: var(--text);
+  border: 1px solid var(--line-strong); box-shadow: var(--shadow);
+  opacity: 0; transform: scale(0.9);
+  transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+}
+.pp-on { opacity: 1; transform: none; }
+.pp-bg { position: absolute; inset: -24px; z-index: -2; background-size: cover; background-position: center; filter: blur(22px) saturate(1.2); opacity: 0.55; }
+.pp::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(14, 11, 18, 0.55), rgba(14, 11, 18, 0.82)); }
+.pp-body { padding: var(--space-4); display: grid; gap: var(--space-2); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); color: #ede7e1; }
+.pp p, .pp h3 { margin: 0; }
+.pp-title { font: 700 var(--step-1)/1.15 var(--font-display); letter-spacing: 0.02em; }
+.pp-year { font-weight: 500; opacity: 0.75; }
+.pp-director { font-size: var(--step--1); opacity: 0.9; display: flex; align-items: center; gap: var(--space-2); }
+.pp-dir-photo { width: 22px; height: 22px; }
+.pp-dir-photo .hs-i { font-size: var(--step--2); }
+.pp-genres { font-size: var(--step--1); opacity: 0.8; }
+.pp-scores { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.pp-score { font-size: var(--step--1); font-weight: 600; padding: 1px 8px; border-radius: var(--radius-b); background: rgba(255, 255, 255, 0.14); }
+.pp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.pp-tag { font-size: var(--step--1); padding: 1px 8px; border-radius: 999px; background: rgba(244, 169, 196, 0.17); color: #f8bcd2; cursor: default; } /* always on the dark overlay, so the dark-theme pink, not the theme tokens */
+.pp-blurb { font-size: var(--step--1); line-height: 1.4; opacity: 0.9; }
+@media (prefers-reduced-motion: reduce) { .pp { transition: none; transform: none; } }
+:root[data-motion="less"] .pp { transition: none; transform: none; }
+[data-theme="neutral"] .pp-tag, [data-theme="neutral-light"] .pp-tag { background: rgba(143, 176, 240, 0.22); color: #dce6fb; } /* blue accent instead of pink in the grey themes; the overlay is dark in all of them */

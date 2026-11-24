@@ -1,0 +1,24 @@
+/* App shell extras: skip link and the focus target for route changes. */
+.skip-link { background: var(--accent); color: var(--accent-ink); border: 0; font: inherit; }
+.skip-link:focus { position: fixed; top: var(--space-2); left: var(--space-2); width: auto; height: auto; clip: auto; overflow: visible; padding: var(--space-2) var(--space-4); border-radius: var(--radius-c); z-index: 1000; outline: 2px solid var(--text); outline-offset: 2px; }
+#main:focus, #main h1:focus { outline: none; }
+.crash { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); padding: var(--space-7) var(--space-5); text-align: center; }
+.crash-actions { display: flex; gap: var(--space-3); align-items: center; }
+
+/* back / forward in the rail, like a browser */
+.rail-history { display: flex; gap: 2px; margin: calc(var(--space-2) * -1) 0 var(--space-3); }
+.rail-step { width: 28px; height: 28px; display: grid; place-items: center; border: 0; border-radius: var(--radius-c); background: transparent; color: var(--muted); cursor: pointer; transition: color var(--dur-1) var(--ease), background-color var(--dur-1) var(--ease); }
+.rail-step svg { width: 16px; height: 16px; }
+.rail-step:hover:not(:disabled) { color: var(--text); background: var(--raised); }
+.rail-step:disabled { opacity: .35; cursor: default; }
+
+/* Electron on Windows / Linux: no system title bar. A slim strip above the page is the drag area; the system's window buttons are drawn over its right end.
+   Height matches TITLEBAR_HEIGHT in electron/shell-util.js. The rail's top (logo area) drags too; everything clickable in it opts out. */
+.shell.has-titlebar { --titlebar-h: 36px; grid-template-rows: var(--titlebar-h) 1fr; min-height: 0; }
+.shell.has-titlebar > .rail { grid-row: 1 / 3; -webkit-app-region: drag; }
+.shell.has-titlebar > .rail :is(a, button) { -webkit-app-region: no-drag; }
+.shell.has-titlebar > .titlebar { grid-column: 2; grid-row: 1; -webkit-app-region: drag; }
+.shell.has-titlebar > .main { grid-column: 2; grid-row: 2; min-height: 0; }
+.welcome-frame { display: grid; grid-template-rows: 36px 1fr; height: 100%; min-height: 0; }
+.welcome-frame > .titlebar { -webkit-app-region: drag; }
+.welcome-frame > .welcome { min-height: 0; }

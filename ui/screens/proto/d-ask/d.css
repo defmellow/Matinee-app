@@ -1,0 +1,13 @@
+.pl-d-head { margin-bottom: var(--space-4); }
+.pl-d-head h1 { margin: 0; }
+.pl-d-ask { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); min-height: 48px; max-width: 980px; padding: 4px 4px 4px var(--space-2);
+  background: var(--surface); border: 1px solid var(--control-border); border-radius: calc(var(--radius-c) + 6px); cursor: text;
+  transition: border-color var(--dur-1) var(--ease); }
+.pl-d-ask:focus-within { border-color: var(--accent); }
+.pl-d-ask .pl-pills { margin: 0; display: contents; }
+.pl-d-ask .pl-uni { flex: 1 1 260px; }
+.pl-d-ask .pl-uni .input { border: 0; background: transparent; box-shadow: none; }
+.pl-d-ask .pl-uni .input:focus { outline: none; }
+.pl-d-ask + .lib-toolbar { margin-top: var(--space-4); }
+.pl-d-try { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin: var(--space-3) 0 var(--space-4); font-size: var(--step--1); }
+.pl-d-browse { display: grid; gap: var(--space-2); padding: var(--space-4) var(--space-5); margin-bottom: var(--space-4); max-width: 980px; }

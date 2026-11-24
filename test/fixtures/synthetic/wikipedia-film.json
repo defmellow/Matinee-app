@@ -1,0 +1,21 @@
+{
+  "_synthetic": "hand-written from the public REST API docs; not real API output",
+  "_note": "A made-up film, shaped like GET /api/rest_v1/page/summary/Harbour_Lights_(film): a portrait poster stored under /wikipedia/en/ whose links carry a utm_source tail",
+  "type": "standard",
+  "title": "Harbour Lights (film)",
+  "displaytitle": "<i>Harbour Lights</i> (film)",
+  "wikibase_item": "Q900001",
+  "description": "2019 French-American thriller film",
+  "extract": "Harbour Lights is a 2019 French-American thriller film directed by Claire Beaumont. It follows a night-shift ferry pilot who discovers that the lights guiding her boat home have been rewired.",
+  "thumbnail": {
+    "source": "https://upload.wikimedia.org/wikipedia/en/thumb/a/ab/Harbour_Lights_%282019%29_poster.jpg/320px-Harbour_Lights_%282019%29_poster.jpg?utm_source=synthetic",
+    "width": 320,
+    "height": 493
+  },
+  "originalimage": {
+    "source": "https://upload.wikimedia.org/wikipedia/en/a/ab/Harbour_Lights_%282019%29_poster.jpg?utm_source=synthetic&utm_medium=test",
+    "width": 255,
+    "height": 393
+  },
+  "content_urls": { "desktop": { "page": "https://en.wikipedia.org/wiki/Harbour_Lights_(film)" } }
+}

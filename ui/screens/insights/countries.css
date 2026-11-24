@@ -1,0 +1,23 @@
+.cmap { display: grid; gap: var(--space-2); }
+.cmap-svg { width: 100%; height: auto; display: block; }
+.cmap-c { fill: color-mix(in srgb, var(--text) 10%, var(--surface)); stroke: var(--bg); stroke-width: .6; stroke-linejoin: round; outline: none; }
+.cmap-c.s1 { fill: color-mix(in srgb, var(--accent) 25%, var(--raised)); }
+.cmap-c.s2 { fill: color-mix(in srgb, var(--accent) 42%, var(--raised)); }
+.cmap-c.s3 { fill: color-mix(in srgb, var(--accent) 60%, var(--raised)); }
+.cmap-c.s4 { fill: color-mix(in srgb, var(--accent) 80%, var(--raised)); }
+.cmap-c.s5 { fill: var(--accent); }
+.cmap-c:not(.s0) { cursor: pointer; }
+.cmap-c:not(.s0):hover { stroke: var(--text); stroke-width: 1.2; paint-order: stroke; }
+.cmap-c:focus-visible { stroke: var(--focus); stroke-width: 1.6; paint-order: stroke; }
+.cmap-legend { display: flex; align-items: center; gap: 4px; font-size: var(--step--1); }
+.cmap-key { width: 18px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 2px; }
+.cmap-key.s0 { background: color-mix(in srgb, var(--text) 10%, var(--surface)); margin-right: var(--space-3); }
+.cmap-key.s1 { background: color-mix(in srgb, var(--accent) 25%, var(--raised)); }
+.cmap-key.s2 { background: color-mix(in srgb, var(--accent) 42%, var(--raised)); }
+.cmap-key.s3 { background: color-mix(in srgb, var(--accent) 60%, var(--raised)); }
+.cmap-key.s4 { background: color-mix(in srgb, var(--accent) 80%, var(--raised)); }
+.cmap-key.s5 { background: var(--accent); }
+.cmap-missing { font-size: var(--step--1); }
+.cmap-more { margin-top: var(--space-2); }
+.cmap-more summary { cursor: pointer; color: var(--muted); font-size: var(--step--1); }
+.cmap-more[open] summary { margin-bottom: var(--space-2); }

@@ -1,0 +1,76 @@
+/* TEMP feel colours (F8). Everything here is scoped under data-feel-colours="on", so with it off the app is unchanged.
+   A data-fam attribute sets --fam; what each thing does with it is below. Matte and flat: no shadows, gradients or glows. */
+:root[data-feel-colours="on"] [data-fam="red"] { --fam: var(--feel-red-edge); }
+:root[data-feel-colours="on"] [data-fam="yellow"] { --fam: var(--feel-yellow-edge); }
+:root[data-feel-colours="on"] [data-fam="green"] { --fam: var(--feel-green-edge); }
+:root[data-feel-colours="on"] [data-fam="blue"] { --fam: var(--feel-blue-edge); }
+:root[data-feel-colours="on"] [data-fam="purple"] { --fam: var(--feel-purple-edge); }
+:root[data-feel-colours="on"] [data-fam="none"] { --fam: var(--feel-none); }
+
+/* a. film page chips and c. By feel chips: the tint (strength shading and hover keep working) */
+:root[data-feel-colours="on"] .feel-chip[data-fam] { --tint: var(--fam); }
+:root[data-feel-colours="on"] .chip[data-fam]:not([aria-pressed="true"]):not([data-state="out"]) { border-color: color-mix(in srgb, var(--fam) 90%, var(--line)); }
+:root[data-feel-colours="on"] .chip[data-fam]:not([aria-pressed="true"]):not([data-state="out"]):hover { border-color: var(--fam); background: color-mix(in srgb, var(--fam) 14%, transparent); }
+/* selected pills and chips stay pink; a thin family dot would be new, so none */
+
+/* g. feeling words in sentences */
+:root[data-feel-colours="on"] .fam-text[data-fam] { color: var(--fam); }
+
+/* e. bars that stand for a feeling */
+:root[data-feel-colours="on"] .ins-share-track i[data-fam] { background: color-mix(in srgb, var(--fam) 85%, var(--surface)); }
+
+/* b, h. a film's own colour: a 2px ring (film page, Tonight pick), i. a 4px line under grid posters.
+   Both sit just OFF the poster, on the page's dark background, with a small gap (drawn on the poster's own
+   edge, pale colours vanished into light or busy posters). So the poster lets them paint outside it, and its image and fallback
+   round their own corners instead of being clipped by it. */
+:root[data-feel-colours="on"] .poster[data-fc] { overflow: visible; }
+:root[data-feel-colours="on"] .poster[data-fc] > :is(img, .poster-fallback) { border-radius: inherit; }
+/* the poster no longer clips (the colour line sits outside it), so its fallback title clips itself */
+:root[data-feel-colours="on"] .poster[data-fc] > .poster-fallback { overflow: hidden; }
+/* room for the line between a grid poster and its title (every card, coloured or not, so titles stay level in a row) */
+:root[data-feel-colours="on"] :is(.film-card, .disc-card) .poster { margin-bottom: 6px; }
+:root[data-feel-colours="on"] .poster[data-fc]::after { content: ''; position: absolute; pointer-events: none; z-index: 2; }
+:root[data-feel-colours="on"] .film-card .poster[data-fc]::after,
+:root[data-feel-colours="on"] .feel-tile .poster[data-fc]::after,
+:root[data-feel-colours="on"] .diary-poster .poster[data-fc]::after,
+:root[data-feel-colours="on"] .lib-thumb .poster[data-fc]::after,
+:root[data-feel-colours="on"] .disc-card .poster[data-fc]::after { left: 0; right: 0; bottom: -8px; height: 4px; border-radius: 2px; background: var(--fc); }
+:root[data-feel-colours="on"] .film-poster .poster[data-fc]::after,
+:root[data-feel-colours="on"] .tn-choose-poster .poster[data-fc]::after,
+:root[data-feel-colours="on"] .tn-pick-poster .poster[data-fc]::after { inset: -5px; border: 2px solid var(--fc); border-radius: calc(var(--radius-poster) + 5px); }
+/* The colour's own hover spot (an <i class="fc-hit"> in Poster): pointing at the line or ring names its colour in a small tip. Invisible,
+   and only where a line or ring is drawn. It covers the gap with the line under a grid poster, and only the ring's band around a big
+   poster (the clip-path cuts the poster out, so pointing at the poster itself still does what it always did). */
+.fc-hit { display: none; }
+:root[data-feel-colours="on"] :is(.film-card, .feel-tile, .diary-poster, .lib-thumb, .disc-card) .poster[data-fc] > .fc-hit {
+  display: block; position: absolute; left: 0; right: 0; bottom: -10px; height: 9px; z-index: 3; cursor: help;
+}
+:root[data-feel-colours="on"] :is(.film-poster, .tn-choose-poster, .tn-pick-poster) .poster[data-fc] > .fc-hit {
+  display: block; position: absolute; inset: -9px; z-index: 3; cursor: help;
+  clip-path: polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%, 0 0, 8px 8px, 8px calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 8px, 8px 8px);
+}
+/* h. the hover card takes the colour of the film it is about */
+:root[data-feel-colours="on"] .pp[data-fc] { outline: 2px solid var(--fc); outline-offset: -2px; }
+
+
+/* Insights' above/below-your-average bars were green and red, which would read as "thrilling" and "tense" next to the feel key:
+   with the colours on they use pink (above) and a muted grey (below), so green and red mean only feelings. */
+:root[data-feel-colours="on"] .ins-lean-track i.up { background: color-mix(in srgb, var(--accent) 70%, var(--surface)); }
+:root[data-feel-colours="on"] .ins-lean-track i.down { background: color-mix(in srgb, var(--faint) 55%, var(--surface)); }
+
+/* A film torn between two feelings (data-fc2): both colours, split down the middle. Ring and hover card: a 2px frame drawn
+   with a mask so it keeps the rounded corners; poster lines: two halves. */
+:root[data-feel-colours="on"] .film-card .poster[data-fc2]::after,
+:root[data-feel-colours="on"] .feel-tile .poster[data-fc2]::after,
+:root[data-feel-colours="on"] .diary-poster .poster[data-fc2]::after,
+:root[data-feel-colours="on"] .lib-thumb .poster[data-fc2]::after,
+:root[data-feel-colours="on"] .disc-card .poster[data-fc2]::after { background: linear-gradient(90deg, var(--fc) 50%, var(--fc2) 50%); }
+:root[data-feel-colours="on"] .film-poster .poster[data-fc2]::after,
+:root[data-feel-colours="on"] .tn-choose-poster .poster[data-fc2]::after,
+:root[data-feel-colours="on"] .tn-pick-poster .poster[data-fc2]::after {
+  border: 0; padding: 2px; background: linear-gradient(90deg, var(--fc) 50%, var(--fc2) 50%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+:root[data-feel-colours="on"] .pp[data-fc2] { outline: 0; }
+:root[data-feel-colours="on"] .pp[data-fc2]::after { content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none; border-radius: inherit; padding: 2px;
+  background: linear-gradient(90deg, var(--fc) 50%, var(--fc2) 50%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }

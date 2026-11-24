@@ -1,0 +1,68 @@
+appId: app.matinee.desktop
+productName: Matinee
+copyright: Matinee
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/ui/**
+  - electron/**
+  - core/**
+  - package.json
+asar: true
+icon: build/icon.png
+win:
+  icon: build/icon.ico # one picture per size, drawn by build/make-icon.mjs
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+mac:
+  # Unsigned and not notarised (no Apple developer account): macOS asks the user to allow it the first time. The zip is what
+  # electron-updater's latest-mac.yml lists; Matinee itself only checks for a newer release and opens the .dmg download.
+  category: public.app-category.entertainment
+  # The ticket inside Apple's icon grid (made by build/make-icon.mjs), so it sits the same size as other apps in the Dock.
+  icon: build/icon-mac.png
+  # The words macOS shows when Matinee first saves into Documents (Settings → Your data puts its share file there).
+  extendInfo:
+    NSDocumentsFolderUsageDescription: Matinee saves files you ask for, like the file you share from Settings, in your Documents folder.
+  identity: null
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+    - target: zip
+      arch: [arm64, x64]
+  # Plain names that can be told apart at a glance: Matinee-0.58.0-Mac.dmg (Apple Silicon). The Intel copy is built in a second run
+  # with -c.mac.artifactName=Matinee-${version}-Mac-Intel.${ext} (see .github/workflows/build.yml).
+  artifactName: Matinee-${version}-Mac.${ext}
+  # Apple Silicon refuses to start an app whose files changed after the last signature, so seal it ad hoc (no certificate needed).
+  # Runs on macOS only; see build/after-pack.cjs.
+afterPack: build/after-pack.cjs
+linux:
+  category: AudioVideo
+  executableName: matinee
+  # The window's app id (from desktopName in package.json) matches the menu entry, so the taskbar shows Matinee's icon.
+  syncDesktopName: true
+  maintainer: Matinee <matinee@users.noreply.github.com>
+  target:
+    - target: AppImage
+      arch: [x64]
+    - target: deb
+      arch: [x64]
+appImage:
+  artifactName: Matinee-${version}-Linux.AppImage
+deb:
+  artifactName: Matinee-${version}-Linux.deb
+publish:
+  provider: github
+  owner: defmellow
+  repo: matinee-app
+  releaseType: release
+nsis:
+  oneClick: true
+  perMachine: false
+  createDesktopShortcut: true
+  artifactName: Matinee-${version}-Windows.exe
+portable:
+  artifactName: Matinee-${version}-Windows-Portable.exe

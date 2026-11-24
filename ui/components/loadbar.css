@@ -1,0 +1,4 @@
+.loadbar { position: fixed; right: var(--space-5); bottom: var(--space-5); z-index: 900; max-width: min(360px, calc(100vw - 2 * var(--space-5))); padding: 8px var(--space-4); border-radius: var(--radius-p); background: var(--surface); border: 1px solid var(--line-strong); box-shadow: var(--shadow); color: var(--muted); font-size: var(--step--1); overflow: hidden; pointer-events: none; transition: opacity var(--dur-3) var(--ease) var(--dur-1), transform var(--dur-3) var(--ease); animation: mt-rise var(--dur-2) var(--ease); }
+.loadbar-text { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.loadbar i { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accent); transform-origin: 0 50%; transition: transform var(--dur-3) var(--ease); }
+.loadbar-done { opacity: 0; transform: translateY(4px); }

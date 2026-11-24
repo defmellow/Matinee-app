@@ -1,0 +1,11 @@
+.fetchpill { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
+.fetchpill:hover { color: var(--warn); border-color: var(--warn); }
+.fetchpill.is-waiting { color: var(--muted); border-color: var(--control-border); }
+.fetchpill.is-missed { color: var(--muted); border-color: var(--control-border); }
+.fetchpill-checking { opacity: .85; }
+.fetchpanel { display: grid; gap: var(--space-3); justify-items: start; margin-top: var(--space-2); padding: var(--space-3) var(--space-4); max-width: 560px; width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); }
+.fetchpanel-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); width: 100%; }
+.fetchpanel-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.fetchpanel-text { display: grid; gap: 2px; min-width: 0; }
+.fetchpanel-state { font-size: var(--step--1); color: var(--warn); font-weight: 600; }
+.fetchpanel-why { font-size: var(--step--1); }

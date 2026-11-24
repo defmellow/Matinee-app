@@ -1,0 +1,243 @@
+/* Base elements and the shared component styles (ui/components/*). Screen-specific CSS lives beside each screen. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #app { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 400 var(--step-0)/1.5 var(--font-body);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+h1 { font: 700 var(--step-3)/1.1 var(--font-display); letter-spacing: 0; }
+h2, h3 { letter-spacing: 0; }
+h2 { font: 650 var(--step-2)/1.2 var(--font-body); letter-spacing: -0.01em; }
+h3 { font: 650 var(--step-1)/1.3 var(--font-body); }
+p { margin: 0; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+img { max-width: 100%; display: block; }
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.faint { color: var(--faint); }
+.eyebrow { font-size: var(--step--1); font-weight: 600; letter-spacing: .01em; color: var(--muted); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+::selection { background: var(--accent-soft); }
+/* One custom scrollbar everywhere: a slim rounded thumb on a clear track, no arrow buttons. Don't set the standard
+   scrollbar-width / scrollbar-color anywhere: in Chromium they override these rules and bring back the plain system bar. */
+::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: var(--faint); background-clip: padding-box; }
+::-webkit-scrollbar-button { display: none; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+:root[data-motion="less"] *, :root[data-motion="less"] *::before, :root[data-motion="less"] *::after { animation: none !important; transition: none !important; }
+
+/* ---------- motion ----------
+   Durations and easings come from tokens.css. Rules: animate transform, opacity, colour, shadow and filter only;
+   entrance keyframes have no fill-mode (except `backwards` on staggered items) so nothing lingers once they end.
+   The reduced-motion rule above switches all of it off. */
+@keyframes mt-fade { from { opacity: 0; } }
+@keyframes mt-rise { from { opacity: 0; transform: translateY(6px); } }
+@keyframes mt-reveal { from { opacity: 0; transform: translateY(-4px); } }
+@keyframes mt-dialog-in { from { opacity: 0; transform: translateY(8px) scale(.97); } }
+@keyframes mt-toast-in { from { opacity: 0; transform: translateX(-50%) translateY(10px); } }
+@keyframes mt-pulse { 50% { opacity: .5; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- app shell ---------- */
+.shell { display: grid; grid-template-columns: var(--rail) 1fr; height: 100%; }
+.rail { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding: var(--space-4) 0; border-right: 1px solid var(--line); background: color-mix(in srgb, var(--text) 4%, var(--bg)); }
+.rail-logo { width: 40px; height: 40px; display: grid; place-items: center; margin-bottom: var(--space-4); border-radius: var(--radius-c); }
+.rail-logo img { display: block; width: 40px; height: 40px; }
+.rail-btn { width: 60px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 0 6px; border: 0; border-radius: var(--radius-c); background: transparent; color: var(--muted); cursor: pointer; font-size: var(--step--2); font-weight: 600; letter-spacing: 0.01em; transition: color var(--dur-1) var(--ease), background-color var(--dur-1) var(--ease), box-shadow var(--dur-2) var(--ease), transform var(--dur-1) var(--ease); }
+.rail-btn { position: relative; }
+.rail-btn svg { width: 22px; height: 22px; transition: transform var(--dur-2) var(--ease-pop); }
+.rail-btn:hover svg { transform: translateY(-1px) scale(1.06); }
+.rail-btn::before { content: ''; position: absolute; left: -12px; top: 50%; width: 3px; height: 20px; margin-top: -10px; border-radius: 0 3px 3px 0; background: var(--accent); opacity: 0; transform: scaleY(.3); transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease-pop); }
+.rail-btn[aria-current="page"]::before { opacity: 1; transform: none; }
+.rail-btn:hover { color: var(--text); background: var(--raised); }
+.rail-btn:active { transform: scale(.97); }
+.rail-btn[aria-current="page"] { color: var(--accent-text); background: var(--accent-soft); box-shadow: none; }
+.rail-spacer { flex: 1; }
+.main { overflow: auto; position: relative; }
+/* Each screen's root is a direct child of .main and fades up once on arrival. Animation only (no fill-mode), so the
+   transform is gone as soon as it ends: sticky/fixed descendants and scroll restore are unaffected. */
+.main > * { animation: mt-rise var(--dur-2) var(--ease); }
+.screen { padding: var(--space-6) var(--space-6) var(--space-8); max-width: 1600px; margin: 0 auto; }
+.screen-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-5); }
+.screen-head .sub { color: var(--muted); margin-top: var(--space-2); }
+
+/* ---------- buttons, chips & badges: one system ----------
+   THE RULE: pill-shaped, bordered, hover-responding things are interactive. A chip is an <a href> (it navigates) or a
+   <button> (it acts or toggles) via <Chip>; buttons are .btn (primary / default / ghost, 36px, or .btn-small 28px) or .icon-btn.
+   All share the same hover, press and focus ring. Anything that only informs is a <Badge> (.badge): flat soft fill, no border,
+   no hover, cursor default. Never give a static label a border or pill shape. Colours, radii and timing come from tokens only. */
+/* ---------- buttons & inputs ---------- */
+.btn { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 36px; padding: 0 var(--space-4); border-radius: var(--radius-c); border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); font-weight: 600; cursor: pointer; white-space: nowrap; transition: background-color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease), filter var(--dur-1) var(--ease), transform var(--dur-1) var(--ease); }
+.btn:active:not(:disabled), .icon-btn:active { transform: translateY(1px); }
+.btn:hover { background: var(--raised); border-color: var(--control-border); }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn svg { width: 18px; height: 18px; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--accent); border-color: var(--accent); filter: brightness(1.08); }
+.btn-ghost { background: transparent; border-color: transparent; }
+.btn-ghost:hover { background: var(--raised); border-color: transparent; }
+.btn-link { display: inline; min-height: 0; padding: 0; border: 0; border-radius: var(--radius-b); background: none; color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; cursor: pointer; transition: color var(--dur-1) var(--ease), text-decoration-color var(--dur-1) var(--ease); }
+.btn-link:hover { color: var(--accent-text); text-decoration-color: var(--accent); }
+.btn-small { min-height: 28px; padding: 0 var(--space-3); font-size: var(--step--1); }
+.icon-btn { width: 36px; height: 36px; display: inline-grid; place-items: center; border: 0; border-radius: var(--radius-c); background: transparent; color: var(--muted); cursor: pointer; transition: background-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease); }
+.icon-btn:hover { background: var(--raised); color: var(--text); }
+.icon-btn svg { width: 20px; height: 20px; }
+.input, .select { min-height: 36px; padding: 0 var(--space-4); border-radius: var(--radius-c); border: 1px solid var(--control-border); background: var(--raised); color: var(--text); transition: border-color var(--dur-1) var(--ease), background-color var(--dur-1) var(--ease), box-shadow var(--dur-2) var(--ease); }
+.input:hover, .select:hover { border-color: var(--faint); }
+.input:focus, .select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.input:focus-visible, .select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+/* Drop-down list: styled like the rest of the app where the browser allows it (base-select), the plain list otherwise. */
+@supports (appearance: base-select) {
+  select.select, select.select::picker(select) { appearance: base-select; }
+  select.select { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--space-2); padding: 0 var(--space-3) 0 var(--space-4); font: inherit; font-size: var(--step--1); line-height: 1; cursor: pointer; }
+  /* The default triangle is a big white glyph that stretches the button: a small muted chevron instead. */
+  select.select::picker-icon { content: ''; width: 7px; height: 7px; margin-top: -3px; border: solid var(--muted); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); transition: transform var(--dur-1) var(--ease); }
+  select.select:open::picker-icon { transform: rotate(225deg); margin-top: 3px; }
+  select.select::picker(select) { min-width: anchor-size(width); }
+  select.select::picker(select) { margin-top: 6px; padding: var(--space-2); border: 1px solid var(--control-border); border-radius: var(--radius-p); background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+  select.select option { padding: 8px var(--space-4); border-radius: var(--radius-c); background: transparent; color: var(--text); cursor: pointer; }
+  select.select option:hover, select.select option:focus-visible { background: var(--accent-soft); outline: none; }
+  select.select option:checked { color: var(--accent-text); font-weight: 600; }
+  select.select option::checkmark { display: none; }
+}
+.input::placeholder { color: var(--faint); }
+/* A pill radius turns into an oval on anything taller than one line, so every multi-line control gets the rounded-rectangle radius. */
+textarea.input, select[multiple].input, select[multiple].select { padding: var(--space-3) var(--space-4); min-height: 80px; resize: vertical; border-radius: var(--radius-c); line-height: 1.5; }
+.search { position: relative; display: flex; align-items: center; }
+.search svg { position: absolute; left: 10px; width: 18px; height: 18px; color: var(--faint); pointer-events: none; }
+.search .input { padding-left: 40px; width: 100%; }
+.segmented { display: inline-flex; padding: 3px; gap: 2px; border-radius: calc(var(--radius-c) + 3px); background: var(--raised); }
+.segmented button { min-height: 30px; padding: 0 var(--space-3); border: 0; border-radius: var(--radius-c); background: transparent; color: var(--muted); font-weight: 600; font-size: var(--step--1); cursor: pointer; transition: background-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease), transform var(--dur-1) var(--ease); }
+.segmented button:hover:not([aria-pressed="true"]) { color: var(--text); background: color-mix(in srgb, var(--text) 6%, transparent); }
+.segmented button:active { transform: scale(.97); }
+.segmented button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent-text); box-shadow: none; }
+
+/* ---------- chips (interactive pills) & badges (static labels) ---------- */
+/* Tab strip (components/Tabs.jsx): links with one pill that slides under the current tab. Insights, Year in review. */
+.tabs { position: sticky; top: calc(var(--titlebar-h, 0px) + var(--space-2)); z-index: 5; display: flex; gap: 2px; width: max-content; max-width: 100%; overflow-x: auto; padding: 4px; margin: 0 0 var(--space-5) -4px; border-radius: 999px; background: var(--raised); }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs a { position: relative; z-index: 1; display: inline-flex; align-items: center; min-height: 34px; padding: 0 var(--space-4); border-radius: 999px; color: var(--muted); font-weight: 650; font-size: var(--step--1); text-decoration: none; white-space: nowrap; transition: color var(--dur-2) var(--ease); }
+.tabs a:hover { color: var(--text); }
+.tabs a[aria-current="page"] { color: var(--accent-text); }
+.tabs a:focus-visible { border-radius: 999px; }
+/* the pill is the whole strip, clipped to the current tab: clip-path moves and resizes it without animating layout */
+.tabs-pill { position: absolute; inset: 0; border-radius: 999px; background: color-mix(in srgb, var(--accent) 24%, var(--surface)); clip-path: inset(4px calc(100% - var(--x, 0px) - var(--w, 0px)) 4px var(--x, 0px) round 999px); transition: clip-path var(--dur-3) var(--ease); pointer-events: none; }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 var(--space-3); border-radius: 999px; border: 1px solid var(--control-border); background: transparent; color: var(--muted); font-size: var(--step--1); font-weight: 600; text-decoration: none; cursor: pointer; white-space: nowrap; transition: background-color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease); }
+.chip:hover { color: var(--text); border-color: var(--line-strong); background: var(--raised); }
+.chip:active { transform: scale(.97); }
+.chip:focus-visible { border-radius: 999px; }
+.chip:disabled { opacity: .5; cursor: default; }
+.chip[aria-pressed="true"], .chip[aria-current="page"] { background: var(--accent-soft); border-color: var(--accent); color: var(--text); }
+.chip .x { opacity: .6; }
+.chip svg { width: 14px; height: 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+/* a chip with a remove button inside (your own tags on a watchlist film): the pill is the wrapper, both halves are controls */
+.chip-split { display: inline-flex; align-items: center; min-height: 28px; border-radius: 999px; border: 1px solid var(--control-border); font-size: var(--step--1); font-weight: 600; color: var(--muted); transition: border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease); }
+.chip-split:hover { color: var(--text); border-color: var(--line-strong); }
+.chip-split > .chip { border: 0; background: none; min-height: 26px; padding: 0 4px 0 var(--space-3); }
+.chip-split > .chip:hover { background: none; }
+.chip-split > .icon-btn { width: 22px; height: 22px; margin-right: 3px; border-radius: 50%; }
+.chip-split > .icon-btn svg { width: 12px; height: 12px; }
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 1px var(--space-2); border-radius: var(--radius-b); background: var(--raised); color: var(--muted); font-size: var(--step--1); font-weight: 600; line-height: 1.4; cursor: default; white-space: nowrap; }
+.badge[data-tone="accent"] { background: var(--accent-soft); color: var(--text); }
+
+/* ---------- posters & film cards ---------- */
+.poster { position: relative; container-type: inline-size; aspect-ratio: 2 / 3; width: 100%; border-radius: var(--radius-poster); overflow: hidden; background: var(--raised); box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset; }
+.poster img { width: 100%; height: 100%; object-fit: cover; } /* no fade-in: it would run from mount, not from load, and the Library can mount hundreds at once */
+.poster-fallback { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; gap: 4px; color: #fff; }
+/* Title size follows the poster's width, so a long word fits a small tile instead of breaking mid-word ("Wastela-nd"). */
+.poster-fallback .t { font: 700 clamp(.7rem, 12cqi, 1.05rem)/1.1 var(--font-display); letter-spacing: .01em; overflow-wrap: break-word; hyphens: auto; }
+.poster-fallback .y { font-size: var(--step--2); opacity: .8; font-weight: 600; }
+.film-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-min, 132px), 1fr)); gap: var(--space-5) var(--space-4); }
+.film-card { display: flex; flex-direction: column; gap: 6px; min-width: 0; cursor: pointer; border: 0; padding: 0; background: none; text-align: left; color: inherit; text-decoration: none; }
+/* THE content pop: every poster you can open lifts a little on hover or keyboard focus. One rule for the whole app;
+   screens never write their own. Not for controls (the change-poster button, picker tiles, tiny list thumbnails). */
+.poster { transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease); }
+:is(a, button.disc-card):is(:hover, :focus-visible) .poster:not(.lib-thumb .poster) { transform: var(--lift); box-shadow: var(--shadow); z-index: 1; }
+@media (prefers-reduced-motion: reduce) { :is(a, button.disc-card):is(:hover, :focus-visible) .poster { transform: none; } }
+:root[data-motion="less"] :is(a, button.disc-card):is(:hover, :focus-visible) .poster { transform: none; }
+.film-card .meta { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; font-size: var(--step--1); min-width: 0; }
+.film-card .title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.badge-corner { position: absolute; top: 6px; right: 6px; display: inline-flex; align-items: center; gap: 3px; padding: 2px 6px; border-radius: var(--radius-b); background: rgba(10,8,12,.78); color: #fff; font-size: var(--step--2); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---------- stars, scores ---------- */
+.stars { display: inline-flex; gap: 1px; color: var(--star); line-height: 1; white-space: nowrap; }
+.stars .off { color: var(--line-strong); }
+.score { display: inline-grid; place-items: center; min-width: 40px; height: 40px; padding: 0 6px; border-radius: var(--radius-b); font: 800 1.25rem/1 var(--font-display); font-variant-numeric: tabular-nums; background: var(--raised); color: var(--text); }
+.score[data-band="high"] { background: color-mix(in srgb, var(--good) 22%, var(--raised)); }
+.score[data-band="mid"] { background: color-mix(in srgb, var(--warn) 20%, var(--raised)); }
+.score[data-band="low"] { background: color-mix(in srgb, var(--bad) 20%, var(--raised)); }
+.rating-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.rating-chip { display: flex; flex-direction: column; gap: 1px; padding: 6px 10px; border-radius: var(--radius-b); background: var(--raised); min-width: 76px; transition: background-color var(--dur-1) var(--ease); }
+.rating-chip:hover { background: color-mix(in srgb, var(--text) 7%, var(--raised)); }
+.rating-chip .src { font-size: var(--step--2); font-weight: 700; letter-spacing: .02em; color: var(--muted); }
+.rating-chip .val { font-size: var(--step-1); font-weight: 700; font-variant-numeric: tabular-nums; }
+.rating-chip .cnt { font-size: var(--step--2); color: var(--faint); font-variant-numeric: tabular-nums; }
+
+/* ---------- panels, empty states, progress ---------- */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); padding: var(--space-5); }
+.empty { display: grid; place-items: center; text-align: center; gap: var(--space-3); padding: var(--space-8) var(--space-5); color: var(--muted); }
+.empty h2 { color: var(--text); }
+.empty p { max-width: 46ch; }
+.progress-pill { display: flex; align-items: center; gap: var(--space-2); padding: 6px 10px; border-radius: var(--radius-b); background: var(--surface); border: 1px solid var(--line); font-size: var(--step--2); color: var(--muted); max-width: 64px; }
+.bar { height: 4px; border-radius: 4px; background: var(--raised); overflow: hidden; }
+.bar > i { display: block; height: 100%; background: var(--accent); border-radius: 4px; transition: width var(--dur-3) var(--ease); } /* width is allowed here: a 4px bar, no layout around it depends on it */
+.spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line-strong); border-top-color: var(--accent); animation: spin .8s linear infinite; } /* literal: a loop, not a transition */
+
+.toast { position: fixed; left: 50%; bottom: var(--space-5); transform: translateX(-50%); z-index: 50; padding: 10px 16px; border-radius: var(--radius-p); background: var(--text); color: var(--bg); font-weight: 600; box-shadow: var(--shadow); animation: mt-toast-in var(--dur-2) var(--ease); }
+
+/* ---------- sheet / dialog ---------- */
+.overlay { position: fixed; inset: 0; z-index: 40; background: var(--overlay); display: grid; place-items: center; padding: var(--space-5); animation: mt-fade var(--dur-2) var(--ease); }
+.dialog { width: min(560px, 100%); max-height: 90vh; overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); padding: var(--space-5); box-shadow: var(--shadow); display: grid; gap: var(--space-4); animation: mt-dialog-in var(--dur-3) var(--ease); }
+.dialog-head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
+
+/* ---------- settling in: small sets only (first 8 items, 30 ms steps). Never lists that can hold hundreds. ---------- */
+:is(.tn-picks, .tn-grid, .ins-band, .ins-grid, .disc-row, .year-cols, .year-side) > :nth-child(-n+8) {
+  animation: mt-rise var(--dur-2) var(--ease) backwards; animation-delay: calc(var(--i, 0) * 30ms);
+}
+:is(.tn-picks, .tn-grid, .ins-band, .ins-grid, .disc-row, .year-cols, .year-side) > :nth-child(2) { --i: 1; }
+:is(.tn-picks, .tn-grid, .ins-band, .ins-grid, .disc-row, .year-cols, .year-side) > :nth-child(3) { --i: 2; }
+:is(.tn-picks, .tn-grid, .ins-band, .ins-grid, .disc-row, .year-cols, .year-side) > :nth-child(4) { --i: 3; }
+:is(.tn-picks, .tn-grid, .ins-band, .ins-grid, .disc-row, .year-cols, .year-side) > :nth-child(5) { --i: 4; }
+:is(.tn-picks, .tn-grid, .ins-band, .ins-grid, .disc-row, .year-cols, .year-side) > :nth-child(6) { --i: 5; }
+:is(.tn-picks, .tn-grid, .ins-band, .ins-grid, .disc-row, .year-cols, .year-side) > :nth-child(7) { --i: 6; }
+:is(.tn-picks, .tn-grid, .ins-band, .ins-grid, .disc-row, .year-cols, .year-side) > :nth-child(8) { --i: 7; }
+
+/* ---------- expanding panels: opacity + a small slide (height is never animated, so nothing below jumps) ---------- */
+details[open] > :not(summary), .logdrop-box, .lib-filters, .lib-pop, .set-key-body { animation: mt-reveal var(--dur-3) var(--ease); }
+.lib-bar { animation: mt-rise var(--dur-2) var(--ease); }
+
+/* ---------- charts ---------- */
+.chart text { fill: var(--muted); font-size: var(--step--2); font-family: var(--font-body); }
+.chart .bar-fill { fill: var(--accent); }
+.chart .bar-fill.alt { fill: var(--line-strong); }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+
+/* ---------- Windows High Contrast: backgrounds and shadows are dropped, so mark state with outlines ---------- */
+@media (forced-colors: active) {
+  .rail-btn[aria-current="page"], .segmented button[aria-pressed="true"], .chip[aria-pressed="true"], .chip[aria-current="page"] { outline: 2px solid Highlight; }
+  .bar > i, .pf-bar span, .ins-bar-track i { background: Highlight; forced-color-adjust: none; }
+  .btn, .input, .select, .chip, .chip-split { border-color: ButtonText; }
+  .cmap-c { stroke: CanvasText; }
+}
+
+/* Runtime slider (Tonight, Library filter): pink thumb on a soft track, value read out beside it. */
+.runtime-slider { display: inline-flex; align-items: center; gap: var(--space-4); min-width: min(380px, 100%); }
+.runtime-slider input[type="range"] { -webkit-appearance: none; appearance: none; flex: 1; min-width: 220px; height: 28px; margin: 0; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.runtime-slider input[type="range"]::-webkit-slider-runnable-track { height: 8px; border-radius: 999px; background: linear-gradient(to right, var(--accent) 0, var(--accent) var(--pct, 100%), var(--raised) var(--pct, 100%), var(--raised) 100%); box-shadow: inset 0 0 0 1px var(--control-border); }
+.runtime-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; margin-top: -7px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--control-border), 0 1px 4px rgba(0, 0, 0, .35); }
+.runtime-slider input[type="range"]::-moz-range-track { height: 8px; border-radius: 999px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--control-border); }
+.runtime-slider input[type="range"]::-moz-range-progress { height: 8px; border-radius: 999px; background: var(--accent); }
+.runtime-slider input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--control-border); }
+.runtime-slider input[type="range"]:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 999px; }
+.runtime-out { min-width: 7.5em; color: var(--accent-text); font-weight: 600; font-size: var(--step--1); font-variant-numeric: tabular-nums; }
+
+/* Labels sit dead centre: Nunito's tall ascenders otherwise make text look high in pills and buttons. */
+.btn, .chip, .badge, .select, .segmented button { text-box: trim-both cap alphabetic; }

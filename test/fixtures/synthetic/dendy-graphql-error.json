@@ -1,0 +1,7 @@
+{
+ "_note": "SYNTHETIC fixture: invented films and ids, real field structure of newtown.dendy.com.au/graphql responses (29 Oct 2026). Not real schedule data.",
+ "data": {},
+ "error": {
+  "message": "Consumer Site request for Site that does not exist: undefined (Code: 901, Ref: 0000000000)"
+ }
+}

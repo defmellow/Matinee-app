@@ -1,0 +1,19 @@
+{
+  "_synthetic": "hand-written from the public REST API docs; not real API output",
+  "_note": "A made-up film whose portrait poster lives on Wikimedia Commons (/wikipedia/commons/ path) and is large",
+  "type": "standard",
+  "title": "The Salt Road",
+  "wikibase_item": "Q900003",
+  "description": "1962 Italian western film",
+  "extract": "The Salt Road is a 1962 Italian western film in which a retired surveyor leads a convoy across a dry lake bed.",
+  "thumbnail": {
+    "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/The_Salt_Road_poster.jpg/320px-The_Salt_Road_poster.jpg",
+    "width": 320,
+    "height": 480
+  },
+  "originalimage": {
+    "source": "https://upload.wikimedia.org/wikipedia/commons/1/1f/The_Salt_Road_poster.jpg",
+    "width": 1000,
+    "height": 1500
+  }
+}

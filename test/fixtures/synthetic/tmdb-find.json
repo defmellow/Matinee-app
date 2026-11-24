@@ -1,0 +1,9 @@
+{
+  "_synthetic": "hand-written from the public API docs; not real API output",
+  "_note": "Shaped like GET /3/find/{imdb_id}?external_source=imdb_id",
+  "movie_results": [{ "id": 900001, "title": "Harbour Lights", "original_title": "Les Lumières du Port", "release_date": "2019-06-14", "media_type": "movie" }],
+  "person_results": [],
+  "tv_results": [],
+  "tv_episode_results": [],
+  "tv_season_results": []
+}

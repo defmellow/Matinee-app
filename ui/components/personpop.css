@@ -1,0 +1,32 @@
+/* Person photos (Headshot) and the person hover card (PersonPop). Classes: hs-, ppl-. */
+.hs { position: relative; display: inline-block; flex: none; overflow: hidden; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line); border-radius: 50%; width: 28px; height: 28px; vertical-align: middle; }
+.hs-i { position: absolute; inset: 0; display: grid; place-items: center; color: var(--faint); font-size: var(--step--2); font-weight: 700; letter-spacing: 0.02em; user-select: none; }
+.hs-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--dur-2) var(--ease); }
+.hs-on { opacity: 1; }
+
+.ppl {
+  position: fixed; z-index: 900; pointer-events: none; overflow: hidden;
+  display: grid; gap: var(--space-2); padding: var(--space-3) var(--space-4) var(--space-4);
+  border-radius: var(--radius-p); background: var(--raised); color: var(--text);
+  border: 1px solid var(--line-strong); box-shadow: var(--shadow);
+  opacity: 0;
+}
+.ppl-on { opacity: 1; transition: opacity var(--dur-1) var(--ease); } /* fades in; closing is instant */
+.ppl p { margin: 0; }
+.ppl-top { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.ppl-photo { width: 64px; height: 64px; }
+.ppl-photo .hs-i { font-size: var(--step-1); }
+.ppl-who { min-width: 0; display: grid; gap: 2px; }
+.ppl-name { font: 700 var(--step-1)/1.15 var(--font-display); letter-spacing: 0.02em; overflow-wrap: anywhere; }
+.ppl-as { font-size: var(--step--1); color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ppl-lib { font-size: var(--step--1); color: var(--muted); line-height: 1.35; }
+.ppl-live { pointer-events: auto; }
+/* about three rows show; the rest scrolls inside the card (the app's one scrollbar) */
+.ppl-posters { display: flex; flex-wrap: wrap; gap: var(--space-2); max-height: 237px; overflow-y: auto; overscroll-behavior: contain; padding: 4px 4px 4px 0; margin: -4px 0; }
+.ppl-film { position: relative; display: block; flex: none; width: 46px; height: 69px; border-radius: var(--radius-b); }
+.ppl-poster { display: block; width: 46px; height: 69px; object-fit: cover; border-radius: var(--radius-b); background: var(--surface); box-shadow: 0 0 0 1px var(--line); transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease); }
+.ppl-film:is(:hover, :focus-visible) .ppl-poster { transform: var(--lift); box-shadow: var(--shadow); } /* the Content pop lift, as on every poster */
+.ppl-mark { position: absolute; left: 2px; bottom: 2px; display: inline-flex; align-items: center; padding: 1px 3px; border-radius: 4px; background: color-mix(in srgb, var(--bg) 82%, transparent); color: var(--text); font-size: 8px; line-height: 1.2; letter-spacing: 0; white-space: nowrap; pointer-events: none; }
+.ppl .debug-info { margin: 0; }
+@media (prefers-reduced-motion: reduce) { .ppl-on, .hs-img, .ppl-poster { transition: none; } .ppl-film:is(:hover, :focus-visible) .ppl-poster { transform: none; } }
+:root[data-motion="less"] .ppl-on, :root[data-motion="less"] .hs-img, :root[data-motion="less"] .ppl-poster { transition: none; } :root[data-motion="less"] .ppl-film:is(:hover, :focus-visible) .ppl-poster { transform: none; }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SYNTHETIC test sitemap (invented films) mimicking the real slug shapes -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://newtown.dendy.com.au/</loc></url>
+<url><loc>https://newtown.dendy.com.au/movie/the-velvet-orchard/</loc></url>
+<url><loc>https://newtown.dendy.com.au/movie/a-tale-of-two-lanterns-/</loc></url>
+<url><loc>https://newtown.dendy.com.au/movie/8/</loc></url>
+<url><loc>https://newtown.dendy.com.au/movie/1900-novecento-example---original-directors-cut/</loc></url>
+<url><loc>https://newtown.dendy.com.au/movie/harbour-lights---directors-cut/</loc></url>
+<url><loc>https://newtown.dendy.com.au/movie/the-velvet-orchard/</loc></url>
+<url><loc>https://newtown.dendy.com.au/harbour-lights--tickets-on-sale/</loc></url>
+<url><loc>https://newtown.dendy.com.au/cinemas-newtown/</loc></url>
+<url><loc>https://newtown.dendy.com.au/movie/the-velvet-orchard/checkout/</loc></url>
+</urlset>

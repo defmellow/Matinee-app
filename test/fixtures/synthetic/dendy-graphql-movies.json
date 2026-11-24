@@ -1,0 +1,79 @@
+{
+ "_note": "SYNTHETIC fixture: invented films and ids, real field structure of newtown.dendy.com.au/graphql responses (29 Oct 2026). Not real schedule data.",
+ "data": {
+  "movies": {
+   "count": 4,
+   "resultVersion": "1000000001",
+   "data": [
+    {
+     "id": "90001",
+     "name": "The Glass Orchard",
+     "urlSlug": "the-glass-orchard",
+     "showingStatus": "On Sale",
+     "dateOfFirstShowing": "2026-12-16",
+     "releaseDate": "2026-12-16",
+     "duration": 150,
+     "rating": "CTC",
+     "directedBy": "Ada Quill",
+     "showingCount": 5,
+     "includeInComingSoon": true,
+     "includeInFuture": false,
+     "isMarathon": false,
+     "titleClassId": "12",
+     "__typename": "Movie"
+    },
+    {
+     "id": "90002",
+     "name": "Harbour Lights - Directors Cut",
+     "urlSlug": "harbour-lights---directors-cut",
+     "showingStatus": "On Sale",
+     "dateOfFirstShowing": "2026-11-20",
+     "releaseDate": "1994-05-01",
+     "duration": 101,
+     "rating": "MA15+",
+     "directedBy": "Bo Merrin, Cass Vale",
+     "showingCount": 1,
+     "includeInComingSoon": true,
+     "includeInFuture": false,
+     "isMarathon": false,
+     "titleClassId": "12",
+     "__typename": "Movie"
+    },
+    {
+     "id": "90003",
+     "name": "Paper Moons",
+     "urlSlug": "paper-moons",
+     "showingStatus": "Coming Soon",
+     "dateOfFirstShowing": "2027-02-04",
+     "releaseDate": "2027-01-14",
+     "duration": 118,
+     "rating": "PG",
+     "directedBy": "Ada Quill",
+     "showingCount": 0,
+     "includeInComingSoon": true,
+     "includeInFuture": false,
+     "isMarathon": false,
+     "titleClassId": "12",
+     "__typename": "Movie"
+    },
+    {
+     "id": "90004",
+     "name": "Unscheduled Wonder",
+     "urlSlug": "unscheduled-wonder",
+     "showingStatus": "Unknown Date",
+     "dateOfFirstShowing": null,
+     "releaseDate": null,
+     "duration": 118,
+     "rating": "CTC",
+     "directedBy": "Ada Quill",
+     "showingCount": 0,
+     "includeInComingSoon": true,
+     "includeInFuture": false,
+     "isMarathon": false,
+     "titleClassId": "12",
+     "__typename": "Movie"
+    }
+   ]
+  }
+ }
+}

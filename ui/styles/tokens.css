@@ -1,0 +1,185 @@
+/* Matinee design tokens.
+   Layout concept (28 Oct, "Blush / E, no glow"): a slim left rail, wide poster-led canvas, soft rounded shapes,
+   warm brown-grey surfaces and one light pink accent. Sentence-case titles in Quicksand, body in Nunito (layout D without the film tiles). Posters bring the colour. */
+@import '@fontsource-variable/quicksand';
+@import '@fontsource-variable/nunito';
+
+
+:root, [data-theme="dark"] {
+  /* colour — dark Blush is the default look (follows Windows theme); the [data-theme] selector lets a theme preview card show its own palette */
+  --bg: #221d1d;          /* warm brown-grey */
+  --surface: #2c2625;     /* panels, cards */
+  --raised: #38302f;      /* hover, inputs, popovers */
+  --line: rgba(255, 235, 225, 0.11);  /* hairlines */
+  --line-strong: rgba(255, 235, 225, 0.2);
+  --text: #f8eee7;        /* warm cream */
+  --muted: #d4c6bc;
+  --faint: #ab9d94;
+  --accent: #f4a9c4;      /* soft pink: fills, stars, bars (light, never dark pink) */
+  --accent-text: #f8bcd2; /* the same pink used as text or link colour */
+  --accent-ink: #3a1424;  /* text on accent */
+  --accent-soft: rgba(244, 169, 196, 0.17);
+  --good: #7fd09c;
+  --warn: #ecc062;
+  --bad: #ee8479;
+  --on-bad: #2a0f0b;      /* text on a --bad fill */
+  --control-border: #8b7f77; /* edges of inputs, selects, chips (3:1 on the page) */
+  --overlay: rgba(20, 15, 14, 0.72);
+  --shadow: 0 12px 34px rgba(10, 6, 6, 0.4);
+  --focus: var(--accent); /* focus ring colour */
+  --star: var(--accent);  /* star ratings: a touch deeper in light so they read on white */
+  color-scheme: dark;
+
+  /* type */
+  --font-display: 'Quicksand Variable', 'Nunito Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Nunito Variable', 'Segoe UI', system-ui, sans-serif;
+  --step--2: 0.6875rem;   /* 11 — tiny labels: counts, badges, axis text */
+  --step--1: 0.8125rem;   /* 13 — captions, meta */
+  --step-0: 0.9375rem;    /* 15 — body */
+  --step-1: 1.125rem;     /* 18 — card titles */
+  --step-2: 1.5rem;       /* 24 — section heads */
+  --step-3: 2.25rem;      /* 36 — screen titles (display face) */
+  --step-4: 3.5rem;       /* 56 — film title (display face) */
+
+  /* space & shape */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 72px;
+  --radius-s: 12px;
+  --radius-m: 20px;
+  --radius-poster: 16px;
+  --radius-c: 8px;        /* controls: buttons, inputs, selects, segmented, icon buttons */
+  --radius-p: 14px;       /* popovers and hover cards */
+  --radius-b: 6px;        /* static badges */
+  --rail: 84px;           /* left navigation rail width */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+
+  /* motion: transform/opacity/colour only; base.css switches all of it off for prefers-reduced-motion */
+  --dur-1: 120ms;         /* hover, press, colour changes */
+  --dur-2: 180ms;         /* small reveals, chips, tooltips, route enter */
+  --dur-3: 260ms;         /* dialogs, drawers, expanding panels */
+  --dur-4: 400ms;         /* bars filling, one-off emphasis */
+  --ease-in: cubic-bezier(.4, 0, 1, 1);
+  --lift: translateY(-4px) scale(1.03); /* content pop on hover (posters); see base.css */
+  --ease-pop: cubic-bezier(.34, 1.25, .5, 1);   /* a hint of overshoot for badges and toggles */
+  /* The feel palette (docs/DESIGN.md 2.1.1): a key to feeling, never an accent. Same fills in every theme; -edge is for borders and bars, deeper in the light themes. */
+  --feel-red: #ec9481; --feel-red-edge: #ec9481;
+  --feel-yellow: #e9c77f; --feel-yellow-edge: #e9c77f;
+  --feel-green: #95d0a2; --feel-green-edge: #95d0a2;
+  --feel-blue: #94b6e2; --feel-blue-edge: #94b6e2;
+  --feel-purple: #bea6e8; --feel-purple-edge: #bea6e8;
+  --feel-none: #b8aaa0;   /* a feeling with no family (the warm neutral, core/analysis/feel-families.js) */
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg: #faf5f2;          /* warm off-white */
+    --surface: #fffcfa;
+    --raised: #f3e9e5;
+    --line: rgba(70, 40, 40, 0.12);
+    --line-strong: rgba(70, 40, 40, 0.24);
+    --text: #2b2121;
+    --muted: #5b4d4b;
+    --faint: #756663;
+    --accent: #ec92b2;      /* the same soft rose for fills and bars */
+    --accent-text: #a8315f; /* deeper rose for text and links only (5.5:1 on the page) */
+    --accent-ink: #3a1424;
+    --accent-soft: rgba(214, 74, 124, 0.13);
+    --star: #d4578a;
+    --feel-red-edge: #d0654f;
+    --feel-yellow-edge: #b8861f;
+    --feel-green-edge: #4f9d67;
+    --feel-blue-edge: #4f84c4;
+    --feel-purple-edge: #8a6bcf;
+    --feel-none: #8f817a;
+    --focus: #b8386a;       /* focus rings need 3:1 on the page, so deeper than the fill */
+    --good: #23703f; --warn: #85570a; --bad: #b0372d; --on-bad: #ffffff;
+    --control-border: #92827d;
+    --overlay: rgba(43, 33, 33, 0.42);
+    --shadow: 0 12px 30px rgba(90, 50, 50, 0.16);
+    color-scheme: light;
+  }
+}
+[data-theme="light"] {
+  --bg: #faf5f2;          /* warm off-white */
+  --surface: #fffcfa;
+  --raised: #f3e9e5;
+  --line: rgba(70, 40, 40, 0.12);
+  --line-strong: rgba(70, 40, 40, 0.24);
+  --text: #2b2121;
+  --muted: #5b4d4b;
+  --faint: #756663;
+  --accent: #ec92b2;      /* the same soft rose for fills and bars */
+  --accent-text: #a8315f; /* deeper rose for text and links only (5.5:1 on the page) */
+  --accent-ink: #3a1424;
+  --accent-soft: rgba(214, 74, 124, 0.13);
+  --star: #d4578a;
+  --feel-red-edge: #d0654f;
+  --feel-yellow-edge: #b8861f;
+  --feel-green-edge: #4f9d67;
+  --feel-blue-edge: #4f84c4;
+  --feel-purple-edge: #8a6bcf;
+  --feel-none: #8f817a;
+  --focus: #b8386a;       /* focus rings need 3:1 on the page, so deeper than the fill */
+  --good: #23703f; --warn: #85570a; --bad: #b0372d; --on-bad: #ffffff;
+  --control-border: #92827d;
+  --overlay: rgba(43, 33, 33, 0.42);
+  --shadow: 0 12px 30px rgba(90, 50, 50, 0.16);
+  color-scheme: light;
+}
+
+/* Dark (neutral): calm greys with a faint cool tint and a soft blue accent instead of pink; posters bring the colour. */
+[data-theme="neutral"] {
+  --bg: #1c1c1e;
+  --surface: #252528;
+  --raised: #2f2f33;
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --text: #f2f2f3;
+  --muted: #c4c4c8;
+  --faint: #9a9aa0;
+  --accent: #8fb0f0;
+  --accent-text: #a9c3f6;
+  --accent-ink: #0f1a33;
+  --accent-soft: rgba(143, 176, 240, 0.16);
+  --good: #7fd09c;
+  --warn: #ecc062;
+  --bad: #ee8479;
+  --on-bad: #2a0f0b;
+  --control-border: #7c7c82;
+  --overlay: rgba(10, 10, 12, 0.72);
+  --shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+  --focus: #8fb0f0;
+  --star: #8fb0f0;
+  color-scheme: dark;
+}
+
+/* Light (neutral): clean greys with no pink; dark grey accent. */
+[data-theme="neutral-light"] {
+  --bg: #f4f4f5;
+  --surface: #ffffff;
+  --raised: #e9e9ec;
+  --line: rgba(20, 20, 25, 0.11);
+  --line-strong: rgba(20, 20, 25, 0.22);
+  --text: #1c1c1f;
+  --muted: #4a4a51;
+  --faint: #66666e;
+  --accent: #3d63c4;
+  --feel-red-edge: #d0654f;
+  --feel-yellow-edge: #b8861f;
+  --feel-green-edge: #4f9d67;
+  --feel-blue-edge: #4f84c4;
+  --feel-purple-edge: #8a6bcf;
+  --feel-none: #8f817a;
+  --accent-text: #2c4ea6;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(61, 99, 196, 0.12);
+  --good: #23703f;
+  --warn: #85570a;
+  --bad: #b0372d;
+  --on-bad: #ffffff;
+  --control-border: #76767e;
+  --overlay: rgba(20, 20, 25, 0.4);
+  --shadow: 0 12px 30px rgba(20, 20, 25, 0.14);
+  --focus: #3d63c4;
+  --star: #3d63c4;
+  color-scheme: light;
+}

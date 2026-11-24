@@ -1,0 +1,14 @@
+{
+  "_synthetic": "hand-written from the public REST API docs; not real API output",
+  "_note": "A made-up disambiguation page: nothing on it describes one film",
+  "type": "disambiguation",
+  "title": "Harbour Lights",
+  "wikibase_item": "Q900007",
+  "description": "Topics referred to by the same term",
+  "extract": "Harbour Lights may refer to: Harbour Lights (film), a 2019 thriller film; Harbour Lights (song), a 1937 popular song.",
+  "thumbnail": {
+    "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Disambig_gray.svg/60px-Disambig_gray.svg.png",
+    "width": 60,
+    "height": 45
+  }
+}

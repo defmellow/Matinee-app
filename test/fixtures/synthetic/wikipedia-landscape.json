@@ -1,0 +1,19 @@
+{
+  "_synthetic": "hand-written from the public REST API docs; not real API output",
+  "_note": "A made-up film whose lead image is a landscape still, not a poster: the synopsis is kept, the image is not",
+  "type": "standard",
+  "title": "Night Ferry",
+  "wikibase_item": "Q900004",
+  "description": "2003 British film",
+  "extract": "Night Ferry is a 2003 British film about the last crossing of a decommissioned car ferry and the passengers who refuse to disembark.",
+  "thumbnail": {
+    "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Night_Ferry_still.jpg/320px-Night_Ferry_still.jpg",
+    "width": 320,
+    "height": 180
+  },
+  "originalimage": {
+    "source": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Night_Ferry_still.jpg?utm_source=synthetic",
+    "width": 1280,
+    "height": 720
+  }
+}

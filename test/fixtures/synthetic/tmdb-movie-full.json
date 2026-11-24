@@ -1,0 +1,144 @@
+{
+  "_synthetic": "hand-written from the public API docs; not real API output",
+  "_note": "A made-up film, shaped like GET /3/movie/{id}?append_to_response=credits,keywords,release_dates,watch/providers,recommendations,external_ids",
+  "id": 900001,
+  "imdb_id": "tt9000001",
+  "title": "Harbour Lights",
+  "original_title": "Les Lumières du Port",
+  "original_language": "fr",
+  "overview": "A night-shift ferry pilot discovers that the lights guiding her boat home have been rewired by someone who wants her lost.",
+  "tagline": "Follow the lights.",
+  "runtime": 118,
+  "release_date": "2019-06-14",
+  "poster_path": "/synthPosterAbc123.jpg",
+  "backdrop_path": "/synthBackdropXyz789.jpg",
+  "budget": 12000000,
+  "revenue": 48500000,
+  "vote_average": 7.4,
+  "vote_count": 3210,
+  "popularity": 41.2,
+  "adult": false,
+  "genres": [{ "id": 53, "name": "Thriller" }, { "id": 18, "name": "Drama" }],
+  "production_countries": [
+    { "iso_3166_1": "FR", "name": "France" },
+    { "iso_3166_1": "US", "name": "United States of America" },
+    { "iso_3166_1": "GB", "name": "United Kingdom" }
+  ],
+  "spoken_languages": [
+    { "english_name": "English", "iso_639_1": "en", "name": "English" },
+    { "english_name": "French", "iso_639_1": "fr", "name": "Français" }
+  ],
+  "production_companies": [
+    { "id": 11, "name": "Maison Bleue", "logo_path": null, "origin_country": "FR" },
+    { "id": 12, "name": "Tidewater Pictures", "logo_path": "/synthLogo.png", "origin_country": "US" }
+  ],
+  "belongs_to_collection": { "id": 5001, "name": "Harbour Lights Collection", "poster_path": null, "backdrop_path": null },
+  "credits": {
+    "cast": [
+      { "id": 101, "name": "Ana Roux", "character": "Mireille Fontaine", "order": 0 },
+      { "id": 102, "name": "Ben Okafor", "character": "Captain Dray", "order": 1 },
+      { "id": 103, "name": "Chloe Vance", "character": "Dispatcher", "order": 2 },
+      { "id": 104, "name": "Dmitri Lang", "character": "Harbourmaster", "order": 3 },
+      { "id": 105, "name": "Elodie Marsh", "character": "Nora", "order": 4 },
+      { "id": 106, "name": "Felix Ng", "character": "Deckhand", "order": 5 },
+      { "id": 107, "name": "Gita Rao", "character": "Inspector Sen", "order": 6 },
+      { "id": 108, "name": "Hugo Bell", "character": "Pilot Two", "order": 7 },
+      { "id": 109, "name": "Ines Duarte", "character": "Lena", "order": 8 },
+      { "id": 110, "name": "Jonas Weir", "character": "Engineer", "order": 9 },
+      { "id": 111, "name": "Kemal Aydin", "character": "Customs Officer", "order": 10 },
+      { "id": 112, "name": "Lucia Ferro", "character": "Journalist", "order": 11 },
+      { "id": 113, "name": "Marek Novak", "character": "Fisherman", "order": 12 },
+      { "id": 114, "name": "Nadia Holt", "character": "Mother", "order": 13 },
+      { "id": 115, "name": "Omar Reyes", "character": "Bartender", "order": 14 },
+      { "id": 116, "name": "Petra Lind", "character": "Passenger", "order": 15 },
+      { "id": 117, "name": "Quinn Abel", "character": "", "order": 16 },
+      { "id": 118, "name": "Rosa Imai", "character": "Child", "order": 17 },
+      { "id": 119, "name": "Sven Moreau", "character": "Voice", "order": 18 },
+      { "id": 120, "name": "Tess Calder", "character": "Extra", "order": 19 }
+    ],
+    "crew": [
+      { "id": 201, "name": "Claire Beaumont", "job": "Director", "department": "Directing" },
+      { "id": 202, "name": "Daniel Hart", "job": "Screenplay", "department": "Writing" },
+      { "id": 201, "name": "Claire Beaumont", "job": "Story", "department": "Writing" },
+      { "id": 202, "name": "Daniel Hart", "job": "Writer", "department": "Writing" },
+      { "id": 203, "name": "Eve Lorrimer", "job": "Novel", "department": "Writing" },
+      { "id": 204, "name": "Farid Nasser", "job": "Director of Photography", "department": "Camera" },
+      { "id": 205, "name": "Greta Solheim", "job": "Original Music Composer", "department": "Sound" },
+      { "id": 206, "name": "Hal Brandt", "job": "Music", "department": "Sound" },
+      { "id": 207, "name": "Iris Colbert", "job": "Editor", "department": "Editing" },
+      { "id": 208, "name": "Jules Varga", "job": "Producer", "department": "Production" },
+      { "id": 209, "name": "Kit Mallory", "job": "Producer", "department": "Production" },
+      { "id": 210, "name": "Lena Strand", "job": "Producer", "department": "Production" },
+      { "id": 211, "name": "Milo Perrin", "job": "Producer", "department": "Production" },
+      { "id": 212, "name": "Nell Garrity", "job": "Producer", "department": "Production" },
+      { "id": 213, "name": "Otto Brandl", "job": "Producer", "department": "Production" },
+      { "id": 214, "name": "Pia Sandoval", "job": "Producer", "department": "Production" },
+      { "id": 215, "name": "Ravi Kulkarni", "job": "Executive Producer", "department": "Production" },
+      { "id": 216, "name": "Sol Bianchi", "job": "Costume Design", "department": "Costume & Make-Up" }
+    ]
+  },
+  "keywords": { "keywords": [{ "id": 1, "name": "ferry" }, { "id": 2, "name": "conspiracy" }, { "id": 3, "name": "night" }] },
+  "release_dates": {
+    "results": [
+      {
+        "iso_3166_1": "US",
+        "release_dates": [{ "certification": "R", "type": 3, "release_date": "2019-06-21T00:00:00.000Z", "iso_639_1": "", "note": "" }]
+      },
+      {
+        "iso_3166_1": "AU",
+        "release_dates": [
+          { "certification": "MA15+", "type": 5, "release_date": "2019-10-01T00:00:00.000Z", "iso_639_1": "", "note": "DVD" },
+          { "certification": "M", "type": 3, "release_date": "2019-07-04T00:00:00.000Z", "iso_639_1": "", "note": "" },
+          { "certification": "", "type": 1, "release_date": "2019-06-30T00:00:00.000Z", "iso_639_1": "", "note": "Festival" }
+        ]
+      }
+    ]
+  },
+  "watch/providers": {
+    "results": {
+      "AU": {
+        "link": "https://www.themoviedb.org/movie/900001-harbour-lights/watch?locale=AU",
+        "flatrate": [
+          { "logo_path": "/synthNetflixLogo.jpg", "provider_id": 8, "provider_name": "Netflix", "display_priority": 2 },
+          { "logo_path": "/synthStanLogo.jpg", "provider_id": 21, "provider_name": "Stan", "display_priority": 1 }
+        ],
+        "rent": [{ "logo_path": "/synthAppleLogo.jpg", "provider_id": 2, "provider_name": "Apple TV", "display_priority": 3 }],
+        "buy": [
+          { "logo_path": "/synthAppleLogo.jpg", "provider_id": 2, "provider_name": "Apple TV", "display_priority": 3 },
+          { "logo_path": null, "provider_id": 3, "provider_name": "Google Play Movies", "display_priority": 5 }
+        ],
+        "free": [{ "logo_path": "/synthSBSLogo.jpg", "provider_id": 55, "provider_name": "SBS On Demand", "display_priority": 4 }],
+        "ads": [
+          { "logo_path": "/synthTubiLogo.jpg", "provider_id": 73, "provider_name": "Tubi TV", "display_priority": 9 },
+          { "logo_path": "/synthSBSLogo.jpg", "provider_id": 55, "provider_name": "SBS On Demand", "display_priority": 4 }
+        ]
+      },
+      "US": {
+        "link": "https://www.themoviedb.org/movie/900001-harbour-lights/watch?locale=US",
+        "flatrate": [{ "logo_path": "/synthMaxLogo.jpg", "provider_id": 1899, "provider_name": "Max", "display_priority": 1 }]
+      }
+    }
+  },
+  "recommendations": {
+    "page": 1,
+    "results": [
+      { "id": 910001, "title": "Rec One", "release_date": "2017-03-03" },
+      { "id": 910002, "title": "Rec Two", "release_date": "2018-04-04" },
+      { "id": 910003, "title": "Rec Three", "release_date": "2016-05-05" },
+      { "id": 910004, "title": "Rec Four", "release_date": "2015-06-06" },
+      { "id": 910005, "title": "Rec Five", "release_date": "2014-07-07" },
+      { "id": 910006, "title": "Rec Six", "release_date": "2013-08-08" },
+      { "id": 910007, "title": "Rec Seven", "release_date": "2012-09-09" },
+      { "id": 910008, "title": "Rec Eight", "release_date": "2011-10-10" },
+      { "id": 910009, "title": "Rec Nine", "release_date": "2010-11-11" },
+      { "id": 910010, "title": "Rec Ten", "release_date": "2009-12-12" },
+      { "id": 910011, "title": "Rec Eleven", "release_date": "2008-01-01" },
+      { "id": 910012, "title": "Rec Twelve", "release_date": "" },
+      { "id": 910013, "title": "Rec Thirteen", "release_date": "2006-03-03" },
+      { "id": 910014, "title": "Rec Fourteen", "release_date": "2005-04-04" }
+    ],
+    "total_pages": 1,
+    "total_results": 14
+  },
+  "external_ids": { "imdb_id": "tt9000001", "wikidata_id": "Q900001", "facebook_id": null, "instagram_id": null, "twitter_id": null }
+}

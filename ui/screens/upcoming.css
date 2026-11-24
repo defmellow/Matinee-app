@@ -1,0 +1,30 @@
+/* Upcoming. Classes prefixed upc-. */
+.upc { display: grid; gap: var(--space-6); align-content: start; }
+.upc > .segmented { justify-self: start; }
+.upc-group { display: grid; gap: var(--space-3); min-width: 0; }
+.upc-group-head { display: grid; gap: 2px; }
+.upc-card { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.upc-when { font-size: var(--step--1); color: var(--muted); }
+.upc-date { font-weight: 600; color: var(--text); }
+.upc-badge { align-self: flex-start; padding: 1px 8px; border-radius: var(--radius-b); cursor: default; font-size: var(--step--2); font-weight: 600; background: color-mix(in srgb, var(--accent, currentColor) 18%, transparent); color: var(--text); }
+.upc-note { margin: 0; font-size: var(--step--1); }
+.upc a.btn { text-decoration: none; }
+
+/* At Dendy Newtown */
+.upc-cinema { display: grid; gap: var(--space-4); min-width: 0; }
+.upc-cinema-head h2 { margin: 0; }
+.upc-group-head h3 { margin: 0; font-size: var(--step-1); font-weight: 650; }
+.upc-filters { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.upc-never { display: grid; gap: var(--space-3); justify-items: start; }
+.upc-never p { margin: 0; }
+.upc-sessions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
+.upc-sessions .chip { font-size: var(--step--1); padding: 0 var(--space-2); min-height: 24px; }
+.upc-more { font-size: var(--step--1); }
+.upc-when .badge { vertical-align: 1px; }
+.upc-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.upc-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); padding: var(--space-3) var(--space-4); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-c); }
+.upc-row-main { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); flex: 1 1 260px; min-width: 0; }
+.upc-row-title { overflow-wrap: anywhere; }
+.upc-row-link { margin-left: auto; font-size: var(--step--1); }
+.upc-foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); font-size: var(--step--1); }
+.upc-msg { margin: 0; font-size: var(--step--1); font-weight: 600; color: var(--bad); }

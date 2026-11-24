@@ -1,0 +1,184 @@
+{
+ "_note": "SYNTHETIC fixture: invented films and ids, real field structure of newtown.dendy.com.au/graphql responses (29 Oct 2026). Not real schedule data. The sold-out row (seatsRemaining 0) and the Q&A badge are constructed: none was seen in the live data.",
+ "data": {
+  "showingsForDate": {
+   "count": 6,
+   "resultVersion": "2000000002",
+   "data": [
+    {
+     "id": "910001",
+     "time": "2026-11-20T08:30:00Z",
+     "screenId": "109",
+     "seatsRemaining": 87,
+     "published": true,
+     "private": false,
+     "isPreview": false,
+     "showingBadgeIds": [
+      "52",
+      "53"
+     ],
+     "past": false,
+     "current": false,
+     "ticketsSold": 100,
+     "displayMetaData": "{\"classes\":\"reserved-seating\"}",
+     "movie": {
+      "id": "90002",
+      "name": "Harbour Lights - Directors Cut",
+      "urlSlug": "harbour-lights---directors-cut",
+      "duration": 101,
+      "rating": "MA15+",
+      "dateOfFirstShowing": "2026-11-20",
+      "directedBy": "Bo Merrin, Cass Vale",
+      "showingStatus": "On Sale",
+      "__typename": "Movie"
+     },
+     "__typename": "Showing"
+    },
+    {
+     "id": "910002",
+     "time": "2026-12-15T13:01:00Z",
+     "screenId": "108",
+     "seatsRemaining": 163,
+     "published": true,
+     "private": false,
+     "isPreview": false,
+     "showingBadgeIds": [
+      "52"
+     ],
+     "past": false,
+     "current": false,
+     "ticketsSold": 38,
+     "displayMetaData": "{\"classes\":\"reserved-seating\"}",
+     "movie": {
+      "id": "90001",
+      "name": "The Glass Orchard",
+      "urlSlug": "the-glass-orchard",
+      "duration": 150,
+      "rating": "CTC",
+      "dateOfFirstShowing": "2026-12-16",
+      "directedBy": "Ada Quill",
+      "showingStatus": "On Sale",
+      "__typename": "Movie"
+     },
+     "__typename": "Showing"
+    },
+    {
+     "id": "910003",
+     "time": "2026-12-16T22:30:00Z",
+     "screenId": "108",
+     "seatsRemaining": 2,
+     "published": true,
+     "private": false,
+     "isPreview": false,
+     "showingBadgeIds": [
+      "52",
+      "54"
+     ],
+     "past": false,
+     "current": false,
+     "ticketsSold": 100,
+     "displayMetaData": "{\"classes\":\"reserved-seating\"}",
+     "movie": {
+      "id": "90001",
+      "name": "The Glass Orchard",
+      "urlSlug": "the-glass-orchard",
+      "duration": 150,
+      "rating": "CTC",
+      "dateOfFirstShowing": "2026-12-16",
+      "directedBy": "Ada Quill",
+      "showingStatus": "On Sale",
+      "__typename": "Movie"
+     },
+     "__typename": "Showing"
+    },
+    {
+     "id": "910004",
+     "time": "2026-12-17T09:00:00Z",
+     "screenId": "112",
+     "seatsRemaining": 0,
+     "published": true,
+     "private": false,
+     "isPreview": false,
+     "showingBadgeIds": [
+      "52",
+      "64"
+     ],
+     "past": false,
+     "current": false,
+     "ticketsSold": 67,
+     "displayMetaData": "{\"classes\":\"reserved-seating\"}",
+     "movie": {
+      "id": "90001",
+      "name": "The Glass Orchard",
+      "urlSlug": "the-glass-orchard",
+      "duration": 150,
+      "rating": "CTC",
+      "dateOfFirstShowing": "2026-12-16",
+      "directedBy": "Ada Quill",
+      "showingStatus": "On Sale",
+      "__typename": "Movie"
+     },
+     "__typename": "Showing"
+    },
+    {
+     "id": "910005",
+     "time": "2026-12-17T11:15:00Z",
+     "screenId": "111",
+     "seatsRemaining": 31,
+     "published": true,
+     "private": true,
+     "isPreview": false,
+     "showingBadgeIds": [
+      "52"
+     ],
+     "past": false,
+     "current": false,
+     "ticketsSold": 100,
+     "displayMetaData": "{\"classes\":\"reserved-seating\"}",
+     "movie": {
+      "id": "90001",
+      "name": "The Glass Orchard",
+      "urlSlug": "the-glass-orchard",
+      "duration": 150,
+      "rating": "CTC",
+      "dateOfFirstShowing": "2026-12-16",
+      "directedBy": "Ada Quill",
+      "showingStatus": "On Sale",
+      "__typename": "Movie"
+     },
+     "__typename": "Showing"
+    },
+    {
+     "id": "910006",
+     "time": "2026-12-18T02:00:00Z",
+     "screenId": "108",
+     "seatsRemaining": 200,
+     "published": false,
+     "private": false,
+     "isPreview": false,
+     "showingBadgeIds": [
+      "52",
+      "66"
+     ],
+     "past": false,
+     "current": false,
+     "ticketsSold": 100,
+     "displayMetaData": "{\"classes\":\"reserved-seating\"}",
+     "movie": {
+      "id": "90001",
+      "name": "The Glass Orchard",
+      "urlSlug": "the-glass-orchard",
+      "duration": 150,
+      "rating": "CTC",
+      "dateOfFirstShowing": "2026-12-16",
+      "directedBy": "Ada Quill",
+      "showingStatus": "On Sale",
+      "__typename": "Movie"
+     },
+     "__typename": "Showing"
+    }
+   ],
+   "__typename": "ShowingList"
+  }
+ }
+}

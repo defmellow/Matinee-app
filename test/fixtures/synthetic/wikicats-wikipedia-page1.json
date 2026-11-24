@@ -1,0 +1,18 @@
+{
+  "_note": "Synthetic, shaped from the MediaWiki action API (prop=categories, formatversion=2). Page 1 of 2.",
+  "continue": { "clcontinue": "111|Films_set_in_Texas", "continue": "||" },
+  "query": {
+    "normalized": [{ "from": "paris, Texas (film)", "to": "Paris, Texas (film)" }],
+    "redirects": [{ "from": "Old Name", "to": "Harbour Lights (film)" }],
+    "pages": [
+      { "pageid": 111, "ns": 0, "title": "Paris, Texas (film)", "categories": [
+        { "ns": 14, "title": "Category:Films about atonement" },
+        { "ns": 14, "title": "Category:Articles with short description" },
+        { "ns": 14, "title": "Category:Use dmy dates from July 2020" } ] },
+      { "pageid": 222, "ns": 0, "title": "Harbour Lights (film)", "categories": [
+        { "ns": 14, "title": "Category:Films_set_in_ports" } ] },
+      { "pageid": 333, "ns": 0, "title": "Quiet Film", "categories": [
+        { "ns": 14, "title": "Category:Wikipedia articles needing clarification" } ] }
+    ]
+  }
+}

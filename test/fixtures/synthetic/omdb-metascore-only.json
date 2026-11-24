@@ -1,0 +1,15 @@
+{
+  "_synthetic": "hand-written from the public API docs; not real API output",
+  "_note": "No Ratings array entries for Metacritic, but a Metascore field; runtime in a longer form; Rated is a real rating",
+  "Title": "Metascore Only",
+  "Year": "2005",
+  "Rated": "PG-13",
+  "Runtime": "152 min",
+  "Poster": "N/A",
+  "Ratings": [{ "Source": "Rotten Tomatoes", "Value": "61%" }],
+  "Metascore": "64",
+  "imdbRating": "N/A",
+  "imdbVotes": "N/A",
+  "imdbID": "tt9000004",
+  "Response": "True"
+}

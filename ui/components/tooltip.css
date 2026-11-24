@@ -1,0 +1,10 @@
+.tip {
+  position: fixed; left: 0; top: 0; z-index: 1000; pointer-events: none; width: max-content; max-width: 280px;
+  padding: 6px 10px; border-radius: var(--radius-p);
+  background: var(--raised); color: var(--text); border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow); font-size: var(--step--1); line-height: 1.35; text-align: center; white-space: pre-line;
+  opacity: 0; transform: translateY(4px) scale(0.96); transform-origin: 50% 100%;
+  transition: opacity var(--dur-1) var(--ease), transform var(--dur-2) var(--ease);
+}
+.tip.tip-below { transform: translateY(-4px) scale(0.96); transform-origin: 50% 0; }
+.tip-on { opacity: 1; transform: none !important; }

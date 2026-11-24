@@ -1,0 +1,14 @@
+{
+  "_synthetic": "hand-written from the public REST API docs; not real API output",
+  "_note": "A made-up film whose poster is already no wider than the 250px thumbnail size, so the original doubles as the thumbnail",
+  "type": "standard",
+  "title": "Paper Boats",
+  "wikibase_item": "Q900002",
+  "description": "2011 Australian drama film",
+  "extract": "Paper Boats is a 2011 Australian drama film about two brothers who sell handmade kites on a coastal highway.",
+  "originalimage": {
+    "source": "https://upload.wikimedia.org/wikipedia/en/c/cd/Paper_Boats_poster.png?utm_source=synthetic",
+    "width": 200,
+    "height": 300
+  }
+}

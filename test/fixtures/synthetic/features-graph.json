@@ -1,0 +1,28 @@
+{
+  "_note": "Synthetic: invented people and films for the Discover / filmography / series tests. Not real data.",
+  "types": { "Q11424": "film", "Q24862": "short film", "Q5398426": "television series", "Q471839": "science fiction film (unknown until learned)", "Q3305213": "painting (not a film)", "Q99": "invented episode type (descends from TV programme, must be rejected)" },
+  "subclassesOfFilm": ["Q471839", "Q99"],
+  "episodeTypes": ["Q99"],
+  "personFilms": [
+    { "person": "Q100", "film": "Q1", "title": "Alpha Road", "date": "1990-05-01T00:00:00Z", "imdb": "tt0000001", "wiki": "Alpha Road", "types": ["Q11424"], "roles": ["director"] },
+    { "person": "Q100", "film": "Q2", "title": "Beta Night", "date": "1995-05-01T00:00:00Z", "imdb": "tt0000002", "types": ["Q11424"], "roles": ["director", "writer"] },
+    { "person": "Q100", "film": "Q10", "title": "Gamma Dawn", "date": "2001-01-01T00:00:00Z", "imdb": "tt0000010", "wiki": "Gamma Dawn", "types": ["Q11424"], "roles": ["director"] },
+    { "person": "Q100", "film": "Q11", "title": "Delta Shore", "date": "2005-01-01T00:00:00Z", "imdb": "tt0000011", "types": ["Q471839"], "roles": ["director"] },
+    { "person": "Q100", "film": "Q12", "title": "Epsilon Ten", "date": "2010-01-01T00:00:00Z", "imdb": "tt0000012", "types": ["Q11424"], "roles": ["director"], "runtime": "95" },
+    { "person": "Q100", "film": "Q13", "title": "Tiny Alpha", "date": "1999-01-01T00:00:00Z", "types": ["Q24862"], "roles": ["director"] },
+    { "person": "Q100", "film": "Q14", "title": "Future Alpha", "date": "2999-01-01T00:00:00Z", "imdb": "tt0000014", "types": ["Q11424"], "roles": ["director"] },
+    { "person": "Q100", "film": "Q15", "title": "Alpha Painting", "date": "1980-01-01T00:00:00Z", "types": ["Q3305213"], "roles": ["director"] },
+    { "person": "Q100", "film": "Q16", "title": "Zeta Acting", "date": "2012-01-01T00:00:00Z", "imdb": "tt0000016", "types": ["Q11424"], "roles": ["cast"] },
+    { "person": "Q100", "film": "Q17", "title": "Beta Night", "date": "1995-02-01T00:00:00Z", "imdb": "tt0000099", "types": ["Q11424"], "roles": ["producer"] },
+    { "person": "Q300", "film": "Q10", "title": "Gamma Dawn", "date": "2001-01-01T00:00:00Z", "imdb": "tt0000010", "wiki": "Gamma Dawn", "types": ["Q11424"], "roles": ["director"] },
+    { "person": "Q100", "film": "Q18", "title": "Pilot", "date": "1990-01-01T00:00:00Z", "imdb": "tt0000018", "types": ["Q99"], "roles": ["director"] },
+    { "person": "Q300", "film": "Q20", "title": "Eta Hills", "date": "2003-01-01T00:00:00Z", "imdb": "tt0000020", "types": ["Q11424"], "roles": ["director"] }
+  ],
+  "seriesMembers": [
+    { "series": "Q900", "sname": "Orbit", "film": "Q31", "title": "Orbit Three", "date": "1988-01-01T00:00:00Z", "ord": "3", "imdb": "tt0000031", "types": ["Q11424"] },
+    { "series": "Q900", "sname": "Orbit", "film": "Q30", "title": "Orbit Two", "date": "1984-01-01T00:00:00Z", "ord": "2", "imdb": "tt0000030", "types": ["Q11424"] },
+    { "series": "Q900", "sname": "Orbit", "film": "Q29", "title": "Orbit", "date": "1980-01-01T00:00:00Z", "ord": "1", "imdb": "tt0000029", "types": ["Q11424"] },
+    { "series": "Q900", "sname": "Orbit", "film": "Q32", "title": "Orbit Four", "date": "1992-01-01T00:00:00Z", "imdb": "tt0000032", "wiki": "Orbit Four", "types": ["Q11424"] }
+  ],
+  "ratings": "tconst\taverageRating\tnumVotes\ntt0000010\t8.0\t50000\ntt0000012\t6.0\t60000\ntt0000020\t7.5\t30000\ntt0000031\t7.0\t20000\ntt0000032\t6.0\t300\ntt0000016\t7.0\t9000\n"
+}

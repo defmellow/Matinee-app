@@ -1,0 +1,14 @@
+{
+  "_synthetic": "hand-written from the public REST API docs; not real API output",
+  "_note": "A made-up stub article: a poster but an extract too short to be a synopsis",
+  "type": "standard",
+  "title": "Lantern Hill",
+  "wikibase_item": "Q900006",
+  "description": "2021 film",
+  "extract": "Lantern Hill is a 2021 film.",
+  "originalimage": {
+    "source": "https://upload.wikimedia.org/wikipedia/en/e/e2/Lantern_Hill_poster.jpg?utm_source=synthetic",
+    "width": 500,
+    "height": 740
+  }
+}

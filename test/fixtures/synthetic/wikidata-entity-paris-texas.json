@@ -1,0 +1,49 @@
+{
+  "_note": "SYNTHETIC fixture shaped like a wbgetentities response (Wikidata is CC0). Values trimmed/invented for tests.",
+  "entities": {
+    "Q100": {
+      "id": "Q100",
+      "labels": { "en": { "language": "en", "value": "Paris, Texas" } },
+      "sitelinks": { "enwiki": { "site": "enwiki", "title": "Paris, Texas (film)" } },
+      "claims": {
+        "P31": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q11424" } } } }],
+        "P577": [
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "time": "+1984-05-19T00:00:00Z", "precision": 11 } } } },
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "time": "+1984-00-00T00:00:00Z", "precision": 9 } } } },
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "time": "+1985-01-01T00:00:00Z", "precision": 11 } } } }
+        ],
+        "P1476": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "text": "Paris, Texas", "language": "en" } } } }],
+        "P57": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q101" } } } }],
+        "P161": [
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q103" } } }, "qualifiers": { "P1545": [{ "snaktype": "value", "datavalue": { "value": "2" } }] } },
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q102" } } }, "qualifiers": { "P1545": [{ "snaktype": "value", "datavalue": { "value": "1" } }], "P453": [{ "snaktype": "value", "datavalue": { "value": { "id": "Q104" } } }] } },
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q199" } } } }
+        ],
+        "P136": [
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q110" } } } },
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q111" } } } }
+        ],
+        "P495": [
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q30" } } } },
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q183" } } } }
+        ],
+        "P166": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q120" } } }, "qualifiers": { "P585": [{ "snaktype": "value", "datavalue": { "value": { "time": "+1984-05-20T00:00:00Z", "precision": 11 } } }] } }],
+        "P1411": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "id": "Q121" } } }, "qualifiers": { "P585": [{ "snaktype": "value", "datavalue": { "value": { "time": "+1985-01-01T00:00:00Z", "precision": 9 } } }] } }],
+        "P2047": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "amount": "+145", "unit": "http://www.wikidata.org/entity/Q7727" } } } }],
+        "P2130": [
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "amount": "+9000000", "unit": "http://www.wikidata.org/entity/Q8146" } } } },
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "amount": "+1800000", "unit": "http://www.wikidata.org/entity/Q4917" } } } }
+        ],
+        "P2142": [
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "amount": "+2300000", "unit": "http://www.wikidata.org/entity/Q4917" } } } },
+          { "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": { "amount": "+2181987", "unit": "http://www.wikidata.org/entity/Q4917" } } } }
+        ],
+        "P345": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": "tt0087884" } } }],
+        "P4947": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": "655" } } }],
+        "P6127": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": "paris-texas" } } }],
+        "P1258": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": "m/paris_texas" } } }],
+        "P1712": [{ "rank": "normal", "mainsnak": { "snaktype": "value", "datavalue": { "value": "movie/paris-texas" } } }]
+      }
+    }
+  }
+}

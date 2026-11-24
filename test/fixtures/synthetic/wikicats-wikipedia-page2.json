@@ -1,0 +1,12 @@
+{
+  "_note": "Synthetic. Page 2 of 2 (the continuation).",
+  "batchcomplete": true,
+  "query": {
+    "pages": [
+      { "pageid": 111, "ns": 0, "title": "Paris, Texas (film)", "categories": [
+        { "ns": 14, "title": "Category:Films set in Texas" },
+        { "ns": 14, "title": "Category:Films about atonement" },
+        { "ns": 14, "title": "Category:Good articles" } ] }
+    ]
+  }
+}

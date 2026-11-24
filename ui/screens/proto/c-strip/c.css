@@ -1,0 +1,12 @@
+.pl-c-search { flex: 1 1 380px; max-width: 520px; }
+.pl-c-strip { margin-bottom: var(--space-4); }
+.pl-c-tabs { display: flex; flex-wrap: wrap; gap: 2px var(--space-1); align-items: center; border-bottom: 1px solid var(--line); }
+.pl-c-tab { position: relative; display: inline-flex; gap: 6px; align-items: center; height: 38px; padding: 0 var(--space-3); border: 0; background: transparent;
+  color: var(--muted); font: inherit; font-size: var(--step-0); cursor: pointer; border-radius: var(--radius-c) var(--radius-c) 0 0; transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease); }
+.pl-c-tab:hover { color: var(--text); background: var(--surface); }
+.pl-c-tab[aria-selected="true"] { color: var(--text); font-weight: 700; }
+.pl-c-tab[aria-selected="true"]::after { content: ''; position: absolute; left: var(--space-3); right: var(--space-3); bottom: -1px; height: 2px; border-radius: 2px; background: var(--accent); }
+.pl-c-on { min-width: 18px; height: 18px; padding: 0 5px; display: inline-grid; place-items: center; border-radius: 999px; background: var(--accent-soft); color: var(--accent-text); font-size: var(--step--2); font-weight: 700; }
+.pl-c-close { margin-left: auto; width: 30px; height: 30px; }
+.pl-c-band { padding: var(--space-4) 0 var(--space-2); }
+.pl-c-band .lib-filters { padding: 0; margin: 0; }

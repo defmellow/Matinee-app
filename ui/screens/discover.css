@@ -1,0 +1,29 @@
+/* Discover. Classes prefixed disc-. */
+.disc { display: grid; gap: var(--space-6); align-content: start; }
+.disc-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.disc-actions { display: flex; align-items: center; gap: var(--space-3); }
+.disc-section { display: grid; gap: var(--space-3); min-width: 0; }
+.disc-section-head { display: grid; gap: 2px; }
+.disc-rowwrap { position: relative; min-width: 0; }
+.disc-row { display: flex; gap: var(--space-4); overflow-x: auto; scroll-snap-type: x proximity; padding: 4px 2px var(--space-3); }
+.disc-card { flex: 0 0 150px; scroll-snap-align: start; display: flex; flex-direction: column; align-items: stretch; gap: 4px; text-align: left; background: none; border: 0; padding: 0; color: inherit; cursor: pointer; min-width: 0; }
+.disc-title { font-weight: 600; line-height: 1.25; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; margin-top: 4px; }
+.disc-meta { font-size: var(--step--1); }
+.disc-scores { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
+.disc-reason { font-size: var(--step--1); line-height: 1.3; color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.disc-tv { position: absolute; top: 6px; left: 6px; padding: 1px 6px; border-radius: var(--radius-b); font-size: var(--step--2); font-weight: 700; background: color-mix(in srgb, var(--bg) 80%, transparent); color: var(--text); }
+.disc-arrow { position: absolute; top: 35%; z-index: 2; width: 36px; height: 36px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line-strong); box-shadow: var(--shadow); opacity: 0; transition: opacity var(--dur-1) var(--ease); display: none; }
+.disc-arrow.left { left: -12px; transform: scaleX(-1); }
+.disc-arrow.right { right: -12px; }
+@media (min-width: 960px) {
+  .disc-arrow { display: grid; place-items: center; }
+  .disc-rowwrap:hover .disc-arrow, .disc-arrow:focus-visible { opacity: 1; }
+}
+.disc-dialog { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: var(--space-4); }
+.disc-dialog-body { display: grid; gap: var(--space-2); align-content: start; min-width: 0; }
+.disc-dialog-body p { margin: 0; }
+.disc-reasons { margin: var(--space-1) 0 0; padding-left: var(--space-4); display: grid; gap: 4px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .disc-row { scroll-behavior: auto; } }
+:root[data-motion="less"] .disc-row { scroll-behavior: auto; }
+.disc a.btn { text-decoration: none; }
+.disc-filters { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0 var(--space-4); }

@@ -1,0 +1,16 @@
+.logdrop { margin-top: var(--space-2); }
+.logdrop-btn { display: inline-flex; align-items: center; gap: var(--space-1); background: none; border: 0; padding: var(--space-1) 0; color: var(--muted); font: inherit; font-size: var(--step--1); cursor: pointer; transition: color var(--dur-1) var(--ease); }
+.logdrop-btn:hover { color: var(--text); }
+.logdrop-box { max-height: 220px; overflow-y: auto; margin-top: var(--space-2); padding: var(--space-2) var(--space-3); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); font-size: var(--step--1); line-height: 1.5; text-align: left; }
+.logdrop-box ul { list-style: none; margin: 0; padding: 0; }
+.logdrop-box li { padding: 1px 0; color: var(--text); overflow-wrap: anywhere; }
+.logdrop-time { margin-right: var(--space-2); }
+.logdrop-kind { color: var(--muted); }
+.logdrop-ok .logdrop-kind { color: var(--good); }
+.logdrop-error .logdrop-kind { color: var(--bad); }
+.logdrop-wait .logdrop-kind, .logdrop-miss .logdrop-kind { color: var(--warn); }
+.logdrop-empty { margin: 0; color: var(--muted); }
+.logdrop-chev { display: inline-flex; width: 14px; transition: transform var(--dur-2) var(--ease); }
+.logdrop-chev.open { transform: rotate(90deg); }
+.logdrop-chev svg { width: 14px; height: 14px; }
+.logdrop-eta { margin: 0 0 var(--space-1); color: var(--muted); }
