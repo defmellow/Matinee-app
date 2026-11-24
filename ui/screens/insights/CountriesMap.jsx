@@ -2,8 +2,8 @@
 import { useMemo } from 'preact/hooks';
 import { WORLD_MAP, WORLD_VIEWBOX } from '../../data/world-map.js';
 import { tallyCountries, colourStep, countText, STEPS } from './countryMap.js';
-import { normalise } from '../library/model.js';
-import { go } from '../../router.js';
+import { filterHref } from '../../components/chip.js';
+import { markFresh } from '../../router.js';
 import './countries.css';
 
 export default function CountriesMap({ films }) {
@@ -13,9 +13,9 @@ export default function CountriesMap({ films }) {
   const open = id => {
     const names = t.names.get(id);
     if (!names) return;
-    // The Library keeps its filter in this saved preference; set it, then open the Library.
-    try { localStorage.setItem('pref:library.query', JSON.stringify({ ...normalise(null), status: 'watched', countries: names })); } catch { /* ignore */ }
-    go('library');
+    // A Library link like any other: the core matches a country's other spellings itself (canonicalCountry).
+    markFresh();
+    location.hash = filterHref('country', names[0]);
   };
   const onClick = e => { const id = e.target.getAttribute && e.target.getAttribute('data-id'); if (id) open(id); };
   const onKey = e => { if (e.key === 'Enter' || e.key === ' ') { const id = e.target.getAttribute('data-id'); if (id) { e.preventDefault(); open(id); } } };

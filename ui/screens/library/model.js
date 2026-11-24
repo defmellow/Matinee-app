@@ -54,10 +54,12 @@ export const normalise = q => {
 
 /**
  * A Library link's filter as a stored query, or null when the text isn't one. Forms: tag:<name>, auto:<id>, genre:<name>,
- * country:<name>, language:<name>, decade:<1980>, status:<watched|watchlist|listed|liked|unrated>, q:<search text>.
+ * country:<name>, language:<name>, decade:<1980>, status:<watched|watchlist|listed|liked|unrated>, q:<search text>,
+ * rating:<8> or rating:<7-8> (your rating on the 1–10 half-star scale, the same as ratingMin/ratingMax),
+ * runtime:<91-120>, runtime:<-90> or runtime:<151-> (minutes, either end open; runtimeMin is the merged Library's field).
  */
 export function queryFromParam(param) {
-  const m = /^(tag|auto|genre|country|language|decade|status|q):([\s\S]+)$/.exec(param || '');
+  const m = /^(tag|auto|genre|country|language|decade|status|rating|runtime|q):([\s\S]+)$/.exec(param || '');
   if (!m) return null;
   const [, kind, value] = m;
   const base = { ...normalise(null), status: 'all' };
@@ -68,6 +70,16 @@ export function queryFromParam(param) {
     case 'country': return { ...base, countries: [value] };
     case 'language': return { ...base, languages: [value] };
     case 'decade': { const d = parseInt(value, 10); return Number.isFinite(d) ? { ...base, decade: Math.floor(d / 10) * 10 } : null; }
+    case 'rating': {
+      const r = /^(\d{1,2})(?:-(\d{1,2}))?$/.exec(value);
+      const lo = r ? +r[1] : NaN, hi = r && r[2] ? +r[2] : lo;
+      return lo >= 1 && hi <= 10 && lo <= hi ? { ...base, ratingMin: lo, ratingMax: hi } : null;
+    }
+    case 'runtime': {
+      const r = /^(\d{0,3})-(\d{0,3})$/.exec(value);
+      const lo = r && r[1] ? +r[1] : null, hi = r && r[2] ? +r[2] : null;
+      return r && (lo != null || hi != null) && (lo == null || hi == null || lo <= hi) ? { ...base, runtimeMin: lo, runtimeMax: hi } : null;
+    }
     case 'status': if (value === 'unwatched') return { ...base, status: 'watchlist' };
       return STATUS_OPTIONS.some(([v]) => v === value) ? { ...base, status: value } : null;
     default: return { ...base, text: value };

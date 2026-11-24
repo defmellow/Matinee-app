@@ -5,6 +5,7 @@
 // entries:   diary entries { key, date:'YYYY-MM-DD', rating, rewatch }
 import { foldSearch } from './tags.js';
 import { localDay } from '../util/localday.js';
+import { linkPart, personPart, partsText } from './text-parts.js';
 
 const round1 = x => Math.round(x * 10) / 10;
 const round2 = x => Math.round(x * 100) / 100;
@@ -217,28 +218,32 @@ export function moreInsights({ summaries = [], entries = [], today, perMonth = 0
     directors: wDirectors.slice(0, 8).map(r => ({ name: r.name, ...(r.id != null ? { id: r.id } : {}), count: r.count, keys: r.keys.slice(0, 6) })),
   };
 
-  // ----- at a glance: a few plain sentences, the most telling first
-  const glance = [];
+  // ----- at a glance: a few plain sentences, the most telling first. Each is kept as parts too (text-parts.js), so
+  // the genres, people and years in it can be links; `glance` is the same sentences as plain text.
+  const glanceParts = [];
   if (pace.thisYear && pace.lastYear) {
     const gap = pace.thisYear - pace.lastYearToDate;
-    glance.push(gap === 0 ? `${plural(pace.thisYear, 'film', 'films')} logged in ${now.y}, level with this point last year.`
-      : `${plural(pace.thisYear, 'film', 'films')} logged in ${now.y}, ${Math.abs(gap)} ${gap > 0 ? 'ahead of' : 'behind'} this point last year.`);
+    glanceParts.push([`${plural(pace.thisYear, 'film', 'films')} logged in `, linkPart(now.y, 'year', now.y),
+      gap === 0 ? ', level with this point last year.' : `, ${Math.abs(gap)} ${gap > 0 ? 'ahead of' : 'behind'} this point last year.`]);
   }
   if (genreLean.higher.length) {
     const g = genreLean.higher[0], l = genreLean.lower[0];
-    glance.push(`${g.name} gets your highest ratings (${g.averageRating.toFixed(1)}★ across ${plural(g.rated, "film", "films")})${l ? `, ${l.name} your lowest (${l.averageRating.toFixed(1)}★)` : ""}.`);
+    glanceParts.push([linkPart(g.name, 'genre', g.name), ` gets your highest ratings (${g.averageRating.toFixed(1)}★ across ${plural(g.rated, "film", "films")})`,
+      ...(l ? [', ', linkPart(l.name, 'genre', l.name), ` your lowest (${l.averageRating.toFixed(1)}★)`] : []), '.']);
   }
-  if (people.directors.length) { const p = people.directors[0]; glance.push(`${p.name} is your most watched director, with ${plural(p.count, 'film', 'films')}.`); }
+  if (people.directors.length) { const p = people.directors[0]; glanceParts.push([personPart(p, 'director'), ` is your most watched director, with ${plural(p.count, 'film', 'films')}.`]); }
   if (yearsSeen.length >= 10) {
     const recent = yearsSeen.filter(y => y >= now.y - 10).length;
-    glance.push(`${Math.round((100 * recent) / yearsSeen.length)}% of what you've watched came out in the last ten years; your middle film is from ${Math.round(median(yearsSeen))}.`);
+    const mid = Math.round(median(yearsSeen));
+    glanceParts.push([`${Math.round((100 * recent) / yearsSeen.length)}% of what you've watched came out in the last ten years; your middle film is from `, linkPart(mid, 'text', `year:${mid}`), '.']);
   }
-  if (watchlist.count && watchlist.yearsAtPace) glance.push(`Your watchlist holds ${plural(watchlist.count, 'film', 'films')}: about ${watchlist.yearsAtPace} years at your usual pace.`);
+  if (watchlist.count && watchlist.yearsAtPace) glanceParts.push(['Your watchlist holds ', linkPart(plural(watchlist.count, 'film', 'films'), 'status', 'watchlist'), `: about ${watchlist.yearsAtPace} years at your usual pace.`]);
+  const glance = glanceParts.map(partsText);
 
   return {
     mean: mean != null ? round2(mean) : null,
     genres, genreLean, decades, medianYear: yearsSeen.length ? Math.round(median(yearsSeen)) : null,
-    runtime, age, ratingsByYear, pace, years, people, rewatched, records, watchlist, glance,
+    runtime, age, ratingsByYear, pace, years, people, rewatched, records, watchlist, glance, glanceParts,
     liked: { count: watched.filter(s => s.user?.liked).length, share: watched.length ? Math.round((100 * watched.filter(s => s.user?.liked).length) / watched.length) : 0 },
   };
 }

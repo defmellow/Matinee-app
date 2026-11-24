@@ -1,11 +1,12 @@
 // Small building blocks for the Insights screen.
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import { colourWords } from '../../feel-colours.js'; // TEMP feel colours
 import { wordFamilyOf } from '../../../core/analysis/feel-families.js'; // TEMP feel colours
 import { Poster, Stars } from '../../components/film.jsx';
 import { externalScores } from '../../components/scores.js';
 import { href } from '../../router.js';
+import { linkHref } from '../../components/chip.js';
 import { n as num, plural } from '../../format.js';
 
 /** A card: a titled panel. `wide` spans the whole grid, `hint` is one muted line under the title, `aside` sits right of the title. */
@@ -26,16 +27,27 @@ export function Section({ title, hint, children, wide, aside, class: cls = '' })
 
 export const Thin = ({ children = 'Rate a few more films to see this.' }) => <p class="faint ins-thin">{children}</p>;
 
+/** A quiet text link (the film page's `film-link`), or the plain children when there is nowhere to go. */
+export const TextLink = ({ to, children, class: cls = '' }) => (to ? <a class={'film-link' + (cls ? ' ' + cls : '')} href={to}>{children}</a> : children);
+
+/** A sentence given as text parts (core/analysis/text-parts.js): plain parts as text, linked parts as quiet links. */
+export function Words({ parts }) {
+  return (parts || []).map((p, i) => (typeof p === 'string'
+    ? <Fragment key={i}>{colourWords(p, h)}</Fragment>
+    : <TextLink key={i} to={linkHref(p.to)}>{p.text}</TextLink>));
+}
+
 /**
  * A short note in plain sentences, the way you'd tell a friend: used where a row of number tiles would otherwise go.
- * `children` is the opening paragraph (wrap the numbers in <b>); `lines` are further sentences, one per line.
+ * `children` is the opening paragraph (wrap the numbers in <b>); `lines` are further sentences, one per line: a string,
+ * text parts (an array, see Words) or anything renderable.
  */
 export function Note({ children, lines = [], title = null }) {
   return (
     <section class="ins-note-card wide">
       {title && <h2>{title}</h2>}
       <p class="ins-lede">{children}</p>
-      {lines.length > 0 && <ul class="ins-lines">{lines.map((g, i) => <li key={i}>{typeof g === 'string' ? colourWords(g, h) : g}</li>)}</ul>}
+      {lines.length > 0 && <ul class="ins-lines">{lines.map((g, i) => <li key={i}>{typeof g === 'string' ? colourWords(g, h) : Array.isArray(g) ? <Words parts={g} /> : g}</li>)}</ul>}
     </section>
   );
 }
@@ -63,17 +75,19 @@ export function MiniPosters({ keys = [], lib, max = 4 }) {
 }
 
 /**
- * rows: [{ name, id?, count, averageRating, keys? }]. People rows link to their page when an id is known.
+ * rows: [{ name, id?, count, averageRating, keys? }]. People rows (`linkPeople`) link to their page, by id when known,
+ * else by name, opening on `role`; `link(row)` gives any other row's href (a genre, country…).
  * `posters` (with `lib`) adds a few of each row's films on the right.
  */
-export function RankList({ rows, linkPeople = false, lib = null, posters = false, unit = ['film', 'films'] }) {
+export function RankList({ rows, linkPeople = false, role = null, link = null, lib = null, posters = false, unit = ['film', 'films'] }) {
+  const to = r => (linkPeople ? ((r.id || r.name) ? href('person', r.id || r.name, role ? { role } : undefined) : null) : link ? link(r) : null);
   const max = Math.max(1, ...rows.map(r => r.count));
   return (
     <ol class={'ins-rank' + (posters ? ' with-posters' : '')}>
       {rows.map((r, i) => (
         <li key={r.id || r.name} style={{ '--i': i }} title={`${r.name}: ${plural(r.count, unit[0], unit[1])}${r.averageRating != null ? `, ${r.averageRating.toFixed(2)}★ on average` : ''}`}>
           <span class="ins-rank-n num faint" aria-hidden="true">{i + 1}</span>
-          <span class="ins-rank-name">{linkPeople && r.id ? <a href={href('person', r.id)}>{r.name}</a> : r.name}</span>
+          <span class="ins-rank-name">{to(r) ? <a href={to(r)}>{r.name}</a> : r.name}</span>
           {posters && lib && <MiniPosters keys={r.keys} lib={lib} />}
           <span class="ins-rank-avg">{r.averageRating != null && <Stars rating={Math.round(r.averageRating * 2)} size="12px" />}</span>
           <span class="ins-rank-count num">{r.count}</span>

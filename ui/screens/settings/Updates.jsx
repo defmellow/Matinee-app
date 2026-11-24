@@ -62,25 +62,14 @@ function ago(t) {
   return h < 24 ? `${h} hour${h === 1 ? '' : 's'} ago` : 'over a day ago';
 }
 
-/** Check now + which kind of builds to follow. */
+/** Check now. (The Main / Experimental choice was removed: every copy follows the normal releases.) */
 function CheckAndChannel({ s, b }) {
-  const experimental = s.channel === 'experimental';
   const status = s.checking ? 'Checking…' : s.checkFailed ? "Couldn't reach GitHub. Try again in a moment." : s.lastCheckedAt ? `Last checked ${ago(s.lastCheckedAt)}.` : 'Not checked yet.';
   return (
-    <>
-      <div class="set-row">
-        <button type="button" class="btn" disabled={!!s.checking} onClick={() => b.check()?.catch?.(e => reportFailure('Updates', "Couldn't check for updates.", e))}>Check for updates now</button>
-        <span class="set-small" aria-live="polite">{status}</span>
-      </div>
-      <div class="set-row">
-        <label for="upd-channel">Follow</label>
-        <select id="upd-channel" value={s.channel || 'main'} onChange={e => b.setChannel(e.currentTarget.value)}>
-          <option value="main">Main (stable)</option>
-          <option value="experimental">Experimental (early tests)</option>
-        </select>
-      </div>
-      {experimental && <p class="set-small">Experimental builds are early tests of new features and can be rough. Switch back to Main any time; your library stays as it is.</p>}
-    </>
+    <div class="set-row">
+      <button type="button" class="btn" disabled={!!s.checking} onClick={() => b.check()?.catch?.(e => reportFailure('Updates', "Couldn't check for updates.", e))}>Check for updates now</button>
+      <span class="set-small" aria-live="polite">{status}</span>
+    </div>
   );
 }
 

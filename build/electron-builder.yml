@@ -28,11 +28,9 @@ mac:
   extendInfo:
     NSDocumentsFolderUsageDescription: Matinee saves files you ask for, like the file you share from Settings, in your Documents folder.
   identity: null
-  target:
-    - target: dmg
-      arch: [arm64, x64]
-    - target: zip
-      arch: [arm64, x64]
+  # No arch here: build.yml picks one per run (--x64, then --arm64). An arch list in this file wins over those flags, so
+  # each run built both chips under one name and the Intel app ended up in the Apple Silicon .dmg (v1.0, v1.1).
+  target: [dmg, zip]
   # Plain names that can be told apart at a glance: Matinee-0.58.0-Mac.dmg (Apple Silicon). The Intel copy is built in a second run
   # with -c.mac.artifactName=Matinee-${version}-Mac-Intel.${ext} (see .github/workflows/build.yml).
   artifactName: Matinee-${version}-Mac.${ext}

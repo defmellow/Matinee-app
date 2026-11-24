@@ -4,6 +4,7 @@
 // entries:   diary entries { id, key, date:'YYYY-MM-DD', rating, rewatch, review }
 import { yourTake } from './scores.js';
 import { foldSearch } from './tags.js';
+import { linkPart, partsText } from './text-parts.js';
 
 const DAY = 86400000;
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -164,21 +165,24 @@ export function yearInReview({ summaries = [], entries = [], year } = {}) {
   const ratingVsCrowd = diffs.length ? round2(diffs.reduce((a, b) => a + b, 0) / diffs.length / 20) : null; // 100 points = 5 stars
 
   const title = key => byKey.get(key)?.title || 'a film';
-  const highlights = [];
+  // Each highlight is kept as parts too (text-parts.js), so a film or year named in it can be a link; `highlights` is
+  // the same sentences as plain text.
+  const parts = [];
   if (!inYear.length) {
-    highlights.push(`Nothing in your diary for ${Y} yet.`);
+    parts.push([`Nothing in your diary for ${Y} yet.`]);
   } else {
     const busiest = monthCounts.reduce((bi, c, i) => (c > monthCounts[bi] ? i : bi), 0);
-    if (monthCounts[busiest] > 1) highlights.push(`You watched ${monthCounts[busiest]} films in ${MONTH_NAMES[busiest]}, your busiest month.`);
-    if (topFilms.length) highlights.push(`Your highest rated was ${title(topFilms[0].key)}, at ${topFilms[0].rating / 2} stars.`);
-    if (longestStreak.days >= 2) highlights.push(`Your longest streak was ${plural(longestStreak.days, 'day', 'days')} in a row.`);
-    if (busiestDay && busiestDay.count >= 2) highlights.push(`${plural(busiestDay.count, 'film', 'films')} in one day on ${new Date(busiestDay.date + 'T12:00:00Z').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', timeZone: 'UTC' })}.`);
-    if (totals.rewatches) highlights.push(`You rewatched ${plural(totals.rewatches, 'film', 'films')}.`);
-    if (ratingVsCrowd != null && Math.abs(ratingVsCrowd) >= 0.1) highlights.push(`You rated ${Math.abs(ratingVsCrowd).toFixed(1)} stars ${ratingVsCrowd > 0 ? 'above' : 'below'} the crowd on average.`);
-    if (oldestFilm && newestFilm && newestFilm.year - oldestFilm.year >= 20) highlights.push(`Your films span ${newestFilm.year - oldestFilm.year} years, from ${oldestFilm.year} to ${newestFilm.year}.`);
-    if (highlights.length < 3 && totals.newToYou) highlights.push(`${plural(totals.newToYou, 'film was', 'films were')} new to you.`);
-    if (highlights.length < 3) highlights.push(`You logged ${plural(totals.entries, 'film', 'films')} in ${Y}.`);
+    if (monthCounts[busiest] > 1) parts.push([`You watched ${monthCounts[busiest]} films in ${MONTH_NAMES[busiest]}, your busiest month.`]);
+    if (topFilms.length) parts.push(['Your highest rated was ', byKey.has(topFilms[0].key) ? linkPart(title(topFilms[0].key), 'film', topFilms[0].key) : title(topFilms[0].key), `, at ${topFilms[0].rating / 2} stars.`]);
+    if (longestStreak.days >= 2) parts.push([`Your longest streak was ${plural(longestStreak.days, 'day', 'days')} in a row.`]);
+    if (busiestDay && busiestDay.count >= 2) parts.push([`${plural(busiestDay.count, 'film', 'films')} in one day on ${new Date(busiestDay.date + 'T12:00:00Z').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', timeZone: 'UTC' })}.`]);
+    if (totals.rewatches) parts.push([`You rewatched ${plural(totals.rewatches, 'film', 'films')}.`]);
+    if (ratingVsCrowd != null && Math.abs(ratingVsCrowd) >= 0.1) parts.push([`You rated ${Math.abs(ratingVsCrowd).toFixed(1)} stars ${ratingVsCrowd > 0 ? 'above' : 'below'} the crowd on average.`]);
+    if (oldestFilm && newestFilm && newestFilm.year - oldestFilm.year >= 20) parts.push([`Your films span ${newestFilm.year - oldestFilm.year} years, from `, linkPart(oldestFilm.year, 'film', oldestFilm.key), ' to ', linkPart(newestFilm.year, 'film', newestFilm.key), '.']);
+    if (parts.length < 3 && totals.newToYou) parts.push([`${plural(totals.newToYou, 'film was', 'films were')} new to you.`]);
+    if (parts.length < 3) parts.push([`You logged ${plural(totals.entries, 'film', 'films')} in ${Y}.`]);
   }
+  const highlights = parts.map(partsText);
 
   // ---------- Nov 2026 remake: everything below is additive ----------
   const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -290,7 +294,7 @@ export function yearInReview({ summaries = [], entries = [], year } = {}) {
 
   return {
     year: Y, years, totals, topFilms, mosaic, firstFilm, lastFilm, months, favouritePeople, genres, decades,
-    longestStreak, busiestDay, oldestFilm, newestFilm, ratingAverage, ratingVsCrowd, highlights: highlights.slice(0, 5),
+    longestStreak, busiestDay, oldestFilm, newestFilm, ratingAverage, ratingVsCrowd, highlights: highlights.slice(0, 5), highlightParts: parts.slice(0, 5),
     films: allFilms, monthsFull, weekdays, dayCounts: dayCountsIso, previous, genresRated, countries, languages, runtime,
     hotTakes, ratingHistogram, newDirectors, favouritePeopleFilms, rewatchedFilms, liked,
   };

@@ -3,6 +3,10 @@
 Newest first. Plain language; what you'd notice.
 The TOP section is published as the release notes (and shown in Settings → Updates) by the next build. After a build, retitle it with its version and date, then start a new "## Next build" section above it.
 
+## v1.2 — 24 Nov 2026
+- Fixed: the Apple Silicon Mac download contained the Intel version.
+- Genres, people, countries, years and ratings in Insights and Year in review now open the Library when clicked.
+
 ## v1.1 — 24 Nov 2026
 - UI polish and minor bug fixes
 

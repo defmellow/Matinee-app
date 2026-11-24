@@ -2,10 +2,14 @@
 import { MATINEE_TYPICAL as T } from '../../components/matineeTypical.js';
 import Bars from './Bars.jsx';
 import { Section, Thin } from './parts.jsx';
+import { filterHref } from '../../components/chip.js';
 
 const median = a => { const s = [...a].sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 
-/** Counts of scores per ten points (0–9 … 90–100), as the chart's rows, trimmed of empty tens at both ends. */
+/**
+ * Counts of scores per ten points (0–9 … 90–100), as the chart's rows, trimmed of empty tens at both ends. Each bar links
+ * to the Library with that range typed as a search (score:70-79): the Library's own Matinee score filter has no upper end.
+ */
 export function spreadBins(scores) {
   const counts = Array(10).fill(0);
   for (const s of scores) counts[Math.min(9, Math.max(0, Math.floor(s / 10)))]++;
@@ -14,7 +18,7 @@ export function spreadBins(scores) {
   const rows = [];
   for (let i = first; i <= last && first >= 0; i++) {
     const lo = i * 10, hi = i === 9 ? 100 : lo + 9;
-    rows.push({ label: `${lo}s`, value: counts[i], hot: lo + 5 >= T.low && lo + 5 <= T.high, title: `${lo}–${hi}: ${counts[i]} ${counts[i] === 1 ? 'film' : 'films'}` });
+    rows.push({ label: `${lo}s`, value: counts[i], hot: lo + 5 >= T.low && lo + 5 <= T.high, title: `${lo}–${hi}: ${counts[i]} ${counts[i] === 1 ? 'film' : 'films'}`, href: filterHref('text', `score:${lo}-${hi}`) });
   }
   return rows;
 }

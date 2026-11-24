@@ -3,6 +3,7 @@ import { useCall } from '../../state.js';
 import { Loading } from '../../components/ui.jsx';
 import { Poster, Stars, dateText, runtimeText } from '../../components/film.jsx';
 import { href } from '../../router.js';
+import { filterHref } from '../../components/chip.js';
 import { n as num, plural, pluralN, MONTHS_SHORT } from '../../format.js';
 import Bars from './Bars.jsx';
 import Calibration from './Calibration.jsx';
@@ -10,13 +11,24 @@ import ScoreSpread from './ScoreSpread.jsx';
 import CountriesMap from './CountriesMap.jsx';
 import { tallyCountries } from './countryMap.js';
 import { famOf } from '../../feel-colours.js'; // TEMP feel colours
-import { Section, Thin, Note, Stack, RankList, LeanList, PosterRow, TakeList, MiniPosters } from './parts.jsx';
+import { Section, Thin, Note, Stack, RankList, LeanList, PosterRow, TakeList, MiniPosters, TextLink } from './parts.jsx';
 
 const monthLabel = ym => MONTHS_SHORT[+ym.slice(5) - 1];
 const monthLong = ym => new Date(ym + '-01T12:00:00').toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
 const films = c => plural(c, 'film', 'films');
 const pct = (a, b) => (b ? Math.round((100 * a) / b) : 0);
 const starsText = v => `${v.toFixed(1)}★`;
+
+// Where a row or bar leads: the Library filtered by the thing it names.
+export const genreLink = r => filterHref('genre', r.name);
+export const countryLink = r => filterHref('country', r.name);
+export const languageLink = r => filterHref('language', r.name);
+export const decadeLink = name => filterHref('decade', parseInt(name, 10));
+/** A runtime band (insights-more RUNTIME_BANDS: a band holds runtimes up to its limit) as the Library's Length range. */
+const LENGTH_RANGES = { 'Under 90 min': '-90', '90 min to 2 hours': '91-120', '2 to 2½ hours': '121-150', 'Over 2½ hours': '151-' };
+const lengthLink = b => (LENGTH_RANGES[b.name] ? filterHref('runtime', LENGTH_RANGES[b.name]) : null);
+/** A star-rating histogram row (1–10) as Library links: films you rated exactly that. */
+export const ratingLink = r => filterHref('rating', r);
 
 function crowdLine(v) {
   if (v.averageDiff == null) return 'Once ratings from other sites arrive, you\'ll see how you compare with the crowd.';
@@ -59,10 +71,10 @@ export function Overview({ d, lib, library }) {
   const days = t.hours / 24;
   return (
     <div class="ins-grid">
-      <Note lines={d.glance}>
-        You've watched <b class="num">{pluralN(t.films, 'film')}</b>{t.hours > 0 && <>, <b class="num">{num(Math.round(t.hours))} hours</b> of them{days >= 2 ? `, or about ${Math.round(days)} days end to end` : ''}</>}.
-        {t.entries > 0 && <> Your diary holds <b class="num">{pluralN(t.entries, 'entry', 'entries')}</b>{t.reviews ? <>, {pluralN(t.reviews, 'review')} among them</> : null}.</>}
-        {d.averageRating != null && <> You give <b class="num">{d.averageRating.toFixed(2)}★</b> on average{d.liked.count ? <>, and a heart to <b class="num">{pluralN(d.liked.count, 'film')}</b></> : null}.</>}
+      <Note lines={d.glanceParts || d.glance}>
+        You've watched <b class="num"><TextLink to={filterHref('status', 'watched')}>{pluralN(t.films, 'film')}</TextLink></b>{t.hours > 0 && <>, <b class="num">{num(Math.round(t.hours))} hours</b> of them{days >= 2 ? `, or about ${Math.round(days)} days end to end` : ''}</>}.
+        {t.entries > 0 && <> Your diary holds <b class="num"><TextLink to={href('diary')}>{pluralN(t.entries, 'entry', 'entries')}</TextLink></b>{t.reviews ? <>, {pluralN(t.reviews, 'review')} among them</> : null}.</>}
+        {d.averageRating != null && <> You give <b class="num">{d.averageRating.toFixed(2)}★</b> on average{d.liked.count ? <>, and a heart to <b class="num"><TextLink to={filterHref('status', 'liked')}>{pluralN(d.liked.count, 'film')}</TextLink></b></> : null}.</>}
       </Note>
 
       <YearTiles years={d.years} lib={lib} />
@@ -82,7 +94,7 @@ export function Ratings({ d, lib, library }) {
   const t = d.totals;
   const hist = d.ratingHistogram;
   const top = hist.reduce((b, r) => (r.count > b.count ? r : b), hist[0]);
-  const histData = hist.map(r => ({ label: r.rating % 2 ? (r.rating === 1 ? '½' : `${(r.rating - 1) / 2}½`) : String(r.rating / 2), value: r.count, hot: r === top && r.count > 0, title: `${r.rating / 2}★: ${films(r.count)}` }));
+  const histData = hist.map(r => ({ label: r.rating % 2 ? (r.rating === 1 ? '½' : `${(r.rating - 1) / 2}½`) : String(r.rating / 2), value: r.count, hot: r === top && r.count > 0, title: `${r.rating / 2}★: ${films(r.count)}`, href: ratingLink(r.rating) }));
   const hot = d.hotTakes || { higher: [], lower: [] };
   const by = d.ratingsByYear;
   const trend = by.length >= 2 ? by[by.length - 1].averageRating - by[0].averageRating : 0;
@@ -95,7 +107,7 @@ export function Ratings({ d, lib, library }) {
       <Section title="Kinder or tougher over time?" hint="Your average rating in each diary year.">
         {by.length >= 2 ? (
           <>
-            <Bars data={by.map((y, i) => ({ label: String(y.year), value: y.averageRating, note: films(y.count), hot: i === by.length - 1, title: `${y.year}: ${y.averageRating.toFixed(2)}★ across ${films(y.count)}` }))} height={110} />
+            <Bars data={by.map((y, i) => ({ label: String(y.year), value: y.averageRating, note: films(y.count), hot: i === by.length - 1, title: `${y.year}: ${y.averageRating.toFixed(2)}★ across ${films(y.count)}`, href: href('year', y.year) }))} height={110} />
             <p class="ins-summary">{Math.abs(trend) < 0.1 ? 'Your ratings have stayed about the same.' : `You've grown ${trend > 0 ? 'kinder' : 'tougher'} by ${Math.abs(trend).toFixed(1)}★ since ${by[0].year}.`}</p>
           </>
         ) : <Thin>This shows once your diary spans two years.</Thin>}
@@ -136,7 +148,7 @@ export function Taste({ d, lib }) {
   const mean = d.mean;
   const waiting = <Thin>{loading ? 'Reading how your films feel…' : 'This couldn\'t load just now.'}</Thin>;
   const none = <Thin>Rate a few more films and this shows which feelings go with your highest ratings.</Thin>;
-  const decades = d.decades.map(x => ({ label: x.name, value: x.count, note: x.averageRating != null ? starsText(x.averageRating) : null, title: `${x.name}: ${films(x.count)}${x.averageRating != null ? `, ${x.averageRating.toFixed(2)}★ on average` : ''}` }));
+  const decades = d.decades.map(x => ({ label: x.name, value: x.count, note: x.averageRating != null ? starsText(x.averageRating) : null, title: `${x.name}: ${films(x.count)}${x.averageRating != null ? `, ${x.averageRating.toFixed(2)}★ on average` : ''}`, href: decadeLink(x.name) }));
   const rt = d.runtime;
   const bestBand = rt.bands.filter(b => b.lean != null).sort((a, b) => b.lean - a.lean)[0];
   const lenMax = Math.max(1, ...rt.bands.map(b => b.count));
@@ -164,7 +176,7 @@ export function Taste({ d, lib }) {
       </Section>
 
       <Section title="Genres" hint="How often you watch each, and how you rate it." wide>
-        {d.genres.length ? <RankList rows={d.genres} lib={lib} posters /> : <Thin>Genres appear once film details have loaded.</Thin>}
+        {d.genres.length ? <RankList rows={d.genres} link={genreLink} lib={lib} posters /> : <Thin>Genres appear once film details have loaded.</Thin>}
       </Section>
 
       <Section title="Decades" hint={d.medianYear ? `Your middle film is from ${d.medianYear}. Under each decade: your average rating.` : null}>
@@ -175,7 +187,7 @@ export function Taste({ d, lib }) {
           <ul class="ins-len">
             {rt.bands.map((b, i) => (
               <li key={b.name} style={{ '--i': i }} title={`${b.name}: ${films(b.count)}${b.averageRating != null ? `, ${b.averageRating.toFixed(2)}★ on average` : ''}`}>
-                <span class="ins-len-name">{b.name}</span>
+                <span class="ins-len-name">{b.count && lengthLink(b) ? <a href={lengthLink(b)}>{b.name}</a> : b.name}</span>
                 <span class="ins-share-track" aria-hidden="true"><i style={{ width: (b.count / lenMax) * 100 + '%' }} /></span>
                 <span class="ins-len-avg num">{b.averageRating != null ? <>{b.averageRating.toFixed(1)}<span class="ins-star">★</span></> : '–'}</span>
                 <span class="ins-share-n num">{b.count}</span>
@@ -196,14 +208,14 @@ export function Taste({ d, lib }) {
 
 export function People({ d, lib }) {
   const p = d.people;
-  const crew = [['Writers', p.writers], ['Cinematographers', p.cinematographers], ['Composers', p.composers], ['Editors', p.editors]].filter(([, rows]) => rows.length);
+  const crew = [['Writers', p.writers, 'writer'], ['Cinematographers', p.cinematographers, 'cinematography'], ['Composers', p.composers, 'composer'], ['Editors', p.editors, 'editor']].filter(([, rows]) => rows.length);
   return (
     <div class="ins-grid">
       <Section title="Your directors" hint={`Two or more films watched, out of ${pluralN(p.directorCount, 'director')} in all.`}>
-        {p.directors.length ? <RankList rows={p.directors} linkPeople lib={lib} posters /> : <Thin>Watch two films by the same director to see them here.</Thin>}
+        {p.directors.length ? <RankList rows={p.directors} linkPeople role="director" lib={lib} posters /> : <Thin>Watch two films by the same director to see them here.</Thin>}
       </Section>
       <Section title="Your actors" hint="Two or more films, among the top-billed cast.">
-        {p.actors.length ? <RankList rows={p.actors} linkPeople lib={lib} posters /> : <Thin>Watch two films with the same actor to see them here.</Thin>}
+        {p.actors.length ? <RankList rows={p.actors} linkPeople role="cast" lib={lib} posters /> : <Thin>Watch two films with the same actor to see them here.</Thin>}
       </Section>
       {p.bestDirectors.length > 0 && (
         <Section title="Directors you rate highest" hint="By your average rating, two rated films or more." wide>
@@ -211,16 +223,16 @@ export function People({ d, lib }) {
             {p.bestDirectors.map((r, i) => (
               <li key={r.id || r.name} style={{ '--i': i }}>
                 <MiniPosters keys={r.keys} lib={lib} max={3} />
-                <span class="ins-best-name">{r.id ? <a href={href('person', r.id)}>{r.name}</a> : r.name}</span>
+                <span class="ins-best-name"><a href={href('person', r.id || r.name, { role: 'director' })}>{r.name}</a></span>
                 <span class="ins-best-meta muted"><Stars rating={Math.round(r.averageRating * 2)} size="12px" /> <span class="num">{films(r.count)}</span></span>
               </li>
             ))}
           </ul>
         </Section>
       )}
-      {crew.map(([title, rows]) => (
+      {crew.map(([title, rows, role]) => (
         <Section key={title} title={title} hint="Two or more films watched.">
-          <RankList rows={rows} linkPeople />
+          <RankList rows={rows} linkPeople role={role} />
         </Section>
       ))}
     </div>
@@ -244,10 +256,10 @@ export function World({ d, library }) {
         {d.topCountries.length ? <CountriesMap films={library && library.films} /> : <Thin>Countries appear once film details have loaded.</Thin>}
       </Section>
       <Section title="Most watched countries">
-        {d.topCountries.length ? <RankList rows={d.topCountries} /> : <Thin>Countries appear once film details have loaded.</Thin>}
+        {d.topCountries.length ? <RankList rows={d.topCountries} link={countryLink} /> : <Thin>Countries appear once film details have loaded.</Thin>}
       </Section>
       <Section title="Languages">
-        {d.topLanguages.length ? <RankList rows={d.topLanguages} /> : <Thin>Languages appear once film details have loaded.</Thin>}
+        {d.topLanguages.length ? <RankList rows={d.topLanguages} link={languageLink} /> : <Thin>Languages appear once film details have loaded.</Thin>}
       </Section>
     </div>
   );
@@ -286,7 +298,7 @@ export function Habits({ d, lib, library }) {
             <div><dt>Typical month</dt><dd class="num">{plural(d.filmsPerMonthAvg, 'film', 'films')}</dd></div>
             <div><dt>Busiest day</dt><dd>{s.busiestDay ? <>{dateText(s.busiestDay.date)} <span class="faint num">· {films(s.busiestDay.count)}</span></> : '–'}</dd></div>
             <div><dt>Busiest month</dt><dd>{s.busiestMonth ? <>{monthLong(s.busiestMonth.month)} <span class="faint num">· {films(s.busiestMonth.count)}</span></> : '–'}</dd></div>
-            <div><dt>Rewatches</dt><dd class="num">{num(t.rewatches)}</dd></div>
+            <div><dt>Rewatches</dt><dd class="num">{t.rewatches ? <TextLink to={filterHref('text', 'is:rewatched')}>{num(t.rewatches)}</TextLink> : num(t.rewatches)}</dd></div>
           </dl>
         ) : <Thin>Log a few films in your diary to see this.</Thin>}
       </Section>
@@ -317,11 +329,11 @@ export function Watchlist({ d, lib, library }) {
   const w = d.watchlist;
   if (!w.count) return <div class="ins-grid"><Section title="Your watchlist" wide><Thin>Nothing is waiting on your watchlist. Add films on Letterboxd and they show up here.</Thin></Section></div>;
   const gMax = Math.max(1, ...w.genres.flatMap(g => [g.share, g.watchedShare]));
-  const decades = w.decades.map(x => ({ label: x.name, value: x.count, title: `${x.name}: ${films(x.count)}` }));
+  const decades = w.decades.map(x => ({ label: x.name, value: x.count, title: `${x.name}: ${films(x.count)}`, href: decadeLink(x.name) }));
   return (
     <div class="ins-grid">
       <Note>
-        <b class="num">{pluralN(w.count, 'film')}</b> {w.count === 1 ? 'is' : 'are'} waiting on your watchlist{w.hours > 0 && <>: about <b class="num">{num(w.hours)} hours</b>{w.hours >= 48 ? `, or ${Math.round(w.hours / 24)} days end to end` : ''}</>}.
+        <b class="num"><TextLink to={filterHref('status', 'watchlist')}>{pluralN(w.count, 'film')}</TextLink></b> {w.count === 1 ? 'is' : 'are'} waiting on your watchlist{w.hours > 0 && <>: about <b class="num">{num(w.hours)} hours</b>{w.hours >= 48 ? `, or ${Math.round(w.hours / 24)} days end to end` : ''}</>}.
         {w.yearsAtPace != null && <> At your usual {plural(d.filmsPerMonthAvg, 'film', 'films')} a month, that's <b class="num">{w.yearsAtPace >= 1 ? `${w.yearsAtPace.toFixed(1)} years` : `${Math.round(w.yearsAtPace * 12)} months`}</b> of evenings.</>}
       </Note>
 
@@ -339,7 +351,7 @@ export function Watchlist({ d, lib, library }) {
         <ul class="ins-pair">
           {w.genres.map((g, i) => (
             <li key={g.name} style={{ '--i': i }} title={`${g.name}: ${g.share}% of your watchlist (${films(g.count)}), ${g.watchedShare}% of what you've watched`}>
-              <span class="ins-pair-name">{g.name}</span>
+              <span class="ins-pair-name"><a href={genreLink(g)}>{g.name}</a></span>
               <span class="ins-pair-bars" aria-hidden="true"><i class="wl" style={{ width: (g.share / gMax) * 100 + '%' }} /><i class="seen" style={{ width: (g.watchedShare / gMax) * 100 + '%' }} /></span>
               <span class="ins-pair-n num">{g.share}%<span class="faint"> {g.watchedShare}%</span></span>
             </li>
@@ -362,7 +374,7 @@ export function Watchlist({ d, lib, library }) {
       </Section>
 
       <Section title="Directors waiting" hint="Two or more of their films on your watchlist.">
-        {w.directors.length ? <RankList rows={w.directors} linkPeople lib={lib} posters /> : <Thin>No director has two films waiting.</Thin>}
+        {w.directors.length ? <RankList rows={w.directors} linkPeople role="director" lib={lib} posters /> : <Thin>No director has two films waiting.</Thin>}
       </Section>
       <Section title="Decades waiting">
         {decades.length ? <Bars data={decades} height={120} /> : <Thin>Nothing here yet.</Thin>}

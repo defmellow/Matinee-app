@@ -211,6 +211,12 @@ jobs:
           grep -q "repo: $REPO_NAME$" "$f" || { echo "app-update.yml does not point at $REPO_NAME"; cat "$f"; exit 1; }
           grep -q "^version: $APP_VERSION$" release/latest-mac.yml || { echo "latest-mac.yml version is not $APP_VERSION"; cat release/latest-mac.yml; exit 1; }
           ls -l release/Matinee-$APP_VERSION-Mac.dmg release/Matinee-$APP_VERSION-Mac-Intel.dmg release/Matinee-$APP_VERSION-Mac.zip release/Matinee-$APP_VERSION-Mac-Intel.zip
+          # Each file must hold the app for its own chip (v1.0 and v1.1 shipped the Intel app in the Apple Silicon .dmg).
+          chip() { local m; m=$(hdiutil attach -nobrowse -readonly "$1" | grep -o '/Volumes/.*' | head -1); lipo -archs "$m/Matinee.app/Contents/MacOS/Matinee"; hdiutil detach "$m" >/dev/null; }
+          zchip() { local d; d=$(mktemp -d); unzip -q "$1" 'Matinee.app/Contents/MacOS/Matinee' -d "$d"; lipo -archs "$d/Matinee.app/Contents/MacOS/Matinee"; }
+          for f in Mac.dmg:arm64 Mac-Intel.dmg:x86_64; do got=$(chip "release/Matinee-$APP_VERSION-${f%%:*}"); [ "$got" = "${f##*:}" ] || { echo "${f%%:*} holds $got, not ${f##*:}"; exit 1; }; done
+          for f in Mac.zip:arm64 Mac-Intel.zip:x86_64; do got=$(zchip "release/Matinee-$APP_VERSION-${f%%:*}"); [ "$got" = "${f##*:}" ] || { echo "${f%%:*} holds $got, not ${f##*:}"; exit 1; }; done
+          [ "$(grep -c 'url: Matinee' release/latest-mac.yml)" -eq 2 ] || { echo "latest-mac.yml should list one zip and one dmg"; cat release/latest-mac.yml; exit 1; }
           echo "Update files look right for $APP_VERSION"
       - name: Get Playwright's Electron driver for the smoke test (no browsers needed)
         run: npm install -g playwright-core@1.63.0

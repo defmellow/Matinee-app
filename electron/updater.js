@@ -223,7 +223,8 @@ export function createUpdateController(d) {
 
     let memo = null;
     try { memo = readMemo(); } catch (e) { memo = null; log('Could not read the update note:', e); }
-    if (memo && CHANNELS.includes(memo.channel)) channel = memo.channel;
+    // A channel saved by an older copy is not read back: the choice is gone from Settings, so every copy follows the normal releases.
+    if (memo && memo.channel) persist();
     applyChannel();
     if (memo && memo.version) {
       if (compareVersions(currentVersion, memo.version) >= 0) writeSafe(null);

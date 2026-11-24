@@ -8,7 +8,7 @@ import { href } from '../../router.js';
 import { n as num, plural, MONTHS_SHORT } from '../../format.js';
 import Bars from '../insights/Bars.jsx';
 import { Section, Thin, Note, RankList, PosterRow, TakeList, MiniPosters } from '../insights/parts.jsx';
-import { ShareBars, feelLink } from '../insights/tabs.jsx';
+import { ShareBars, feelLink, genreLink, countryLink, languageLink } from '../insights/tabs.jsx';
 import { yearCells } from '../diary/Heatmap.jsx';
 import { dayText } from '../diary/heatmapText.js';
 
@@ -40,7 +40,7 @@ export function Highlights({ d, lib, film }) {
   const fives = d.ratingHistogram[9].count;
   return (
     <div class="ins-grid">
-      <Note lines={d.highlights}>
+      <Note lines={d.highlightParts || d.highlights}>
         In {d.year} you watched <b class="num">{films(t.films)}</b>{t.hours > 0 && <> over <b class="num">{num(Math.round(t.hours))} hours</b></>}{p ? <> ({against(t.films, p.films, p.year)})</> : null}.
         {d.ratingAverage != null && <> You rated them <b class="num">{d.ratingAverage.toFixed(2)}★</b> on average{p && p.ratingAverage != null ? <>, {against(d.ratingAverage, p.ratingAverage, p.year, { unit: '★', digits: 2 })}</> : null}.</>}
         {' '}<b class="num">{t.newToYou}</b> {t.newToYou === 1 ? 'was' : 'were'} new to you{fives ? <>, and <b class="num">{fives}</b> got five stars</> : null}.
@@ -164,7 +164,7 @@ export function Taste({ d, lib }) {
         </Section>
       )}
       <Section title="Genres" hint="How often, and how you rated them." wide>
-        {d.genresRated.length ? <RankList rows={d.genresRated} lib={lib} posters /> : <Thin>Genres show up once film details have loaded.</Thin>}
+        {d.genresRated.length ? <RankList rows={d.genresRated} link={genreLink} lib={lib} posters /> : <Thin>Genres show up once film details have loaded.</Thin>}
       </Section>
       <Section title="Decades">
         {decades.length ? <Bars data={decades} height={110} /> : <Thin>Nothing here yet.</Thin>}
@@ -173,10 +173,10 @@ export function Taste({ d, lib }) {
         {d.runtime.longest ? <PosterRow rows={1} items={[{ key: d.runtime.longest.key, label: 'Longest', note: runtimeText(d.runtime.longest.runtime) }, ...(d.runtime.shortest && d.runtime.shortest.key !== d.runtime.longest.key ? [{ key: d.runtime.shortest.key, label: 'Shortest', note: runtimeText(d.runtime.shortest.runtime) }] : [])]} lib={lib} label="Longest and shortest" /> : <Thin>Runtimes are still arriving.</Thin>}
       </Section>
       <Section title="Countries">
-        {d.countries.length ? <RankList rows={d.countries} /> : <Thin>Countries show up once film details have loaded.</Thin>}
+        {d.countries.length ? <RankList rows={d.countries} link={countryLink} /> : <Thin>Countries show up once film details have loaded.</Thin>}
       </Section>
       <Section title="Languages">
-        {d.languages.length ? <RankList rows={d.languages} /> : <Thin>Languages show up once film details have loaded.</Thin>}
+        {d.languages.length ? <RankList rows={d.languages} link={languageLink} /> : <Thin>Languages show up once film details have loaded.</Thin>}
       </Section>
     </div>
   );
@@ -192,7 +192,7 @@ export function People({ d, lib }) {
             {fav.map((p, i) => (
               <li key={p.name + p.role} style={{ '--i': i }}>
                 <MiniPosters keys={p.keys} lib={lib} max={4} />
-                <span class="year-p-name">{p.id ? <a href={href('person', p.id)}>{p.name}</a> : p.name}</span>
+                <span class="year-p-name"><a href={href('person', p.id || p.name, { role: p.role === 'director' ? 'director' : 'cast' })}>{p.name}</a></span>
                 <span class="year-p-meta muted"><span>{p.role === 'director' ? 'Director' : 'Cast'}</span> · <span class="num">{films(p.count)}</span>{p.averageRating != null && <> · <Stars rating={Math.round(p.averageRating * 2)} size="12px" /></>}</span>
               </li>
             ))}
@@ -205,7 +205,7 @@ export function People({ d, lib }) {
             {met.best.map((p, i) => (
               <li key={p.id || p.name} style={{ '--i': i }}>
                 <MiniPosters keys={p.keys} lib={lib} max={4} />
-                <span class="year-p-name">{p.id ? <a href={href('person', p.id)}>{p.name}</a> : p.name}</span>
+                <span class="year-p-name"><a href={href('person', p.id || p.name, { role: 'director' })}>{p.name}</a></span>
                 <span class="year-p-meta muted"><span class="num">{films(p.count)}</span> · <Stars rating={Math.round(p.averageRating * 2)} size="12px" /></span>
               </li>
             ))}

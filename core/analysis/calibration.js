@@ -2,6 +2,7 @@
 // Pure functions over summaries. diff = mean of (your rating × 10 − score), in points on the 0–100 scale.
 import { yourTake } from './scores.js';
 import { canonicalCountry } from './tags.js';
+import { linkPart, personPart, partsText } from './text-parts.js';
 
 const MIN_COUNT = 3;
 const MIN_DIRECTOR = 2;
@@ -37,32 +38,34 @@ export function pointsText(points) {
 
 const sign = d => (d < 0 ? '−' : '+');
 
+/** The notes as text parts (text-parts.js), so the genre, decade, director or country named can be a link. */
 function notes(overall, groups) {
   const out = [];
   if (overall.count >= MIN_COUNT) {
-    if (Math.abs(overall.diff) < 3) out.push(`Overall you rate right in line with the crowd (${overall.count} films compared).`);
-    else out.push(`Overall you're ${overall.diff < 0 ? 'tougher' : 'kinder'} than most, by ${pointsText(overall.diff)} on average.`);
+    if (Math.abs(overall.diff) < 3) out.push([`Overall you rate right in line with the crowd (${overall.count} films compared).`]);
+    else out.push([`Overall you're ${overall.diff < 0 ? 'tougher' : 'kinder'} than most, by ${pointsText(overall.diff)} on average.`]);
   }
   const used = new Set();
   const say = (r, phrase) => {
     if (!r || used.has(r) || Math.abs(r.diff) < 5) return;
     used.add(r);
     const how = r.diff < 0 ? 'tougher' : 'kinder';
-    out.push(`You're ${how} than most ${phrase(r)} (${sign(r.diff)}${pointsText(r.diff).replace(' (', ', ').replace(')', '')}, across ${r.count} films).`);
+    out.push([`You're ${how} than most `, ...phrase(r), ` (${sign(r.diff)}${pointsText(r.diff).replace(' (', ', ').replace(')', '')}, across ${r.count} films).`]);
   };
   const first = (list, dir) => list.find(r => dir < 0 ? r.diff < 0 : r.diff > 0);
   const [genres, decades, directors, countries] = groups;
-  say(genres[0], r => `on ${r.name.toLowerCase()} films`);
-  say(first(genres, genres[0] ? -Math.sign(genres[0].diff) : 1), r => `on ${r.name.toLowerCase()} films`);
-  say(decades[0], r => `on films from the ${r.name}`);
-  say(directors[0], r => `on ${r.name}`);
-  say(countries[0], r => `on films from ${r.label}`);
+  const genre = r => ['on ', linkPart(r.name.toLowerCase(), 'genre', r.name), ' films'];
+  say(genres[0], genre);
+  say(first(genres, genres[0] ? -Math.sign(genres[0].diff) : 1), genre);
+  say(decades[0], r => ['on films from the ', linkPart(r.name, 'decade', parseInt(r.name, 10))]);
+  say(directors[0], r => ['on ', personPart(r, 'director')]);
+  say(countries[0], r => ['on films from ', linkPart(r.label, 'country', r.name)]);
   return out.slice(0, 4);
 }
 
 /**
  * @param {Array} summaries
- * @returns {{ overall:{diff:number,count:number}, byGenre:Row[], byDecade:Row[], byDirector:Row[], byCountry:Row[], notes:string[] }}
+ * @returns {{ overall:{diff:number,count:number}, byGenre:Row[], byDecade:Row[], byDirector:Row[], byCountry:Row[], notes:string[], noteParts:TextPart[][] }}
  *   Row = { name, id?, diff, count }
  */
 export function calibration(summaries) {
@@ -99,5 +102,6 @@ export function calibration(summaries) {
   const byGenre = rows(genres, MIN_COUNT), byDecade = rows(decades, MIN_COUNT);
   const byDirector = rows(directors, MIN_DIRECTOR), byCountry = rows(countries, MIN_COUNT);
   const noteCountries = byCountry.map(r => ({ ...r, label: labels.get(r.name) || r.name }));
-  return { overall, byGenre, byDecade, byDirector, byCountry, notes: notes(overall, [byGenre, byDecade, byDirector, noteCountries]) };
+  const noteParts = notes(overall, [byGenre, byDecade, byDirector, noteCountries]);
+  return { overall, byGenre, byDecade, byDirector, byCountry, notes: noteParts.map(partsText), noteParts };
 }

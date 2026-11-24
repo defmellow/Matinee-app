@@ -208,10 +208,12 @@ test('channel: experimental allows pre-releases, main allows stepping back; choi
   assert.equal(first.updater.allowDowngrade, true);
   assert.equal(first.memo(), null); // back to defaults: nothing stored
 
+  // an older copy's saved Experimental choice is dropped: the choice is no longer offered
   const second = make({ memo: { channel: 'experimental' } });
   second.c.start();
-  assert.equal(second.c.status().channel, 'experimental');
-  assert.equal(second.updater.allowPrerelease, true);
+  assert.equal(second.c.status().channel, 'main');
+  assert.equal(second.updater.allowPrerelease, false);
+  assert.equal(second.memo(), null);
 });
 
 test('stalled: retry forgets the failed attempt and checks again; the installer link points at the known version', async () => {
