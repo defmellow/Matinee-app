@@ -14,12 +14,7 @@
 > **Matinee is vibe-coded.** I designed it and made the decisions about what it does and how it looks; the code itself
 > was written with AI.
 
-A desktop companion for your Letterboxd account. Matinee reads your Letterboxd export and turns it into a bigger film
-library: ratings from every major site side by side, what each film feels like, a map of how your films relate, and
-stats on what you watch.
-
-It never changes anything on Letterboxd. Log and rate there as usual; Matinee reads it. Everything stays on your
-computer, with no account or sign-up.
+A desktop companion for your Letterboxd account. Reading your Letterboxd export and turns it into a rich film library with ratings from every major site, feelings of films, a map of your films and stats on what you watch.
 
 For Windows, Mac and Linux.
 
