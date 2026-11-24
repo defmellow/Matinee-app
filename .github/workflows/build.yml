@@ -43,7 +43,7 @@ jobs:
       - name: Work out the version (1.<n>.0 in the public repo, 0.<n>.0 elsewhere; experimental builds get -exp.<run> so they sort below the real release)
         id: stamp
         run: |
-          if [ "$GITHUB_REPOSITORY" = "defmellow/matinee-app" ]; then
+          if [ "${GITHUB_REPOSITORY,,}" = "defmellow/matinee-app" ]; then   # GitHub shows it as Matinee-app
             major=$(node -p "require('./package.json').version.split('.')[0]")
             minor=$(( ${{ github.run_number }} - 1 ))
           else
